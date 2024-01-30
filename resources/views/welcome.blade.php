@@ -60,7 +60,8 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="active" href="index.html">Accueil</a></li>
+          {{-- <li><a class="active" href="index.html">Accueil</a></li>;
+          <li><a href="contact.html">Contact</a></li> --}}
           {{-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
@@ -78,8 +79,44 @@
               <li><a href="#">Drop Down 4</a></li>
             </ul>
           </li> --}}
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="blog.html">Compte</a></li>
+          @guest
+          @if (Route::has('login'))
+              <li class="nav-item">
+                  <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+              </li>
+          @endif
+
+        
+      @else
+          @canany(['create-role', 'edit-role', 'delete-role'])
+              <li><a class="nav-link" href="{{ route('roles.index') }}">Gestion Roles</a></li>
+          @endcanany
+          @canany(['create-user', 'edit-user', 'delete-user'])
+              <li><a class="nav-link" href="{{ route('users.index') }}">Gestion Users</a></li>
+          @endcanany
+          @canany(['create-product', 'edit-product', 'delete-product'])
+              <li><a class="nav-link" href="{{ route('products.index') }}">Gestion demandes</a></li>
+          @endcanany
+          <li class="nav-item dropdown">
+              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                  {{ Auth::user()->name }}
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{{ route('logout') }}"
+                     onclick="event.preventDefault();
+                                   document.getElementById('logout-form').submit();">
+                      {{ __('Logout') }}
+                  </a>
+
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                      @csrf
+                  </form>
+              </div>
+          </li>
+      @endguest
+          
+         
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -153,7 +190,7 @@
           <div class="col-lg-6">
             <div class="icon-box">
               <i class="bi bi-card-checklist"></i>
-              <h3><a href="">Je suis une agence acreditée</a></h3>
+              <h3><a href="{{ route('register') }}">Je suis une agence acreditée</a></h3>
               <p>Description d'une agence acreditée</p>
             </div>
           </div>
@@ -161,7 +198,7 @@
           <div class="col-lg-6 mt-4 mt-lg-0">
             <div class="icon-box">
               <i class="bi bi-binoculars"></i>
-              <h3><a href="">Je suis un agent du Ministère</a></h3>
+              <h3><a href="{{ route('register') }}">Je suis un agent du Ministère</a></h3>
               <p>cette espace est reservé au DAF des differents Ministère</p>
             </div>
           </div>
