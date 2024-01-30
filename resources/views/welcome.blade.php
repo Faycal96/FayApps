@@ -5,12 +5,12 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Eterna Bootstrap Template - Index</title>
+  <title>ACHAT DE BILLET AVION</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="{{ asset('frontend/assets/img/armoirie.png') }}" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -53,21 +53,15 @@
     <div class="container d-flex justify-content-between align-items-center">
 
       <div class="logo">
-        <h1><a href="index.html">Eterna</a></h1>
+        <h1><a href="index.html">AchatBillet</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="active" href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="portfolio.html">Portfolio</a></li>
-          <li><a href="team.html">Team</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+          <li><a class="active" href="index.html">Accueil</a></li>
+          {{-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
               <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
@@ -83,8 +77,9 @@
               <li><a href="#">Drop Down 3</a></li>
               <li><a href="#">Drop Down 4</a></li>
             </ul>
-          </li>
+          </li> --}}
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="blog.html">Compte</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -102,35 +97,35 @@
         <div class="carousel-inner" role="listbox">
 
           <!-- Slide 1 -->
-          <div class="carousel-item active" style="background-image: url(assets/img/slide/slide-1.jpg)">
+          <div class="carousel-item active" style="background-image: url(frontend/assets/img/slide/slide3.jpg)">
             <div class="carousel-container">
-              <div class="carousel-content">
+              {{-- <div class="carousel-content">
                 <h2 class="animate__animated animate__fadeInDown">Welcome to <span>Eterna</span></h2>
                 <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
                 <a href="" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
-              </div>
+              </div> --}}
             </div>
           </div>
 
           <!-- Slide 2 -->
-          <div class="carousel-item" style="background-image: url(assets/img/slide/slide-2.jpg)">
+          <div class="carousel-item" style="background-image: url(frontend/assets/img/slide/slide1.jpg)">
             <div class="carousel-container">
-              <div class="carousel-content">
+              {{-- <div class="carousel-content">
                 <h2 class="animate__animated fanimate__adeInDown">Lorem <span>Ipsum Dolor</span></h2>
                 <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
                 <a href="" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
-              </div>
+              </div> --}}
             </div>
           </div>
 
           <!-- Slide 3 -->
-          <div class="carousel-item" style="background-image: url(assets/img/slide/slide-3.jpg)">
+          <div class="carousel-item" style="background-image: url(frontend/assets/img/slide/slide2.jpg)">
             <div class="carousel-container">
-              <div class="carousel-content">
+              {{-- <div class="carousel-content">
                 <h2 class="animate__animated animate__fadeInDown">Sequi ea <span>Dime Lara</span></h2>
                 <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
                 <a href="" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
-              </div>
+              </div> --}}
             </div>
           </div>
 
@@ -153,27 +148,21 @@
     <!-- ======= Featured Section ======= -->
     <section id="featured" class="featured">
       <div class="container">
-
+        <p>Veuillez vous inscrire ci dessous !</p>
         <div class="row">
-          <div class="col-lg-4">
+          <div class="col-lg-6">
             <div class="icon-box">
               <i class="bi bi-card-checklist"></i>
-              <h3><a href="">Lorem Ipsum</a></h3>
-              <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+              <h3><a href="">Je suis une agence acreditée</a></h3>
+              <p>Description d'une agence acreditée</p>
             </div>
           </div>
-          <div class="col-lg-4 mt-4 mt-lg-0">
-            <div class="icon-box">
-              <i class="bi bi-bar-chart"></i>
-              <h3><a href="">Dolor Sitema</a></h3>
-              <p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-            </div>
-          </div>
-          <div class="col-lg-4 mt-4 mt-lg-0">
+
+          <div class="col-lg-6 mt-4 mt-lg-0">
             <div class="icon-box">
               <i class="bi bi-binoculars"></i>
-              <h3><a href="">Sed ut perspiciatis</a></h3>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+              <h3><a href="">Je suis un agent du Ministère</a></h3>
+              <p>cette espace est reservé au DAF des differents Ministère</p>
             </div>
           </div>
         </div>
@@ -182,7 +171,7 @@
     </section><!-- End Featured Section -->
 
     <!-- ======= About Section ======= -->
-    <section id="about" class="about">
+    {{-- <section id="about" class="about">
       <div class="container">
 
         <div class="row">
@@ -209,10 +198,10 @@
         </div>
 
       </div>
-    </section><!-- End About Section -->
+    </section><!-- End About Section --> --}}
 
     <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
+    {{-- <section id="services" class="services">
       <div class="container">
 
         <div class="row">
@@ -267,40 +256,17 @@
         </div>
 
       </div>
-    </section><!-- End Services Section -->
+    </section><!-- End Services Section --> --}}
 
     <!-- ======= Clients Section ======= -->
-    <section id="clients" class="clients">
-      <div class="container">
 
-        <div class="section-title">
-          <h2>Clients</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="clients-slider swiper">
-          <div class="swiper-wrapper align-items-center">
-            <div class="swiper-slide"><img src="assets/img/clients/client-1.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-2.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-3.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-4.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-5.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-6.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-7.png" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-8.png" class="img-fluid" alt=""></div>
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-      </div>
-    </section><!-- End Clients Section -->
 
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
 
-    <div class="footer-newsletter">
+    {{-- <div class="footer-newsletter">
       <div class="container">
         <div class="row">
           <div class="col-lg-6">
@@ -314,9 +280,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
 
-    <div class="footer-top">
+    {{-- <div class="footer-top">
       <div class="container">
         <div class="row">
 
@@ -368,7 +334,7 @@
 
         </div>
       </div>
-    </div>
+    </div> --}}
 
     <div class="container">
       <div class="copyright">
