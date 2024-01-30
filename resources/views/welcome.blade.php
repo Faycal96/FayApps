@@ -86,7 +86,7 @@
               </li>
           @endif
 
-        
+
       @else
           @canany(['create-role', 'edit-role', 'delete-role'])
               <li><a class="nav-link" href="{{ route('roles.index') }}">Gestion Roles</a></li>
@@ -94,9 +94,7 @@
           @canany(['create-user', 'edit-user', 'delete-user'])
               <li><a class="nav-link" href="{{ route('users.index') }}">Gestion Users</a></li>
           @endcanany
-          @canany(['create-product', 'edit-product', 'delete-product'])
-              <li><a class="nav-link" href="{{ route('products.index') }}">Gestion demandes</a></li>
-          @endcanany
+
           <li class="nav-item dropdown">
               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                   {{ Auth::user()->name }}
@@ -115,8 +113,8 @@
               </div>
           </li>
       @endguest
-          
-         
+
+
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->

@@ -55,9 +55,9 @@
                             @canany(['create-user', 'edit-user', 'delete-user'])
                                 <li><a class="nav-link" href="{{ route('users.index') }}">Gestion Users</a></li>
                             @endcanany
-                            @canany(['create-product', 'edit-product', 'delete-product'])
+                            {{-- @canany(['create-product', 'edit-product', 'delete-product'])
                                 <li><a class="nav-link" href="{{ route('products.index') }}">Gestion demandes</a></li>
-                            @endcanany
+                            @endcanany --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -85,7 +85,7 @@
             <div class="container">
                 <div class="row justify-content-center mt-3">
                     <div class="col-md-12">
-                        
+
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success text-center" role="alert">
                                 {{ $message }}
@@ -94,9 +94,9 @@
 
                         <h3 class="text-center mt-3 mb-3">AchatBillet - <a href="https://www.allphptricks.com/">AchatBillet.com</a></h3>
                         @yield('content')
-                        
+
                         <div class="row justify-content-center text-center mt-3">
-                           
+
                         </div>
 
 
