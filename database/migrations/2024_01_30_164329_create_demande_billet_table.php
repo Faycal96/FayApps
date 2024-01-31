@@ -11,16 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('demande_billet', function (Blueprint $table) {
+        Schema::create('demande_billets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('code_demande')->nullable();
             $table->string('lieuDepart')->nullable();
             $table->string('lieuArrive')->nullable();
-            $table->date('dateDepart');
-            $table->date('dateArrive');
+            $table->date('dateDepart')->default(now);
+            $table->date('dateArrive')->default(now);
             $table->string('numeroOrdreMission')->nullable();
-            $table->integer('duree');
+            $table->integer('duree')->nullable();
+            $table->integer('description')->nullable();
+            $table->boolean('etat')->default(true);
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
@@ -33,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('demande_billet');
+        Schema::dropIfExists('demande_billets');
     }
 };

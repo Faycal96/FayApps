@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DemandeBilletController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OffreController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -24,10 +26,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/admin', [HomeController::class, 'index'])->name('backend.index');
-Route::get('/demande', [HomeController::class, 'demande'])->name('backend.demande');
+//Route::get('/demande', [DemandeBilletController::class, 'demande'])->name('backend.demande');
+//Route::get('/offre', [OffreController::class, 'offre'])->name('backend.offre');
 
 Route::resources([
     'roles' => RoleController::class,
     'users' => UserController::class,
+    'demandes' => DemandeBilletController::class,
+    'offres' => OffreController::class,
 
 ]);
