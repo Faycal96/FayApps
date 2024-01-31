@@ -25,6 +25,7 @@ Auth::routes();
 
 Route::get('/admin', [HomeController::class, 'index'])->name('backend.index');
 Route::get('/demande', [HomeController::class, 'demande'])->name('backend.demande');
+Route::post('/users/{user}/validate', [UserController::class, 'valider'])->name('users.activate');
 
 Route::resources([
     'roles' => RoleController::class,
