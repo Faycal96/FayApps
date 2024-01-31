@@ -9,7 +9,15 @@ class AgenceAcredite extends Model
 {
     use HasFactory;
 
+    protected $table = 'agence_acredite';
+
     protected $guarded = [
         'id'
     ];
+
+
+    public function user()
+    {
+        return $this->hasOne(User::class,'id','user_id');
+    }
 }
