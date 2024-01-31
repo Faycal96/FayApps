@@ -3,15 +3,16 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h3 class="text-center mt-3 mb-3">Inscription d'une Agence acreditée </a></h3>
+            <h3 class="text-center mt-3 mb-3">Inscription d'un agent du ministère </a></h3>
 
             <div class="card card-primary">
 
                 <div class="card-header">Agence</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('enregistrer') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('agences.store') }}" enctype="multipart/form-data">
                         @csrf
+
 
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nom Agence') }}</label>

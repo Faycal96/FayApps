@@ -11,7 +11,7 @@ class StoreAgenceAcrediteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class StoreAgenceAcrediteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users|max:255',
+            'adressAgence' => 'required|string|max:255',
+            'dateCreationAgence' => 'required|date',
+            'numeroIfu' => 'required|string|max:255',
+            'rccm' => 'file|mimes:jpeg,png,pdf|max:2048',// Ajoutez d'autres règles de validation selon vos besoins
         ];
     }
 }

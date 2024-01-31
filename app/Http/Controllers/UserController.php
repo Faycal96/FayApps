@@ -9,6 +9,7 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -17,11 +18,13 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('permission:create-user|edit-user|delete-user', ['only' => ['index','show']]);
-        $this->middleware('permission:create-user', ['only' => ['create','store']]);
-        $this->middleware('permission:edit-user', ['only' => ['edit','update']]);
-        $this->middleware('permission:delete-user', ['only' => ['destroy']]);
+
+        $this->middleware('auth', ['except' => ['createdaf']]);
+        // $this->middleware('auth');
+        // $this->middleware('permission:create-user|edit-user|delete-user', ['only' => ['index','show']]);
+        // $this->middleware('permission:create-user', ['only' => ['create','store']]);
+        // $this->middleware('permission:edit-user', ['only' => ['edit','update']]);
+        // $this->middleware('permission:delete-user', ['only' => ['destroy']]);
     }
 
     /**
@@ -44,9 +47,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreUserRequest $request): RedirectResponse
     {
         $input = $request->all();
@@ -58,6 +58,42 @@ class UserController extends Controller
         return redirect()->route('users.index')
                 ->withSuccess('New user is added successfully.');
     }
+
+
+
+    public function createdaf(): View
+    {
+        Log::info('createdaf method called'); // Vérifiez les logs
+        return view('registerDaf');
+    }
+
+        // UserController.php
+public function storedaf(StoreUserRequest $request)
+{
+     // Logique de traitement pour l'enregistrement 'daf'
+
+    // Exemple : Création d'un utilisateur 'daf'
+    $user = User::create([
+        'name' => $request->input('name'),
+        'typeUtilisateur' => 'Daf', // Ajoutez le type d'utilisateur approprié
+        'email' => $request->input('email'),
+        'password' => Hash::make('12345678'),
+    ]);
+
+    // Autres traitements...
+
+    // Redirection après l'enregistrement 'daf'
+    return redirect()->route('login')->with('success', 'Enregistrement Daf réussi !');
+}
+
+
+
+    /**
+     * Store a newly created resource in storage.
+     */
+
+
+
 
     /**
      * Display the specified resource.
@@ -94,13 +130,13 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $input = $request->all();
- 
+
         if(!empty($request->password)){
             $input['password'] = Hash::make($request->password);
         }else{
             $input = $request->except('password');
         }
-        
+
         $user->update($input);
 
         $user->syncRoles($request->roles);
