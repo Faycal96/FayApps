@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,4 +37,16 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    protected function redirectTo()
+    {
+        $user = Auth::user(); // Récupérer l'utilisateur connecté
+
+        // Exemple de redirection basée sur le rôle de l'utilisateur
+        if ($user->hasRole(['Admin','Super Admin'])) {
+            return '/admin'; // Chemin pour les administrateurs
+        } elseif ($user->hasRole('DAF MINISTERE','Agence Voyage')) {
+            return '/'; // Chemin pour les utilisateurs standards
+        }
+}
 }
