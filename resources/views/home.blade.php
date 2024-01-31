@@ -16,7 +16,7 @@
 
                     {{ __('You are logged in!') }}
 
-                 
+
                     @canany(['create-role', 'edit-role', 'delete-role'])
                         <a class="btn btn-primary" href="{{ route('roles.index') }}">
                             <i class="bi bi-person-fill-gear"></i> Gestion Roles</a>
@@ -25,10 +25,10 @@
                         <a class="btn btn-success" href="{{ route('users.index') }}">
                             <i class="bi bi-people"></i> Gestion utilisateur</a>
                     @endcanany
-                    @canany(['create-product', 'edit-product', 'delete-product'])
+                    {{-- @canany(['create-product', 'edit-product', 'delete-product'])
                         <a class="btn btn-warning" href="{{ route('products.index') }}">
                             <i class="bi bi-bag"></i> Gestion Products</a>
-                    @endcanany
+                    @endcanany --}}
                     <p>&nbsp;</p>
                 </div>
             </div>
