@@ -24,9 +24,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/admin', [HomeController::class, 'index'])->name('backend.index');
+Route::get('/demande', [HomeController::class, 'demande'])->name('backend.demande');
 
 Route::resources([
     'roles' => RoleController::class,
     'users' => UserController::class,
-    
+
 ]);
