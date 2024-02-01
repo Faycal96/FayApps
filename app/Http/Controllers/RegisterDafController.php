@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Spatie\Permission\Models\Role;
 
 class RegisterDafController extends Controller
 {
@@ -54,6 +55,13 @@ class RegisterDafController extends Controller
         $user['id_m']= $request->id_m;
         //  dd($user['name']);
         $user->save();
+
+        $clientRole = Role::where('name', 'DAF MINISTERE')->first();
+        if ($clientRole) {
+            $user->roles()->attach($clientRole);
+        }
+    
+      
 
         // Vous pouvez ajouter d'autres logiques ici si nécessaire
 

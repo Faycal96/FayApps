@@ -103,7 +103,7 @@ class RegisterController extends Controller
             $user->roles()->attach($clientRole);
         }
     
-        return $user;
+        
 
         return view('welcome')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
 
