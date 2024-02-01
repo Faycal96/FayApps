@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisterDafController;
+use App\Http\Controllers\RegisterDafController;
 use App\Http\Controllers\DemandeBilletController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OffreController;
+use App\Http\Controllers\RegisterDafController as ControllersRegisterDafController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -31,8 +32,10 @@ Route::get('/admin', [HomeController::class, 'index'])->name('backend.index');
 Route::post('/users/{user}/validate', [UserController::class, 'valider'])->name('users.activate');
 //Route::get('/offre', [OffreController::class, 'offre'])->name('backend.offre');
 
-Route::get('registerdaf', [RegisterDafController::class, 'createdaf'])->name('registerdaf');
-Route::post('registerdaf', [UserController::class, 'storedaf'])->name('storeDaf');
+Route::get('registerdaf', [RegisterDafController::class, 'afficherFormulaire'])->name('registerdaf');
+Route::post('/storeDaf', [RegisterDafController::class , 'enregistrer'])->name('storeDaf');
+
+// Route::post('registerdaf', [ControllersRegisterDafController::class, 'enregistrer'])->name('storeDaf');
 
 Route::resources([
     'roles' => RoleController::class,

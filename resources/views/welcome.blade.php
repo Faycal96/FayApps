@@ -192,7 +192,7 @@
         <script>
             setTimeout(function() {
                 document.querySelector('.alert.alert-success').style.display = 'none';
-            }, 5000); // Le message flash disparaîtra après 5 secondes (5000 millisecondes)
+            }, 6000); // Le message flash disparaîtra après 5 secondes (5000 millisecondes)
         </script>
     @endif</p>
 

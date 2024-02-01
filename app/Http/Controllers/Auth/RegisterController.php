@@ -73,12 +73,20 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'telephone' =>$data['telephone'],
             'password' => Hash::make($data['password']),
         ]);
 
         if (!$user) {
             return redirect()->back()->withInput()->withErrors(['error' => 'Erreur lors de la création de l\'utilisateur.']);
         }
+
+        $user['typeUtilisateur'] = "Agence";
+        $user['name'] = $data['name'];
+
+        //  dd($user['name']);
+
+        $user->save();
 
         AgenceAcredite::create([
             'user_id' => $user->id,
@@ -93,29 +101,29 @@ class RegisterController extends Controller
 
     }
 
-    protected function createdaf(array $data)
-    {
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+    // protected function createdaf(array $data)
+    // {
+    //     $user = User::create([
+    //         'name' => $data['name'],
+    //         'email' => $data['email'],
+    //         'password' => Hash::make($data['password']),
+    //     ]);
 
-        if (!$user) {
-            return redirect()->back()->withInput()->withErrors(['error' => 'Erreur lors de la création de l\'utilisateur.']);
-        }
+    //     if (!$user) {
+    //         return redirect()->back()->withInput()->withErrors(['error' => 'Erreur lors de la création de l\'utilisateur.']);
+    //     }
 
-        AgenceAcredite::create([
-            'user_id' => $user->id,
-            'nomAgence' => $data['name'],
-            'adresseAgence' => $data['adresseAgence'],
-            'numeroIfu' => $data['numeroIfu'],
-            'dateCreationAgence' => $data['dateCreationAgence'],
-            // ... autres champs de l'agence
-        ]);
+    //     AgenceAcredite::create([
+    //         'user_id' => $user->id,
+    //         'nomAgence' => $data['name'],
+    //         'adresseAgence' => $data['adresseAgence'],
+    //         'numeroIfu' => $data['numeroIfu'],
+    //         'dateCreationAgence' => $data['dateCreationAgence'],
+    //         // ... autres champs de l'agence
+    //     ]);
 
-        return view('welcome')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
+    //     return view('welcome')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
 
-    }
+    // }
 
 }
