@@ -33,7 +33,7 @@ class UserController extends Controller
     public function index(): View
     {
         return view('users.index', [
-            'users' => User::latest('id')->paginate(3)
+            'users' => User::latest('id')->paginate(10000000000)
         ]);
     }
 
@@ -43,7 +43,7 @@ class UserController extends Controller
     public function create(): View
     {
         return view('users.create', [
-            'roles' => Role::pluck('name')->all()
+            'roles' => Role::pluck('name')->all() 
         ]);
     }
     // public function createdaf(): View
@@ -152,4 +152,13 @@ class UserController extends Controller
         return redirect()->route('users.index')
                 ->withSuccess('User is deleted successfully.');
     }
+
+    public function toggleStatus(User $user)
+{
+    $user->is_active = !$user->is_active;
+    $user->save();
+
+    return back()->with('success', 'L\'état de l\'utilisateur a été mis à jour avec succès.');
+}
+
 }

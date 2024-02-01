@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -96,6 +97,13 @@ class RegisterController extends Controller
             'dateCreationAgence' => $data['dateCreationAgence'],
             // ... autres champs de l'agence
         ]);
+
+        $clientRole = Role::where('name', 'Agence Voyage')->first();
+        if ($clientRole) {
+            $user->roles()->attach($clientRole);
+        }
+    
+        return $user;
 
         return view('welcome')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
 
