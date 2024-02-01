@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterDafController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -26,6 +27,9 @@ Auth::routes();
 Route::get('/admin', [HomeController::class, 'index'])->name('backend.index');
 Route::get('/demande', [HomeController::class, 'demande'])->name('backend.demande');
 Route::post('/users/{user}/validate', [UserController::class, 'valider'])->name('users.activate');
+
+Route::get('registerdaf', [RegisterDafController::class, 'createdaf'])->name('registerdaf');
+Route::post('registerdaf', [UserController::class, 'storedaf'])->name('storeDaf');
 
 Route::resources([
     'roles' => RoleController::class,

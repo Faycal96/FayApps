@@ -213,7 +213,7 @@
           <div class="col-lg-6 mt-4 mt-lg-0">
             <div class="icon-box">
               <i class="bi bi-binoculars"></i>
-              <h3><a href="{{ route('register') }}">Je suis un agent du Ministère</a></h3>
+              <h3><a href="{{ route('registerdaf') }}">Je suis un agent du Ministère</a></h3>
               <p>cette espace est reservé au DAF des differents Ministère</p>
             </div>
           </div>
