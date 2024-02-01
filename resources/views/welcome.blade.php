@@ -194,7 +194,8 @@
                 document.querySelector('.alert.alert-success').style.display = 'none';
             }, 6000); // Le message flash disparaîtra après 5 secondes (5000 millisecondes)
         </script>
-    @endif</p>
+    @endif
+</p>
 
 
     <!-- ======= Featured Section ======= -->

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\Request;
+
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterDafController extends Controller
 {
