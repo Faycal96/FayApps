@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Spatie\Permission\Models\Role;
 
 class RegisterDafController extends Controller
 {
@@ -55,6 +56,14 @@ class RegisterDafController extends Controller
         //  dd($user['name']);
         $user->save();
 
+        $clientRole = Role::where('name', 'DAF MINISTERE')->first();
+        if ($clientRole) {
+            $user->roles()->attach($clientRole);
+        }
+
+
+
+        // Vous pouvez ajouter d'autres logiques ici si nécessaire
 
         // Redirigez ou affichez une vue
         // return view('welcome')->with('success', 'Votre compte a été créé avec succès et est en attente de validation !!');

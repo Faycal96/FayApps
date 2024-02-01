@@ -111,7 +111,7 @@ class RegisterController extends Controller
 
             $agence->savePdfFile($pdfPath);
         }
-        // $agence->save();
+
 
 
         return view('welcome')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
