@@ -16,6 +16,7 @@
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nom') }}</label>
 
+
                             <div class="col-md-6">
                                 <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror" name="nom" value="{{ old('nom') }}" required autocomplete="nom" autofocus>
 
@@ -44,7 +45,7 @@
                             <label for="matricule" class="col-md-4 col-form-label text-md-end">{{ __('Matricule') }}</label>
 
                             <div class="col-md-6">
-                                <input id="matricule" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('matricule') }}" required autocomplete="matricule" autofocus>
+                                <input id="matricule" type="text" class="form-control @error('name') is-invalid @enderror" name="matricule" value="{{ old('matricule') }}" required autocomplete="matricule" autofocus>
 
                                 @error('matricule')
                                     <span class="invalid-feedback" role="alert">

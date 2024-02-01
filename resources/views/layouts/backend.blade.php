@@ -50,19 +50,6 @@
     <!-- summernote -->
 
     <link href="{{ asset('backend/assets/plugins/summernote/summernote-bs4.min.css') }}" rel="stylesheet">
-
-    <link href="{{ asset('backend/assets/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet">
-    <link href="{{ asset('backend/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('backend/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}"
-        rel="stylesheet">
-    <link href="{{ asset('backend/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}"
-        rel="stylesheet">
-    <link href="{{ asset('backend/assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('backend/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}"
-        rel="stylesheet">
-    <link href="{{ asset('backend/assets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
-
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -105,7 +92,7 @@
                     <li><a class="nav-link" href="{{ route('roles.index') }}">Gestion Roles</a></li>
                 @endcanany
                 @canany(['create-user', 'edit-user', 'delete-user'])
-                    <li><a class="nav-link" href="{{ route('users.index') }}">Gestion Users</a></li>
+                    <li><a class="nav-link" href="{{ route('users.index') }}">Gestion des utilisateurs</a></li>
                 @endcanany
       
                 <li class="nav-item dropdown">
@@ -170,8 +157,7 @@
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         Brad Diesel
-                                        <span class="float-right text-sm text-danger"><i
-                                                class="fas fa-star"></i></span>
+                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                                     </h3>
                                     <p class="text-sm">Call me whenever you can...</p>
                                     <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
@@ -284,7 +270,7 @@
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                     </div>
                 </div>
 
@@ -297,26 +283,29 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-
+               @canany(['create-role', 'edit-role', 'delete-role'])
                         <li class="nav-item">
                             <a href="pages/calendar.html" class="nav-link">
                                 <i class="nav-icon far fa-calendar-alt"></i>
                                 <p>
-                                    Gestion des Agences
+                                    Gestion des Roles
                                     <span class="badge badge-info right">2</span>
                                 </p>
                             </a>
                         </li>
-
+                        @endcanany
+                       
+                    @canany(['create-user', 'edit-user', 'delete-user'])
                         <li class="nav-item">
-                            <a href="pages/calendar.html" class="nav-link">
-                                <i class="nav-icon far fa-calendar-alt"></i>
+                            <a href="{{ route('users.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Gestion des DAF
+                                Gestion des utilisateur
                                     <span class="badge badge-info right">2</span>
                                 </p>
                             </a>
-                        </li>
+                        </li> 
+                        @endcanany
 
                         {{-- <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
