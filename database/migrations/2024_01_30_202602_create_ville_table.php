@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ville', function (Blueprint $table) {
+        Schema::create('villes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pays_id');
             $table->foreign('pays_id')->references('id')->on('pays')->onDelete('cascade')->onUpdate('cascade');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ville');
+        Schema::dropIfExists('villes');
     }
 };

@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterDafController;
+use App\Http\Controllers\DemandeBilletController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OffreController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -25,8 +27,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/admin', [HomeController::class, 'index'])->name('backend.index');
-Route::get('/demande', [HomeController::class, 'demande'])->name('backend.demande');
+//Route::get('/demande', [DemandeBilletController::class, 'demande'])->name('backend.demande');
 Route::post('/users/{user}/validate', [UserController::class, 'valider'])->name('users.activate');
+//Route::get('/offre', [OffreController::class, 'offre'])->name('backend.offre');
 
 Route::get('registerdaf', [RegisterDafController::class, 'createdaf'])->name('registerdaf');
 Route::post('registerdaf', [UserController::class, 'storedaf'])->name('storeDaf');
@@ -34,5 +37,7 @@ Route::post('registerdaf', [UserController::class, 'storedaf'])->name('storeDaf'
 Route::resources([
     'roles' => RoleController::class,
     'users' => UserController::class,
+    'demandes' => DemandeBilletController::class,
+    'offres' => OffreController::class,
 
 ]);
