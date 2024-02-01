@@ -9,7 +9,7 @@ class AgenceAcredite extends Model
 {
     use HasFactory;
 
-    protected $table = 'agence_acredite';
+    // protected $table = 'agence_acredite';
 
     protected $guarded = [
         'id'

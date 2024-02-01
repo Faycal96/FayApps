@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Models\Ministere;
 use Illuminate\Http\Request;
 
 use App\Models\User;
@@ -14,20 +15,15 @@ class RegisterDafController extends Controller
 {
     public function afficherFormulaire()
     {
-        return view('auth.registerDaf');
+
+        $ministeres = Ministere::all(); // Vous pouvez ajuster ceci en fonction de votre logique
+
+        return view('auth.registerDaf', ['ministeres' => $ministeres]);
     }
 
 
     public function enregistrer(Request $request)
     {
-        // dd('La méthode enregistrer est appelée.');
-        // Vérifiez si l'email existe déjà
-        // $existingUser = User::where('email', $request->input('email'))->first();
-
-        // if ($existingUser) {
-        //     // L'email existe déjà, renvoyez une erreur ou gérez-le selon vos besoins
-        //     return redirect()->back()->withErrors(['email' => 'Cet email est déjà enregistré.']);
-        // }
 
         // Utilisez la méthode validate() sur l'instance de Request
         $request->validate([
@@ -47,6 +43,7 @@ class RegisterDafController extends Controller
             'prenom' => $request->input('prenom'),
             'matricule' => $request->input('matricule'),
             'telephone' => $request->input('telephone'),
+            'id_m' =>$request->input('id_m'),
             'typeUtilisateur' => $request->input('typeUtilisateur'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
@@ -54,6 +51,7 @@ class RegisterDafController extends Controller
 
         $user['typeUtilisateur']= "DAF";
         $user['name']= $request->prenom.' '.$request->nom;
+        $user['id_m']= $request->id_m;
         //  dd($user['name']);
         $user->save();
 

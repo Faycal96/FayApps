@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h3 class="text-center mt-3 mb-3">Inscription d'un agent du ministere </a></h3>
+            <h3 class="text-center mt-3 mb-3">Inscription d'un Agent du ministere </a></h3>
             <div class="card">
 
                 <div class="card-header">{{ __('Register') }}</div>
@@ -18,7 +18,7 @@
 
 
                             <div class="col-md-6">
-                                <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror" name="nom" value="{{ old('nom') }}" required autocomplete="nom" autofocus>
+                                <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror  " name="nom" value="{{ old('nom') }}" required autocomplete="nom" autofocus>
 
                                 @error('nom')
                                     <span class="invalid-feedback" role="alert">
@@ -39,6 +39,23 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="ministere" class="col-md-4 col-form-label text-md-end">{{ __('Ministeres') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="id_m" required id="selectMultiplePays"
+                                    class="form-select ">
+                                    {{-- <input type="text" placeholder="filtrer ici"> --}}
+                                    <option value="">Veuillez choisir un Ministere
+                                    </option>
+                                    @foreach ( $ministeres as $ministere)
+                                    <option value="{{ $ministere->id }}">{{$ministere->libelleLong}}</option>
+                                    @endforeach
+                            </select>
+
                             </div>
                         </div>
                         <div class="row mb-3">

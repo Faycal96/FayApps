@@ -24,6 +24,6 @@ class MinisteresTableSeeder extends Seeder
 
         ];
 
-        DB::table('ministere')->insert($ministeres);
+        DB::table('ministeres')->insert($ministeres);
     }
 };
