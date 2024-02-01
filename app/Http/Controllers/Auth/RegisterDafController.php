@@ -64,7 +64,7 @@ class RegisterDafController extends Controller
             // ... autres champs de l'agence
         ]);
 
-        return view('welcome')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
+        return view('/')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
 
     }
 
@@ -87,7 +87,7 @@ protected function storeDaf(StoreUserRequest $request)
         'password' => Hash::make($request->input('password')),
     ]);
 
-    return view('welcome')->with('success', 'Votre compte a été créé avec succès et est en attente de validation !!');
+    return view('/')->with('success', 'Votre compte a été créé avec succès et est en attente de validation !!');
 }
 
 

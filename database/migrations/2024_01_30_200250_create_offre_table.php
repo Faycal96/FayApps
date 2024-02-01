@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -24,8 +25,8 @@ return new class extends Migration
             $table->double('minPrix')->nullable();
             $table->double('maxPrix')->nullable();
             $table->string('description')->nullable();
-            $table->date('dateDebutValidite')->default(now);
-            $table->date('dateFinValidite')->default(now);
+            $table->date('dateDebutValidite')->default(Carbon::now());
+            $table->date('dateFinValidite')->default(Carbon::now());
             $table->boolean('etat')->default(true);
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();

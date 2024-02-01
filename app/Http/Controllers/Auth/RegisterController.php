@@ -89,7 +89,7 @@ class RegisterController extends Controller
             // ... autres champs de l'agence
         ]);
 
-        return view('welcome')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
+        return view('/')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
 
     }
 

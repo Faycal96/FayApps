@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -18,8 +19,9 @@ return new class extends Migration
             $table->string('code_demande')->nullable();
             $table->string('lieuDepart')->nullable();
             $table->string('lieuArrive')->nullable();
-            $table->date('dateDepart')->default(now);
-            $table->date('dateArrive')->default(now);
+            $table->date('dateDepart')->default(Carbon::now());
+           
+            $table->date('dateArrive')->default(Carbon::now());
             $table->string('numeroOrdreMission')->nullable();
             $table->integer('duree')->nullable();
             $table->integer('description')->nullable();
