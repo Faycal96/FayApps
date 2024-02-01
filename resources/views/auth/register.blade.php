@@ -10,7 +10,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nom de l\'Agence') }}</label>
@@ -44,12 +44,12 @@
 
 
                         <div class="row mb-3">
-                            <label for="adresseAgence" class="col-md-4 col-form-label text-md-end">{{ __('adresse Agence') }}</label>
+                            <label for="adressAgence" class="col-md-4 col-form-label text-md-end">{{ __('adresse Agence') }}</label>
 
                             <div class="col-md-6">
-                                <input id="adresseAgence" type="text" class="form-control @error('adresseAgence') is-invalid @enderror" name="adresseAgence" value="{{ old('adresseAgence') }}" required autocomplete="adresseAgence" autofocus>
+                                <input id="adressAgence" type="text" class="form-control @error('adressAgence') is-invalid @enderror" name="adressAgence" value="{{ old('adressAgence') }}" required autocomplete="adressAgence" autofocus>
 
-                                @error('adresseAgence')
+                                @error('adressAgence')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -102,6 +102,11 @@
                             <div class="col-md-6">
                                 <input id="rccm" type="file" class="form-control @error('rccm') is-invalid @enderror" name="rccm" value="{{ old('rccm') }}" required autocomplete="rccm">
 
+                                @error('rccm')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                             </div>
                         </div>
 

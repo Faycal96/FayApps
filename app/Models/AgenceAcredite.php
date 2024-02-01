@@ -17,9 +17,25 @@ class AgenceAcredite extends Model
         'id'
     ];
 
+    protected $fillable = [
+        'user_id',
+        'numeroIfu',
+        'nomAgence',
+        'adressAgence',
+        'rccm',
+        'dateCreationAgence',
+    ];
+
 
     public function user()
     {
         return $this->hasOne(User::class,'id','user_id');
+    }
+
+    public function savePdfFile($pdfFilePath)
+    {
+        // Mettez à jour le chemin du fichier PDF dans le modèle
+        $this->rccm = $pdfFilePath;
+        $this->save();
     }
 }
