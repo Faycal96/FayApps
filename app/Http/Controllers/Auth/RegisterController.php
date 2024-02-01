@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -57,8 +58,9 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'adresseAgence' =>['required', 'string', 'max:255'],
+            'adressAgence' =>['required', 'string', 'max:255'],
             'numeroIfu' =>['required', 'string', 'max:255'],
+            // 'rccm' => 'required|mimes:pdf|max:10240',
         ]);
     }
 
@@ -88,42 +90,32 @@ class RegisterController extends Controller
 
         $user->save();
 
-        AgenceAcredite::create([
+      $agence =  AgenceAcredite::create([
             'user_id' => $user->id,
             'nomAgence' => $data['name'],
-            'adresseAgence' => $data['adresseAgence'],
+            'adressAgence' => $data['adressAgence'],
             'numeroIfu' => $data['numeroIfu'],
             'dateCreationAgence' => $data['dateCreationAgence'],
+            'rccm' =>$data['rccm'],
             // ... autres champs de l'agence
         ]);
+
+
+
+        // Enregistrez le fichier PDF
+        if ($data['rccm'] && is_uploaded_file($data['rccm'])) {
+            $pdfFile = $data['rccm'];
+            $pdfFileName = time() . '_' . $pdfFile->getClientOriginalName();
+            $pdfPath = $pdfFile->storeAs('pdf_files', $pdfFileName);
+
+            $agence->savePdfFile($pdfPath);
+        }
+        // $agence->save();
+
 
         return view('welcome')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
 
     }
 
-    // protected function createdaf(array $data)
-    // {
-    //     $user = User::create([
-    //         'name' => $data['name'],
-    //         'email' => $data['email'],
-    //         'password' => Hash::make($data['password']),
-    //     ]);
-
-    //     if (!$user) {
-    //         return redirect()->back()->withInput()->withErrors(['error' => 'Erreur lors de la création de l\'utilisateur.']);
-    //     }
-
-    //     AgenceAcredite::create([
-    //         'user_id' => $user->id,
-    //         'nomAgence' => $data['name'],
-    //         'adresseAgence' => $data['adresseAgence'],
-    //         'numeroIfu' => $data['numeroIfu'],
-    //         'dateCreationAgence' => $data['dateCreationAgence'],
-    //         // ... autres champs de l'agence
-    //     ]);
-
-    //     return view('welcome')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
-
-    // }
 
 }

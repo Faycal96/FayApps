@@ -55,10 +55,10 @@ class RegisterDafController extends Controller
         //  dd($user['name']);
         $user->save();
 
-        // Vous pouvez ajouter d'autres logiques ici si nécessaire
 
         // Redirigez ou affichez une vue
-        return view('welcome')->with('success', 'Votre compte a été créé avec succès et est en attente de validation !!');
+        // return view('welcome')->with('success', 'Votre compte a été créé avec succès et est en attente de validation !!');
+        return redirect()->route('welcome')->with('success', 'Votre compte a été créé avec succès et est en attente de validation !!');
 
         // return redirect($this->redirectPath())->with('success', 'Votre compte a été Créee avec success et en attente de Validation !! !');
     }
