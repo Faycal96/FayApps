@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOffreRequest;
 use App\Http\Requests\UpdateOffreRequest;
+use App\Models\DemandeBillet;
 use App\Models\Offre;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,6 +31,17 @@ class OffreController extends Controller
     public function create()
     {
         //
+        Auth::id();
+        $demande_billets = DemandeBillet::where('etat', '=', false)
+            //where('user_id', '=', Auth::id())
+            ->get();
+
+        // dd($demande_billets);
+
+        //faire un tableau avec bouton faire une offre
+        //ppartir directement sur la page et selectionner la demande concernée pour l'offre
+        // toutes les informations enregistrees
+
         return view('backend.offres.create');
     }
 
