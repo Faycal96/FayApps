@@ -8,7 +8,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>{{ $totalUsers }}</h3>
 
                     <p>Total des utilisateurs</p>
                 </div>
@@ -23,7 +23,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                    <h3>{{ $usersWithoutAgence }}<sup style="font-size: 20px"></sup></h3>
 
                     <p>Total DAF</p>
                 </div>
@@ -38,7 +38,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>44</h3>
+                    <h3>{{ $usersWithAgence }}</h3>
 
                     <p>Total Agence</p>
                 </div>
@@ -53,7 +53,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>65</h3>
+                    <h3>{{ $disabledUsers }}</h3>
 
                     <p>Utilisateurs desactivés</p>
                 </div>
@@ -90,53 +90,111 @@
                             @forelse ($users as $user)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $user->created_at }}</td>
+                                <td>{{ $user->created_at->translatedFormat('d M Y à H:i:s') }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
 
                                     @if($user->is_active == 1)
                                     <span class="badge bg-success">Activé</span>
-                            @else 
+                            @else
                             <span class="badge bg-danger">Desactivé</span>
 @endif
                                 </td>
 
                                 <td>
                                     @forelse ($user->getRoleNames() as $role)
-                                        <span class="badge bg-primary">{{ $role }}</span>
+                                        {{ $role }}
                                     @empty
                                         <span>N/A</span>
                                     @endforelse
                                 </td>
                                 <td>
                                     <!-- Bouton de déclenchement pour le modal de détails -->
-                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#simpleDetailModal{{ $user->id }}">
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#simpleDetailModal{{ $user->id }}">
                                                 <i class="bi bi-eye"></i> Détails
                                             </button>
                                             <!-- Modal de détails -->
                                            <!-- Modal de détails simplifié -->
-<div class="modal fade" id="simpleDetailModal{{ $user->id }}" tabindex="-1" aria-labelledby="simpleDetailModalLabel{{ $user->id }}" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #f8f9fa; border-bottom: 1px solid #e3e6f0;">
-                <h5 class="modal-title" id="simpleDetailModalLabel{{ $user->id }}">Détails de l'utilisateur</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="background-color: #ffffff;">
-                <p><strong>Nom :</strong> {{ $user->nom }}</p>
-                <p><strong>Prénom :</strong> {{ $user->prenom }}</p>
-                <p><strong>Email :</strong> {{ $user->email }}</p>
-                <p><strong>Téléphone :</strong> {{ $user->telephone }}</p>
-                <!-- Ajoutez d'autres détails ici selon le besoin -->
-            </div>
-            <div class="modal-footer" style="background-color: #f8f9fa; border-top: 1px solid #e3e6f0;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-            </div>
-        </div>
-    </div>
-</div>
+                                           <div class="modal fade" id="simpleDetailModal{{ $user->id }}" tabindex="-1" aria-labelledby="simpleDetailModalLabel{{ $user->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Augmentation de la taille avec modal-lg -->
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-gray-dark text-white">
+                                                        <h5 class="modal-title" id="simpleDetailModalLabel{{ $user->id }}">Détails de l'Utilisateur</h5>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body bg-light">
+                                                        <div class="row">
+                                                           
+                                                            @if ($user->agenceAcredite)
+                                                             <!-- Nom et Email -->
+                                                             <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-person-fill me-2"></i><strong>Nom :</strong> {{ $user->name }}
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-envelope-fill me-2"></i><strong>Email :</strong> {{ $user->email }}
+                                                            </div>
+                                        
+                                                            <!-- Téléphone et Adresse de l'Agence (si applicable) -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-telephone-fill me-2"></i><strong>Téléphone :</strong> {{ $user->telephone }}
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-building me-2"></i><strong>Adresse de l'Agence :</strong> {{ $user->agenceAcredite->adressAgence }}
+                                                            </div>
+                                        
+                                                            <!-- Numéro IFU et Date de Création de l'Agence -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-hash me-2"></i><strong>Numéro IFU :</strong> {{ $user->agenceAcredite->numeroIfu }}
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-calendar-event-fill me-2"></i><strong>Date de Création de l'Agence :</strong> {{ $user->agenceAcredite->dateCreationAgence }}
+                                                            </div>
+                                        
+                                                            <!-- RCCM -->
+                                                            <div class="col-12 mb-3">
+                                                                <i class="bi bi-file-earmark-pdf-fill me-2"></i><strong>RCCM :</strong> 
+                                                                <a href="{{ asset('storage/' . str_replace('public/', '', $user->agenceAcredite->rccm)) }}" class="btn btn-info btn-sm" target="_blank">
+                                                                    <i class="bi bi-download"></i> Télécharger RCCM
+                                                                </a>
+                                                            </div>
+                                                            @else
+                                                             <!-- Nom et Email -->
+                                                             <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-person-fill me-2"></i><strong>Nom :</strong> {{ $user->name }}
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-envelope-fill me-2"></i><strong>Email :</strong> {{ $user->email }}
+                                                            </div>
+                                        
+                                                            <!-- Téléphone et Adresse de l'Agence (si applicable) -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-telephone-fill me-2"></i><strong>Téléphone :</strong> {{ $user->telephone }}
+                                                            </div>
+                                                           <!-- Matricule -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-person-badge-fill me-2"></i><strong>Matricule :</strong> {{ $user->matricule }}
+                                                            </div>
 
+                                                            <!-- Ministère -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-building me-2"></i><strong>Ministère :
+                                                                @foreach ($ministeres as $min)
+                                                                    
+                                                                </strong> {{ $user->id_m==$min->id ? $min->libelleLong : '' }}
+                                                                @endforeach
+                                                            </div>
+
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer bg-dark-primary">
+                                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Fermer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                 
 
 
                                     @can('edit-user')
@@ -145,7 +203,7 @@
                                         <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#deactivateUserModal{{ $user->id }}">
                                             <i class="bi bi-toggle-off"></i> Désactiver
                                         </button>
-                                
+
                                         <!-- Modal de désactivation -->
                                         <div class="modal fade" id="deactivateUserModal{{ $user->id }}" tabindex="-1" aria-labelledby="deactivateUserModalLabel{{ $user->id }}" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -202,7 +260,7 @@
     @endif
 @endcan
 
-                                    
+
 @can('delete-user')
 <!-- Bouton de déclenchement -->
 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUserModal{{ $user->id }}">
@@ -233,7 +291,7 @@
 </div>
 @endcan
 
-                                   
+
                                 </td>
                             </tr>
                             @empty
@@ -242,8 +300,8 @@
                             </tr>
                             @endforelse
                         </tbody>
-                        
-                      
+
+
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -255,5 +313,5 @@
     <!-- /.row -->
 </div><!-- /.container-fluid -->
 
-    
+
 @endsection

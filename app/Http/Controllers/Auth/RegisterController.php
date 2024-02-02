@@ -107,14 +107,18 @@ class RegisterController extends Controller
         if ($data['rccm'] && is_uploaded_file($data['rccm'])) {
             $pdfFile = $data['rccm'];
             $pdfFileName = time() . '_' . $pdfFile->getClientOriginalName();
-            $pdfPath = $pdfFile->storeAs('pdf_files', $pdfFileName);
+            $pdfPath = $pdfFile->storeAs('public/pdf_files', $pdfFileName);
 
             $agence->savePdfFile($pdfPath);
         }
+        $clientRole = Role::where('name', 'Agence Voyage')->first();
+        if ($clientRole) {
+            $user->roles()->attach($clientRole);
+        }
 
+        $user->notify(new \App\Notifications\userNotification());
 
-
-        return view('welcome')->with('success', 'Votre compte a été Créee qvec success et en attente de Validation !!');
+        return view('welcome')->with('success', 'Votre compte a été Créee avec success et en attente de Validation !!');
 
     }
 

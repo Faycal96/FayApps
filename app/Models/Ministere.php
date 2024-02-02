@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Ministere extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'libelleCourt',
+        'libelleLong',
+        
+    ];
+   
+    
+
 }

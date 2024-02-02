@@ -54,7 +54,7 @@
                                     @foreach ( $ministeres as $ministere)
                                     <option value="{{ $ministere->id }}">{{$ministere->libelleLong}}</option>
                                     @endforeach
-                            </select>
+                            </select> 
 
                             </div>
                         </div>

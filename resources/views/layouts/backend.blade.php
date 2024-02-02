@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>billetAvion</title>
 
-    
+
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    
-    
+
+
         <link rel="dns-prefetch" href="//fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    
+
         <!-- Font Awesome -->
 
 
@@ -87,8 +87,8 @@
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
                 @endif
-      
-      
+
+
             @else
                 @canany(['create-role', 'edit-role', 'delete-role'])
                     <li><a class="nav-link" href="{{ route('roles.index') }}">Gestion Roles</a></li>
@@ -96,26 +96,26 @@
                 @canany(['create-user', 'edit-user', 'delete-user'])
                     <li><a class="nav-link" href="{{ route('users.index') }}">Gestion des utilisateurs</a></li>
                 @endcanany
-      
+
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
                     </a>
-      
+
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
-      
+
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
                     </div>
                 </li>
             @endguest
-      
+
 
             </ul>
 
@@ -296,7 +296,7 @@
                             </a>
                         </li>
                         @endcanany
-                       
+
                     @canany(['create-user', 'edit-user', 'delete-user'])
                         <li class="nav-item">
                             <a href="{{ route('users.index') }}" class="nav-link">
@@ -306,7 +306,7 @@
                                     <span class="badge badge-info right">2</span>
                                 </p>
                             </a>
-                        </li> 
+                        </li>
                         @endcanany
 
                         {{-- <li class="nav-item menu-open">
@@ -473,7 +473,7 @@
             });
         });
     </script>
-    
+
 </body>
 
 </html>
