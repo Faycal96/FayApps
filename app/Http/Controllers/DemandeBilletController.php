@@ -49,8 +49,6 @@ class DemandeBilletController extends Controller
             $code = 'BF-MTDPCE-OM-001';
         }
 
-
-
         $dateDepart = $request->dateDepart;
         $dateArrivee = $request->dateArrivee;
         // dd((Carbon::now()->format('d/m/Y')));
