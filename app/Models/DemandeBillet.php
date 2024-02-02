@@ -9,7 +9,7 @@ class DemandeBillet extends Model
 {
     use HasFactory;
 
-    protected $table = 'demande_billet';
+    // protected $table = 'demande_billet';
 
     // protected $fillable = [
     //     'name', 'address', 'type',

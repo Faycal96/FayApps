@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDemandeBilletRequest;
 use App\Http\Requests\UpdateDemandeBilletRequest;
 use App\Models\DemandeBillet;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class DemandeBilletController extends Controller
@@ -45,15 +46,17 @@ class DemandeBilletController extends Controller
             $code = 'BF-MTDPCE-OM-001';
         }
 
+
+
         $dateDepart = $request->dateDepart;
         $dateArrivee = $request->dateArrivee;
+        // dd((Carbon::now()->format('d/m/Y')));
+        // if ($dateDepart->lt(Carbon::now()->format('d/m/Y'))) {
 
-        if ($dateDepart->lt(now())) {
+        // }
+        // if ($dateArrivee->lt($dateDepart)) {
 
-        }
-        if ($dateArrivee->lt($dateDepart)) {
-
-        }
+        // }
         /*
         $request->merge(['dateDepart' => $dateDepart]);
         $request->merge(['dateArrivee' => $dateArrivee]);

@@ -97,7 +97,7 @@
 
                                     @if($user->is_active == 1)
                                     <span class="badge bg-success">Activé</span>
-                            @else 
+                            @else
                             <span class="badge bg-danger">Desactivé</span>
 @endif
                                 </td>
@@ -145,7 +145,7 @@
                                         <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#deactivateUserModal{{ $user->id }}">
                                             <i class="bi bi-toggle-off"></i> Désactiver
                                         </button>
-                                
+
                                         <!-- Modal de désactivation -->
                                         <div class="modal fade" id="deactivateUserModal{{ $user->id }}" tabindex="-1" aria-labelledby="deactivateUserModalLabel{{ $user->id }}" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -202,7 +202,7 @@
     @endif
 @endcan
 
-                                    
+
 @can('delete-user')
 <!-- Bouton de déclenchement -->
 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUserModal{{ $user->id }}">
@@ -233,7 +233,7 @@
 </div>
 @endcan
 
-                                   
+
                                 </td>
                             </tr>
                             @empty
@@ -242,8 +242,8 @@
                             </tr>
                             @endforelse
                         </tbody>
-                        
-                      
+
+
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -255,5 +255,5 @@
     <!-- /.row -->
 </div><!-- /.container-fluid -->
 
-    
+
 @endsection
