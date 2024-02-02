@@ -8,7 +8,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>{{ $totalUsers }}</h3>
 
                     <p>Total des utilisateurs</p>
                 </div>
@@ -23,7 +23,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                    <h3>{{ $usersWithoutAgence }}<sup style="font-size: 20px"></sup></h3>
 
                     <p>Total DAF</p>
                 </div>
@@ -38,7 +38,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>44</h3>
+                    <h3>{{ $usersWithAgence }}</h3>
 
                     <p>Total Agence</p>
                 </div>
@@ -53,7 +53,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>65</h3>
+                    <h3>{{ $disabledUsers }}</h3>
 
                     <p>Utilisateurs desactivés</p>
                 </div>
@@ -178,7 +178,11 @@
 
                                                             <!-- Ministère -->
                                                             <div class="col-md-6 mb-3">
-                                                                <i class="bi bi-building me-2"></i><strong>Ministère :</strong> 
+                                                                <i class="bi bi-building me-2"></i><strong>Ministère :
+                                                                @foreach ($ministeres as $min)
+                                                                    
+                                                                </strong> {{ $user->id_m==$min->id ? $min->libelleLong : '' }}
+                                                                @endforeach
                                                             </div>
 
                                                             @endif
