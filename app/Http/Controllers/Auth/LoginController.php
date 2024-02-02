@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -48,5 +49,11 @@ class LoginController extends Controller
         } elseif ($user->hasRole('DAF MINISTERE','Agence Voyage')) {
             return '/'; // Chemin pour les utilisateurs standards
         }
+}
+protected function attemptLogin(Request $request)
+{
+    return $this->guard()->attempt(
+        ['email' => $request->email, 'password' => $request->password, 'is_active' => 1], $request->filled('remember')
+    );
 }
 }

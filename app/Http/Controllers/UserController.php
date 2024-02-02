@@ -17,6 +17,9 @@ class UserController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth', ['except' => ['createdaf']]);
+        $this->middleware('auth', ['except' => ['storedaf']]);
+
         $this->middleware('auth');
         $this->middleware('permission:create-user|edit-user|delete-user', ['only' => ['index','show']]);
         $this->middleware('permission:create-user', ['only' => ['create','store']]);
@@ -30,7 +33,7 @@ class UserController extends Controller
     public function index(): View
     {
         return view('users.index', [
-            'users' => User::latest('id')->paginate(3)
+            'users' => User::latest('id')->paginate(10000000000)
         ]);
     }
 
@@ -40,9 +43,33 @@ class UserController extends Controller
     public function create(): View
     {
         return view('users.create', [
-            'roles' => Role::pluck('name')->all()
+            'roles' => Role::pluck('name')->all() 
         ]);
     }
+    // public function createdaf(): View
+    // {
+    //     return view('registerDaf');
+    // }
+
+
+
+/*
+** store daf
+*/
+
+ public function storedaf(StoreUserRequest $request): RedirectResponse
+    {
+        $input = $request->all();
+        $input['password'] = Hash::make($request->password);
+
+        $user = User::create($input);
+        $user->assignRole($request->roles);
+
+        return redirect()->route('/')
+                ->withSuccess('New user is added successfully.');
+    }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -94,13 +121,13 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $input = $request->all();
- 
+
         if(!empty($request->password)){
             $input['password'] = Hash::make($request->password);
         }else{
             $input = $request->except('password');
         }
-        
+
         $user->update($input);
 
         $user->syncRoles($request->roles);
@@ -125,4 +152,13 @@ class UserController extends Controller
         return redirect()->route('users.index')
                 ->withSuccess('User is deleted successfully.');
     }
+
+    public function toggleStatus(User $user)
+{
+    $user->is_active = !$user->is_active;
+    $user->save();
+
+    return back()->with('success', 'L\'état de l\'utilisateur a été mis à jour avec succès.');
+}
+
 }
