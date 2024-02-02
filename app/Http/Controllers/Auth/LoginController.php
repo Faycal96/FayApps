@@ -45,7 +45,7 @@ class LoginController extends Controller
 
         // Exemple de redirection basée sur le rôle de l'utilisateur
         if ($user->hasRole(['Admin','Super Admin'])) {
-            return '/admin'; // Chemin pour les administrateurs
+            return '/users'; // Chemin pour les administrateurs
         } elseif ($user->hasRole('DAF MINISTERE','Agence Voyage')) {
             return '/'; // Chemin pour les utilisateurs standards
         }
