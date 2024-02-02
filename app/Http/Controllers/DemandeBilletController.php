@@ -15,6 +15,9 @@ class DemandeBilletController extends Controller
     public function index()
     {
         //
+        return view('backend.demandes.index', [
+            'demandes' => DemandeBillet::latest('id')->paginate(10000000000),
+        ]);
     }
 
     /**
@@ -48,12 +51,12 @@ class DemandeBilletController extends Controller
         $dateDepart = $request->dateDepart;
         $dateArrivee = $request->dateArrivee;
 
-        if ($dateDepart->lt(now())) {
+        // if ($dateDepart->lt(now())) {
 
-        }
-        if ($dateArrivee->lt($dateDepart)) {
+        // }
+        // if ($dateArrivee->lt($dateDepart)) {
 
-        }
+        // }
         /*
         $request->merge(['dateDepart' => $dateDepart]);
         $request->merge(['dateArrivee' => $dateArrivee]);
@@ -86,6 +89,10 @@ class DemandeBilletController extends Controller
     public function show(DemandeBillet $demandeBillet)
     {
         //
+
+        return view('backend.demandes.show', [
+            'demande' => $demandeBillet,
+        ]);
     }
 
     /**

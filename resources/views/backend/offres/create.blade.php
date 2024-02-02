@@ -14,7 +14,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-vote-yea"></i></span>
                     </div>
-                    <input type="text" name="code_demande" class="form-control">
+                    <input type="text" name="code_demande" value="{{ $demande }}" class="form-control">
                 </div>
             </div>
             <div class="form-group">

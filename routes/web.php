@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\RegisterDafController;
 use App\Http\Controllers\DemandeBilletController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OffreController;
+use App\Http\Controllers\RegisterDafController;
 use App\Http\Controllers\RegisterDafController as ControllersRegisterDafController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -34,9 +34,12 @@ Route::post('/users/{user}/validate', [UserController::class, 'valider'])->name(
 Route::patch('/users/{user}/activer', [UserController::class, 'activer'])->name('users.toggleStatus');
 Route::patch('/users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
 
+Route::post('/offres/offre/{demande}', [OffreController::class, 'offre'])->name('offres.offre');
+
+Route::patch('/demandes/{demande}/toggleStatus', [DemandeBilletController::class, 'toggleStatus'])->name('demandes.toggleStatus');
 
 Route::get('registerdaf', [RegisterDafController::class, 'afficherFormulaire'])->name('registerdaf');
-Route::post('/storeDaf', [RegisterDafController::class , 'enregistrer'])->name('storeDaf');
+Route::post('/storeDaf', [RegisterDafController::class, 'enregistrer'])->name('storeDaf');
 
 // Route::post('registerdaf', [ControllersRegisterDafController::class, 'enregistrer'])->name('storeDaf');
 

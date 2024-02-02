@@ -15,19 +15,37 @@ class OffreController extends Controller
      */
 
     //faire une offre de prix pour une demande de billet
-    public function offre()
-    {
-        return view('backend.offre');
-    }
 
     public function index()
     {
         //
+        return view('backend.offres.index', [
+            'offres' => Offre::latest('id')->paginate(10000000000),
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
+    public function offre(DemandeBillet $demande)
+    {
+        //
+        dd($demande);
+        // Auth::id();
+        // $demande_billets = DemandeBillet::where('etat', '=', false)
+        //where('user_id', '=', Auth::id())
+
+        //   ->get();
+
+        // dd($demande_billets);
+
+        //faire un tableau avec bouton faire une offre
+        //ppartir directement sur la page et selectionner la demande concernée pour l'offre
+        // toutes les informations enregistrees
+
+        return view('backend.offres.create');
+    }
+
     public function create()
     {
         //
@@ -37,10 +55,6 @@ class OffreController extends Controller
             ->get();
 
         // dd($demande_billets);
-
-        //faire un tableau avec bouton faire une offre
-        //ppartir directement sur la page et selectionner la demande concernée pour l'offre
-        // toutes les informations enregistrees
 
         return view('backend.offres.create');
     }
@@ -65,11 +79,14 @@ class OffreController extends Controller
             $code = 'BF-MTDPCE-OM-001';
         }
 
-        $request->merge(['user_id' => Auth::id()]);
+        //$request->merge(['user_id' => Auth::id()]);
+        $request->merge(['agence_id' => Auth::user()->agence->id]);
         $request->merge(['created_by' => Auth::user()->name]);
         $request->merge(['code_offre' => $code]);
-        $request->merge(['etat' => 'ACTIF']);
+        //$request->merge(['etat' => ]);
 
+        //dd($request);
+        //dd(Auth::user()->agence->id);
         Offre::create($request->all());
 
         return redirect()->route('offres.index')
