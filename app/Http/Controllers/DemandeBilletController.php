@@ -45,10 +45,23 @@ class DemandeBilletController extends Controller
             $code = 'BF-MTDPCE-OM-001';
         }
 
+        $dateDepart = $request->dateDepart;
+        $dateArrivee = $request->dateArrivee;
+
+        if ($dateDepart->lt(now())) {
+
+        }
+        if ($dateArrivee->lt($dateDepart)) {
+
+        }
+        /*
+        $request->merge(['dateDepart' => $dateDepart]);
+        $request->merge(['dateArrivee' => $dateArrivee]);
+        */
         $request->merge(['user_id' => Auth::id()]);
         $request->merge(['created_by' => Auth::user()->name]);
         $request->merge(['code_demande' => $code]);
-        $request->merge(['etat' => 'ACTIF']);
+        //$request->merge(['etat' => 'ACTIF']);
 
         DemandeBillet::create($request->all());
 

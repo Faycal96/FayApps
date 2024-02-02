@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('code_demande')->nullable();
             $table->string('lieuDepart')->nullable();
-            $table->string('lieuArrive')->nullable();
+            $table->string('lieuArrivee')->nullable();
             $table->date('dateDepart')->default(now);
-            $table->date('dateArrive')->default(now);
+            $table->date('dateArrivee')->default(now);
             $table->string('numeroOrdreMission')->nullable();
             $table->integer('duree')->nullable();
             $table->integer('description')->nullable();
