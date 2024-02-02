@@ -60,7 +60,7 @@ class RegisterDafController extends Controller
         if ($clientRole) {
             $user->roles()->attach($clientRole);
         }
-
+        $user->notify(new \App\Notifications\userNotification());
 
 
         // Vous pouvez ajouter d'autres logiques ici si nécessaire

@@ -46,4 +46,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function agenceAcredite()
+{
+    return $this->hasOne(AgenceAcredite::class);
+}
+//  public function ministere()
+//     {
+//         return $this->hasOne(Ministere::class);
+//     }
 }

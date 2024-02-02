@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\AgenceAcredite;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Spatie\Permission\Models\Role;
@@ -32,8 +33,12 @@ class UserController extends Controller
      */
     public function index(): View
     {
+        // Précharger les agences liées à chaque utilisateur, en assumant qu'un utilisateur a au maximum une agence.
+        // Assurez-vous que la relation 'agenceAcredite' est définie dans le modèle User.
+        $users = User::with('agenceAcredite')->latest('id')->paginate(10000000000);
+    
         return view('users.index', [
-            'users' => User::latest('id')->paginate(10000000000)
+            'users' => $users
         ]);
     }
 
@@ -91,6 +96,7 @@ class UserController extends Controller
      */
     public function show(User $user): View
     {
+      
         return view('users.show', [
             'user' => $user
         ]);
@@ -157,6 +163,8 @@ class UserController extends Controller
 {
     $user->is_active = !$user->is_active;
     $user->save();
+    $user->notify(new \App\Notifications\AccountActivated());
+    $user->notify(new \App\Notifications\AccountDeactivated());
 
     return back()->with('success', 'L\'état de l\'utilisateur a été mis à jour avec succès.');
 }
