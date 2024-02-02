@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
@@ -205,7 +205,7 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="icon-box">
-              <i class="bi bi-card-checklist"></i>
+                <i class="bi bi-building"></i>
               <h3><a href="{{ route('register') }}">Je suis une agence acreditée</a></h3>
               <p>Description d'une agence acreditée</p>
             </div>
@@ -213,7 +213,8 @@
 
           <div class="col-lg-6 mt-4 mt-lg-0">
             <div class="icon-box">
-              <i class="bi bi-binoculars"></i>
+              {{-- <i class="bi bi-binoculars"></i> --}}
+              <i class="bi bi-person"></i>
               <h3><a href="{{ route('registerdaf') }}">Je suis un agent du Ministère</a></h3>
               <p>cette espace est reservé au DAF des differents Ministère</p>
             </div>
@@ -391,14 +392,14 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>Eterna</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>AchatBillet</span></strong>.  Tous droit reservés
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Designed by <a href="https://mdenp.com/">MTDPCE</a>
       </div>
     </div>
   </footer><!-- End Footer -->
