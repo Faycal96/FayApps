@@ -93,43 +93,60 @@
                                                     @csrf
                                                     <div class="modal-body">
                                                         <div class="row">
-                                                            {{-- Numero Ordre de Mission et Lieu Départ --}}
                                                             <div class="col-md-6 form-group">
                                                                 <label>Numero Ordre de Mission:</label>
-                                                                <input type="text" name="numeroOrdreMission" class="form-control">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+                                                                    <input type="text" name="numeroOrdreMission" class="form-control">
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-6 form-group">
                                                                 <label>Lieu Départ:</label>
-                                                                <input type="text" name="lieuDepart" class="form-control">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                                                    <input type="text" name="lieuDepart" class="form-control">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            {{-- Lieu Arrivée et Date Départ --}}
                                                             <div class="col-md-6 form-group">
                                                                 <label>Lieu Arrivée:</label>
-                                                                <input type="text" name="lieuArrivee" class="form-control">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                                                    <input type="text" name="lieuArrivee" class="form-control">
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-6 form-group">
                                                                 <label>Date Départ:</label>
-                                                                <input type="date" name="dateDepart" class="form-control">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                                                    <input type="date" name="dateDepart" class="form-control">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            {{-- Date Arrivée et Durée --}}
                                                             <div class="col-md-6 form-group">
                                                                 <label>Date Arrivée:</label>
-                                                                <input type="date" name="dateArrivee" class="form-control">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
+                                                                    <input type="date" name="dateArrivee" class="form-control">
+                                                                </div>
                                                             </div>
                                                             <div class="col-md-6 form-group">
                                                                 <label>Durée:</label>
-                                                                <input type="text" name="duree" class="form-control">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                                                    <input type="text" name="duree" class="form-control">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            {{-- Description du besoin --}}
                                                             <div class="col-12 form-group">
                                                                 <label>Description du besoin:</label>
-                                                                <textarea name="description" class="form-control"></textarea>
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="fas fa-align-left"></i></span>
+                                                                    <textarea name="description" class="form-control"></textarea>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -141,6 +158,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
 
 
                         <table id="example1" class="table table-bordered table-striped">
