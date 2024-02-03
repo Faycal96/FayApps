@@ -9,6 +9,50 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
+  <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+
+  <link rel="dns-prefetch" href="//fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <!-- Font Awesome -->
+
+
+<link href="{{ asset('backend/assets/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+<!-- Tempusdominus Bootstrap 4 -->
+
+<link href="{{ asset('backend/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}"
+  rel="stylesheet">
+<!-- iCheck -->
+
+<link href="{{ asset('backend/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
+<!-- JQVMap -->
+
+<link href="{{ asset('backend/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}"
+  rel="stylesheet">
+<link href="{{ asset('backend/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}"
+  rel="stylesheet">
+<link href="{{ asset('backend/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}"
+  rel="stylesheet">
+
+<!-- Theme style -->
+
+<link href="{{ asset('backend/assets/dist/css/adminlte.min.css') }}" rel="stylesheet">
+<!-- overlayScrollbars -->
+<link href="{{ asset('backend/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}" rel="stylesheet">
+
+<!-- Daterange picker -->
+<link href="{{ asset('backend/assets/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+
+<!-- summernote -->
+
+<link href="{{ asset('backend/assets/plugins/summernote/summernote-bs4.min.css') }}" rel="stylesheet">
+
   <!-- Favicons -->
   <link href="{{ asset('frontend/assets/img/armoirie.png') }}" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
