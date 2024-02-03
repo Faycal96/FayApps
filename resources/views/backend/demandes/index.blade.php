@@ -74,70 +74,73 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                    {{-- Bouton pour ouvrir le modal de création de demande --}}
-<button type="button" class="btn btn-success btn-sm my-2" data-bs-toggle="modal" data-bs-target="#newDemandeModal">
-    <i class="bi bi-plus-circle"></i> Faire une nouvelle demande
-</button>
+                   @canany(['create-demande-billet'])
+                   <button type="button" class="btn btn-success btn-sm my-2" data-bs-toggle="modal" data-bs-target="#newDemandeModal">
+                    <i class="bi bi-plus-circle"></i> Faire une nouvelle demande
+                </button>
+               @endcanany
+                                   
 
-{{-- Modal pour la création d'une nouvelle demande --}}
-<div class="modal fade" id="newDemandeModal" tabindex="-1" aria-labelledby="newDemandeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-gray-dark text-white">
-                <h5 class="modal-title" id="newDemandeModalLabel">Faire une nouvelle demande</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form method="POST" action="{{ route('demandes.store') }}">
-                @csrf
-                <div class="modal-body">
-                    <div class="row">
-                        {{-- Numero Ordre de Mission et Lieu Départ --}}
-                        <div class="col-md-6 form-group">
-                            <label>Numero Ordre de Mission:</label>
-                            <input type="text" name="numeroOrdreMission" class="form-control">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Lieu Départ:</label>
-                            <input type="text" name="lieuDepart" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        {{-- Lieu Arrivée et Date Départ --}}
-                        <div class="col-md-6 form-group">
-                            <label>Lieu Arrivée:</label>
-                            <input type="text" name="lieuArrivee" class="form-control">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Date Départ:</label>
-                            <input type="date" name="dateDepart" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        {{-- Date Arrivée et Durée --}}
-                        <div class="col-md-6 form-group">
-                            <label>Date Arrivée:</label>
-                            <input type="date" name="dateArrivee" class="form-control">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Durée:</label>
-                            <input type="text" name="duree" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        {{-- Description du besoin --}}
-                        <div class="col-12 form-group">
-                            <label>Description du besoin:</label>
-                            <textarea name="description" class="form-control"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+                                    {{-- Modal pour la création d'une nouvelle demande --}}
+                                    <div class="modal fade" id="newDemandeModal" tabindex="-1" aria-labelledby="newDemandeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-gray-dark text-white">
+                                                    <h5 class="modal-title" id="newDemandeModalLabel">Faire une nouvelle demande</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form method="POST" action="{{ route('demandes.store') }}">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            {{-- Numero Ordre de Mission et Lieu Départ --}}
+                                                            <div class="col-md-6 form-group">
+                                                                <label>Numero Ordre de Mission:</label>
+                                                                <input type="text" name="numeroOrdreMission" class="form-control">
+                                                            </div>
+                                                            <div class="col-md-6 form-group">
+                                                                <label>Lieu Départ:</label>
+                                                                <input type="text" name="lieuDepart" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            {{-- Lieu Arrivée et Date Départ --}}
+                                                            <div class="col-md-6 form-group">
+                                                                <label>Lieu Arrivée:</label>
+                                                                <input type="text" name="lieuArrivee" class="form-control">
+                                                            </div>
+                                                            <div class="col-md-6 form-group">
+                                                                <label>Date Départ:</label>
+                                                                <input type="date" name="dateDepart" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            {{-- Date Arrivée et Durée --}}
+                                                            <div class="col-md-6 form-group">
+                                                                <label>Date Arrivée:</label>
+                                                                <input type="date" name="dateArrivee" class="form-control">
+                                                            </div>
+                                                            <div class="col-md-6 form-group">
+                                                                <label>Durée:</label>
+                                                                <input type="text" name="duree" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            {{-- Description du besoin --}}
+                                                            <div class="col-12 form-group">
+                                                                <label>Description du besoin:</label>
+                                                                <textarea name="description" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
 
 
                         <table id="example1" class="table table-bordered table-striped">
@@ -173,29 +176,34 @@
                                                     <i class="bi bi-eye"></i> Détails
                                                 </a>
                                             </button>
-                                            <button type="button" class="btn btn-warning btn-sm">
-                                                <a href="{{ route('offres.offre', $demande) }}">
-                                                    <i class="bi bi-eye"></i> Faire une offre
-                                                </a>
-                                            </button>
+                                            @canany(['create-demande-billet'])
                                             <button type="button" class="btn btn-warning btn-sm">
                                                 <a href="{{ route('demandes.edit', $demande) }}">
                                                     <i class="bi bi-eye"></i> Modifier
                                                 </a>
                                             </button>
+                                        @endcanany
+                                        @canany(['create-demande-billet'])
                                             <button type="button" class="btn btn-warning btn-sm">
                                                 <a href="{{ route('demandes.destroy', $demande) }}">
                                                     <i class="bi bi-eye"></i> Supprimer
                                                 </a>
                                             </button>
+                                        @endcanany
+                                            </button>
+                                           
+                                            
 
 
                                             <!-- Bouton de déclenchement -->
-                                            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#activateOffreModal{{ $demande->id }}">
-                                                <i class="bi bi-toggle-on"></i> Faire offre
-                                            </button>
+                                           
 
+                                            @canany(['propose-demande-billet'])
+                                            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#activateOffreModal{{ $demande->id }}">
+                                            <i class="bi bi-toggle-on"></i> Faire une offre
+                                        </button>
+                                        @endcanany
                                             <!-- Modal d'activation -->
                                             <div class="modal fade" id="activateOffreModal{{ $demande->id }}"
                                                 tabindex="-1" aria-labelledby="activateOffreModalLabel{{ $demande->id }}"
