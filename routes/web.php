@@ -36,6 +36,7 @@ Route::patch('/users/{user}/toggleStatus', [UserController::class, 'toggleStatus
 
 Route::post('/offres/offre/{demande}', [OffreController::class, 'offre'])->name('offres.offre');
 
+Route::patch('/demandes/create', [DemandeBilletController::class, 'create'])->name('create');
 Route::patch('/demandes/{demande}/toggleStatus', [DemandeBilletController::class, 'toggleStatus'])->name('demandes.toggleStatus');
 
 Route::get('registerdaf', [RegisterDafController::class, 'afficherFormulaire'])->name('registerdaf');

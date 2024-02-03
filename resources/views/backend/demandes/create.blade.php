@@ -1,6 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
+<div class="container-fluid">
     <form method="POST" action="{{ route('demandes.store') }}">
 
         @csrf
@@ -82,4 +83,5 @@
             <button type="submit" class="btn btn-primary">Enregistrer</button>
         </div>
     </form>
+</div>
 @endsection

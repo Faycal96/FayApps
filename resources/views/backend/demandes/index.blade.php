@@ -69,10 +69,16 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Gestion des Utilisateurs</h3>
+                        <h3 class="card-title">Gestion des Demandes</h3>
                     </div>
+
                     <!-- /.card-header -->
                     <div class="card-body">
+                        <div class="col-3 offset-7">
+                            <a href="{{ route('create') }}" type="button" class="btn btn-success btn-sm" >
+                                <i class="bi bi-plus bi-4x"></i> Faire une demande
+                            </a>
+                        </div>
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -92,38 +98,40 @@
                                         <td>{{ $demande->id }}</td>
                                         <td>{{ $demande->lieuDepart }}</td>
                                         <td>{{ $demande->lieuArrivee }}</td>
-                                        <td>{{ $demande->DateDepart }}</td>
-                                        <td>{{ $demande->DateArrivee }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($demande->dateDepart)->translatedFormat('d M Y à H:i:s') }}</td>
+                                        {{-- <td>{{ $demande->dateDepart->translatedFormat('d M Y à H:i:s') }}</td> --}}
+                                        <td>{{ \Carbon\Carbon::parse($demande->dateArrivee)->translatedFormat('d M Y à H:i:s') }}</td>
+                                        {{-- <td>{{ $demande->dateArrivee->translatedFormat('d M Y à H:i:s') }}</td> --}}
                                         <td>{{ $demande->numeroOrdreMission }}</td>
                                         <td>{{ $demande->duree }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-warning btn-sm">
-                                                <a href="{{ route('demandes.show', $demande) }}">
+                                            <button type="button" class="btn btn-primary btn-sm">
+                                                <a class="text-white" href="{{ route('demandes.show', $demande) }}">
                                                     <i class="bi bi-eye"></i> Détails
                                                 </a>
                                             </button>
-                                            <button type="button" class="btn btn-warning btn-sm">
+                                            {{-- <button type="button" class="btn btn-warning btn-sm">
                                                 <a href="{{ route('offres.offre', $demande) }}">
                                                     <i class="bi bi-eye"></i> Faire une offre
                                                 </a>
-                                            </button>
+                                            </button> --}}
                                             <button type="button" class="btn btn-warning btn-sm">
-                                                <a href="{{ route('demandes.edit', $demande) }}">
-                                                    <i class="bi bi-eye"></i> Modifier
+                                                <a class="text-white" href="{{ route('demandes.edit', $demande) }}">
+                                                    <i class="bi bi-edit"></i> Modifier
                                                 </a>
                                             </button>
-                                            <button type="button" class="btn btn-warning btn-sm">
-                                                <a href="{{ route('demandes.destroy', $demande) }}">
-                                                    <i class="bi bi-eye"></i> Supprimer
+                                            <button type="button" class="btn btn-danger btn-sm text-white">
+                                                <a class="text-white" href="{{ route('demandes.destroy', $demande) }}">
+                                                    <i class="bi bi-x"></i> Supprimer
                                                 </a>
                                             </button>
 
 
                                             <!-- Bouton de déclenchement -->
-                                            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                            {{-- <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
                                                 data-bs-target="#activateOffreModal{{ $demande->id }}">
                                                 <i class="bi bi-toggle-on"></i> Faire offre
-                                            </button>
+                                            </button> --}}
 
                                             <!-- Modal d'activation -->
                                             <div class="modal fade" id="activateOffreModal{{ $demande->id }}"
