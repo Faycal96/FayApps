@@ -52,7 +52,7 @@ class LoginController extends Controller
         elseif ($user->hasRole('Agence Voyage')) {
             return '/offres'; // Chemin pour les utilisateurs standards
         }
-        
+
 }
 protected function attemptLogin(Request $request)
 {
