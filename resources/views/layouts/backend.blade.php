@@ -109,7 +109,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
@@ -118,6 +118,7 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
+
                     </div>
                 </li>
             @endguest
@@ -313,9 +314,9 @@
                             </a>
                         </li>
                         @endcanany
-                        
-                   
-                  
+
+
+
                     @canany(['create-user', 'edit-user', 'delete-user'])
                         <li class="nav-item">
                             <a href="{{ route('users.index') }}" class="nav-link">
