@@ -90,6 +90,10 @@ class DemandeBilletController extends Controller
     public function show(DemandeBillet $demandeBillet)
     {
         //
+        //dd($demandeBillet);
+
+        //dd(DemandeBillet::join('offres', 'demande_billets.id', '=', 'offres.demande_id')->where('demande_billets.id', 'like', $demandeBillet)->max('prixBillet'));
+        //dd(DemandeBillet::join('offres', 'demande_billets.id', '=', 'offres.demande_id')->where('demande_billets.id', '=', $demandeBillet)->get());
 
         return view('backend.demandes.show', [
             'demande' => $demandeBillet,
