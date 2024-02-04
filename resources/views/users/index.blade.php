@@ -110,63 +110,91 @@
                                     @endforelse
                                 </td>
                                 <td>
-                                <!-- Bouton de déclenchement pour le modal de détails -->
-<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#userDetailModal{{ $user->id }}">
-    <i class="bi bi-eye"></i> Détails
-</button>
+                                    <!-- Bouton de déclenchement pour le modal de détails -->
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#simpleDetailModal{{ $user->id }}">
+                                                <i class="bi bi-eye"></i> Détails
+                                            </button>
+                                            <!-- Modal de détails -->
+                                           <!-- Modal de détails simplifié -->
+                                           <div class="modal fade" id="simpleDetailModal{{ $user->id }}" tabindex="-1" aria-labelledby="simpleDetailModalLabel{{ $user->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Augmentation de la taille avec modal-lg -->
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-gray-dark text-white">
+                                                        <h5 class="modal-title" id="simpleDetailModalLabel{{ $user->id }}">Détails de l'Utilisateur</h5>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body bg-light">
+                                                        <div class="row">
+                                                           
+                                                            @if ($user->agenceAcredite)
+                                                             <!-- Nom et Email -->
+                                                             <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-person-fill me-2"></i><strong>Nom :</strong> {{ $user->name }}
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-envelope-fill me-2"></i><strong>Email :</strong> {{ $user->email }}
+                                                            </div>
+                                        
+                                                            <!-- Téléphone et Adresse de l'Agence (si applicable) -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-telephone-fill me-2"></i><strong>Téléphone :</strong> {{ $user->telephone }}
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-building me-2"></i><strong>Adresse de l'Agence :</strong> {{ $user->agenceAcredite->adressAgence }}
+                                                            </div>
+                                        
+                                                            <!-- Numéro IFU et Date de Création de l'Agence -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-hash me-2"></i><strong>Numéro IFU :</strong> {{ $user->agenceAcredite->numeroIfu }}
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-calendar-event-fill me-2"></i><strong>Date de Création de l'Agence :</strong> {{ $user->agenceAcredite->dateCreationAgence }}
+                                                            </div>
+                                        
+                                                            <!-- RCCM -->
+                                                            <div class="col-12 mb-3">
+                                                                <i class="bi bi-file-earmark-pdf-fill me-2"></i><strong>RCCM :</strong> 
+                                                                <a href="{{ asset('storage/' . str_replace('public/', '', $user->agenceAcredite->rccm)) }}" class="btn btn-info btn-sm" target="_blank">
+                                                                    <i class="bi bi-download"></i> Télécharger RCCM
+                                                                </a>
+                                                            </div>
+                                                            @else
+                                                             <!-- Nom et Email -->
+                                                             <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-person-fill me-2"></i><strong>Nom :</strong> {{ $user->name }}
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-envelope-fill me-2"></i><strong>Email :</strong> {{ $user->email }}
+                                                            </div>
+                                        
+                                                            <!-- Téléphone et Adresse de l'Agence (si applicable) -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-telephone-fill me-2"></i><strong>Téléphone :</strong> {{ $user->telephone }}
+                                                            </div>
+                                                           <!-- Matricule -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-person-badge-fill me-2"></i><strong>Matricule :</strong> {{ $user->matricule }}
+                                                            </div>
 
-<!-- Modal de détails de l'utilisateur -->
-<div class="modal fade" id="userDetailModal{{ $user->id }}" tabindex="-1" aria-labelledby="userDetailModalLabel{{ $user->id }}" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-gray-dark text-white">
-                <h5 class="modal-title" id="userDetailModalLabel{{ $user->id }}">Détails de l'Utilisateur</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body bg-light">
-                <div class="row">
-                    <!-- Nom et Email -->
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-person-fill me-2"></i><strong>Nom :</strong> {{ $user->name }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-envelope-fill me-2"></i><strong>Email :</strong> {{ $user->email }}
-                    </div>
+                                                            <!-- Ministère -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <i class="bi bi-building me-2"></i><strong>Ministère :
+                                                                @foreach ($ministeres as $min)
+                                                                    
+                                                                </strong> {{ $user->id_m==$min->id ? $min->libelleLong : '' }}
+                                                                @endforeach
+                                                            </div>
 
-                    <!-- Téléphone et Matricule (adapté selon que l'utilisateur ait ou non une agence) -->
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-telephone-fill me-2"></i><strong>Téléphone :</strong> {{ $user->telephone }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-person-badge-fill me-2"></i><strong>Matricule :</strong> {{ $user->matricule ?? 'N/A' }}
-                    </div>
-
-                    <!-- Affichage conditionnel en fonction de l'utilisateur ayant ou non une agence -->
-                    @if($user->agenceAcredite)
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-building me-2"></i><strong>Adresse de l'Agence :</strong> {{ $user->agenceAcredite->adressAgence }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-calendar-event-fill me-2"></i><strong>Date de Création de l'Agence :</strong> {{ $user->agenceAcredite->dateCreationAgence }}
-                    </div>
-                    @endif
-
-                    <!-- Ministère (si applicable) -->
-                    <div class="col-12 mb-3">
-                        <i class="bi bi-building me-2"></i><strong>Ministère :</strong>
-                        @foreach ($ministeres as $min)
-                            {{ $user->id_m == $min->id ? $min->libelleLong : '' }}
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer bg-dark-primary">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Fermer</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer bg-dark-primary">
+                                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Fermer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                 
 
 
                                     @can('edit-user')

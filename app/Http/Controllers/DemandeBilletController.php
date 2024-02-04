@@ -14,20 +14,19 @@ class DemandeBilletController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-{
-    $demandes = DemandeBillet::with('offres')->latest('id')->paginate(10);
-
-
-    // Alternativement, charger le prix minimum pour chaque demande pourrait se faire ici,
-    // mais cela pourrait nécessiter des requêtes supplémentaires ou des manipulations de collection.
-
-    return view('backend.demandes.index', [
-        'demandes' => $demandes,
-    ]);
-}
-
- 
+    public function index(DemandeBillet $demande)
+    {
+         // Récupère l'offre avec le prix le plus bas pour la demande spécifiée
+         $offreMinPrix = Offre::where('demande_id', $demande->id)
+         ->orderBy('prixBillet', 'asc') // Trie par prixBillet en ordre croissant
+         ->first();
+         
+        //
+        return view('backend.demandes.index', [
+            'demandes' => DemandeBillet::latest('id')->paginate(10000000000),
+            'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -95,16 +94,23 @@ class DemandeBilletController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(DemandeBillet $demandeBillet)
+    public function show(DemandeBillet $demande)
     {
-        //
-        //dd($demandeBillet);
-
-        //dd(DemandeBillet::join('offres', 'demande_billets.id', '=', 'offres.demande_id')->where('demande_billets.id', 'like', $demandeBillet)->max('prixBillet'));
-        //dd(DemandeBillet::join('offres', 'demande_billets.id', '=', 'offres.demande_id')->where('demande_billets.id', '=', $demandeBillet)->get());
-
+        // Assurez-vous que $demandeBillet est une instance chargée correctement
+      
+        
+        // Récupère l'offre avec le prix le plus bas pour la demande spécifiée
+        $offreMinPrix = Offre::where('demande_id', $demande->id)
+                             ->orderBy('prixBillet', 'asc') // Trie par prixBillet en ordre croissant
+                             ->first(); // Obtient la première entrée, qui devrait être l'offre la moins chère
+    
+        // Afficher l'offre minimale pour débogage
+       //dd($offreMinPrix->prixBillet);
+    
+        // Si vous n'avez plus besoin de dumper la variable, continuez avec la logique de la vue
         return view('backend.demandes.show', [
-            'demande' => $demandeBillet,
+            'demande' => $demande,
+            'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
         ]);
     }
 

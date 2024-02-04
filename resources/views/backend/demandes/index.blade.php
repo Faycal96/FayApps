@@ -238,15 +238,15 @@
                     <div class="col-12 mb-3">
                         <i class="bi bi-textarea-t me-2"></i><strong>Description du besoin :</strong> {{ $demande->description }}
                     </div>
-                     <!-- Description du besoin -->
+                     {{-- <!-- Description du besoin -->
                      <div class="col-12 mb-3">
                         <i class="bi bi-textarea-t me-2"></i><strong>Description du besoin :</strong> {{ $demande->prix_minimum }}
-                    </div>
-                    @if($demande->offres->isNotEmpty())
+                    </div> --}}
+                    {{-- @if($demande->offres->isNotEmpty())
                     <div>Prix minimum: {{ $demande->offres->first()->prixBillet }}</div>
                 @else
                     <div>Pas d'offres disponibles</div>
-                @endif
+                @endif --}}
                 </div>
             </div>
             <div class="modal-footer bg-dark-primary">
@@ -265,6 +265,18 @@
                                                 </a>
                                             </button>
                                             @endcanany
+                                            @if($demande->offres->isNotEmpty())
+                    
+                                            @canany(['create-demande-billet'])
+
+                                            <button type="button" class="btn btn-info btn-sm">
+                                                <a class="text-white" href="{{ route('demandes.show', $demande) }}">
+                                                    <i class="bi bi-pencil-square"></i> Voir l'offre
+                                                </a>
+                                            </button>
+                                            @endcanany
+@endif
+
                                             @canany(['create-demande-billet'])
                                             <!-- Bouton pour déclencher le modal de suppression d'une demande -->
 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDemandeModal{{ $demande->id }}">
@@ -331,20 +343,19 @@
         
                                                                         <div class="row">
                                                                             <div class="col-6">
-                                                                                <div class="form-group  m-auto">
+                                                                                <div class="form-group m-auto">
                                                                                     <label>Code demande:</label>
-        
                                                                                     <div class="input-group">
                                                                                         <div class="input-group-prepend">
-                                                                                            <span class="input-group-text"><i
-                                                                                                    class="fas fa-vote-yea"></i></span>
+                                                                                            <span class="input-group-text"><i class="fas fa-vote-yea"></i></span>
                                                                                         </div>
-                                                                                        <input  type="text" name="demande_id"
-                                                                                            value="{{ $demande->code_demande }}"
-                                                                                            class="form-control" readonly>
+                                                                                        <input type="text" value="{{ $demande->code_demande }}" class="form-control" readonly>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                            <!-- Champ caché pour envoyer l'ID de la demande -->
+                                                                            <input type="hidden" name="demande_id" value="{{ $demande->id }}">
+                                                                            
                                                                             <div class="col-6">
                                                                                 <div class="form-group  m-auto">
                                                                                     <label>Prix :</label>
