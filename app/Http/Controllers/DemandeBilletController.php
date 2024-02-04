@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDemandeBilletRequest;
 use App\Http\Requests\UpdateDemandeBilletRequest;
 use App\Models\DemandeBillet;
+use App\Models\Offre;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,12 +15,19 @@ class DemandeBilletController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
-        return view('backend.demandes.index', [
-            'demandes' => DemandeBillet::latest('id')->paginate(10000000000),
-        ]);
-    }
+{
+    $demandes = DemandeBillet::with('offres')->latest('id')->paginate(10);
+
+
+    // Alternativement, charger le prix minimum pour chaque demande pourrait se faire ici,
+    // mais cela pourrait nécessiter des requêtes supplémentaires ou des manipulations de collection.
+
+    return view('backend.demandes.index', [
+        'demandes' => $demandes,
+    ]);
+}
+
+ 
 
     /**
      * Show the form for creating a new resource.

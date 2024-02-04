@@ -12,4 +12,9 @@ class Offre extends Model
     //protected $table = 'offres';
 
     protected $guarded = [];
+    public function demande()
+{
+    return $this->belongsTo(DemandeBillet::class, 'demande_id');
+}
+
 }

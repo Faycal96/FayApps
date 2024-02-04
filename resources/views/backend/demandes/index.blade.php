@@ -75,9 +75,13 @@
                     <div class="card-body">
                    {{-- Bouton pour ouvrir le modal de création de demande --}}
                    @canany(['create-demande-billet'])
-                   <button type="button" class="btn btn-success btn-sm my-2" data-bs-toggle="modal" data-bs-target="#newDemandeModal">
-                    <i class="bi bi-plus-circle"></i> Faire une nouvelle demande
-                </button>
+                   <div class="col-3 offset-7">
+                    <button type="button" class="btn btn-success btn-sm my-2" data-bs-toggle="modal"
+                        data-bs-target="#newDemandeModal">
+                        <i class="bi bi-plus-circle"></i> Faire une nouvelle demande
+                    </button>
+                </div>
+                
                @endcanany
                                    
 
@@ -165,12 +169,13 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Num Ordre Mission</th>
                                     <th>Lieu Depart</th>
                                     <th>Lieu Arrivée</th>
                                     <th>Date Depart</th>
-                                    <th>Date Arrivée</th>
-                                    <th>Num Ordre Mission</th>
-                                    <th>Durée</th>
+                                    <th>Date Retour</th>
+                                   
+                                    <th>Délai</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -178,6 +183,7 @@
                                 <tbody>
                                     <tr>
                                         <td>{{ $demande->id }}</td>
+                                        <td>{{ $demande->numeroOrdreMission }}</td>
                                         <td>{{ $demande->lieuDepart }}</td>
                                         <td>{{ $demande->lieuArrivee }}</td>
                                         
@@ -186,105 +192,187 @@
                                          <td>{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d M Y à H:i:s') }}</td>
 
                                         
-                                        <td>{{ $demande->numeroOrdreMission }}</td>
+                                        
                                         <td>{{ $demande->duree }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-warning btn-sm">
-                                                <a href="{{ route('demandes.show', $demande) }}">
-                                                    <i class="bi bi-eye"></i> Détails
-                                                </a>
-                                            </button>
+                                           <!-- Bouton pour ouvrir le modal de détails -->
+                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" 
+                                        data-bs-target="#detailDemandeModal">
+                                            <i class="bi bi-eye"></i> Détails
+                                        </button>
+                                        <!-- Modal de détails de la demande -->
+<div class="modal fade" id="detailDemandeModal" tabindex="-1" aria-labelledby="detailDemandeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-gray-dark text-white">
+                <h5 class="modal-title" id="detailDemandeModalLabel">Détails de la Demande</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-light">
+                <div class="row">
+                    <!-- Numéro Ordre de Mission et Lieu Départ -->
+                    <div class="col-md-6 mb-3">
+                        <i class="bi bi-file-earmark-text me-2"></i><strong>Numéro Ordre de Mission :</strong> {{ $demande->numeroOrdreMission }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <i class="bi bi-geo-alt me-2"></i><strong>Lieu Départ :</strong> {{ $demande->lieuDepart }}
+                    </div>
+
+                    <!-- Lieu Arrivée et Date Départ -->
+                    <div class="col-md-6 mb-3">
+                        <i class="bi bi-geo me-2"></i><strong>Lieu Arrivée :</strong> {{ $demande->lieuArrivee }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <i class="bi bi-calendar-event me-2"></i><strong>Date Départ :</strong> {{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}
+                    </div>
+
+                    <!-- Date Arrivée et Durée -->
+                    <div class="col-md-6 mb-3">
+                        <i class="bi bi-calendar-check me-2"></i><strong>Date Arrivée :</strong> {{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <i class="bi bi-hourglass-split me-2"></i><strong>Durée :</strong> {{ $demande->duree }}
+                    </div>
+
+                    <!-- Description du besoin -->
+                    <div class="col-12 mb-3">
+                        <i class="bi bi-textarea-t me-2"></i><strong>Description du besoin :</strong> {{ $demande->description }}
+                    </div>
+                     <!-- Description du besoin -->
+                     <div class="col-12 mb-3">
+                        <i class="bi bi-textarea-t me-2"></i><strong>Description du besoin :</strong> {{ $demande->prix_minimum }}
+                    </div>
+                    @if($demande->offres->isNotEmpty())
+                    <div>Prix minimum: {{ $demande->offres->first()->prixBillet }}</div>
+                @else
+                    <div>Pas d'offres disponibles</div>
+                @endif
+                </div>
+            </div>
+            <div class="modal-footer bg-dark-primary">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
                                             @canany(['create-demande-billet'])
                                             <button type="button" class="btn btn-warning btn-sm">
-                                                <a href="{{ route('demandes.edit', $demande) }}">
-                                                    <i class="bi bi-eye"></i> Modifier
+                                                <a class="text-white" href="{{ route('demandes.edit', $demande) }}">
+                                                    <i class="bi bi-pencil-square"></i> Modifier
                                                 </a>
                                             </button>
-                                        @endcanany
-                                        @canany(['create-demande-billet'])
-                                            <button type="button" class="btn btn-warning btn-sm">
-                                                <a href="{{ route('demandes.destroy', $demande) }}">
-                                                    <i class="bi bi-eye"></i> Supprimer
-                                                </a>
-                                            </button>
-                                        @endcanany
-                                            </button>
-                                           
-                                            
+                                            @endcanany
+                                            @canany(['create-demande-billet'])
+                                            <!-- Bouton pour déclencher le modal de suppression d'une demande -->
+<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDemandeModal{{ $demande->id }}">
+    <i class="bi bi-trash"></i> Supprimer
+</button>
 
+<!-- Modal de suppression d'une demande -->
+<div class="modal fade" id="deleteDemandeModal{{ $demande->id }}" tabindex="-1" aria-labelledby="deleteDemandeModalLabel{{ $demande->id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteDemandeModalLabel{{ $demande->id }}">Confirmer la Suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer cette demande ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <form action="{{ route('demandes.destroy', $demande->id) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+                                            @endcanany
+                                            </button>
+        
+        
+        
+        
                                             <!-- Bouton de déclenchement -->
-                                           
-
+        
+        
                                             @canany(['propose-demande-billet'])
                                             <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
-                                            data-bs-target="#activateOffreModal{{ $demande->id }}">
-                                            <i class="bi bi-toggle-on"></i> Faire une offre
-                                        </button>
-                                        @endcanany
+                                                data-bs-target="#activateOffreModal{{ $demande->id }}">
+                                                <i class="bi bi-toggle-on"></i> Faire une offre
+                                            </button>
+                                            @endcanany
                                             <!-- Modal d'activation -->
-                                            <div class="modal fade" id="activateOffreModal{{ $demande->id }}"
-                                                tabindex="-1" aria-labelledby="activateOffreModalLabel{{ $demande->id }}"
-                                                aria-hidden="true">
+                                            <div class="modal fade" id="activateOffreModal{{ $demande->id }}" tabindex="-1"
+                                                aria-labelledby="activateOffreModalLabel{{ $demande->id }}" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h2 class="modal-title"
                                                                 id="activateOffreModalLabel{{ $demande->id }}">
-                                                                Faire une offre</h2>
+                                                                Je Propose mon offre</h2>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <form method="POST" action="{{ route('offres.store') }}">
-
+        
                                                                 @csrf
-
-                                                                <button type="submit"
-                                                                    class="btn btn-flat btn-primary">Enregistrer</button>
-
+        
                                                                 <div>
                                                                     <div class="col-lg-12 col-md-12 m-auto">
-
+        
                                                                         <div class="row">
-                                                                            <div class="form-group  m-auto">
-                                                                                <label>Code demande:</label>
-
-                                                                                <div class="input-group">
-                                                                                    <div class="input-group-prepend">
-                                                                                        <span class="input-group-text"><i
-                                                                                                class="fas fa-vote-yea"></i></span>
+                                                                            <div class="col-6">
+                                                                                <div class="form-group  m-auto">
+                                                                                    <label>Code demande:</label>
+        
+                                                                                    <div class="input-group">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i
+                                                                                                    class="fas fa-vote-yea"></i></span>
+                                                                                        </div>
+                                                                                        <input  type="text" name="demande_id"
+                                                                                            value="{{ $demande->code_demande }}"
+                                                                                            class="form-control" readonly>
                                                                                     </div>
-                                                                                    <input type="text" name="demande_id"
-                                                                                        value="{{ $demande->id }}"
-                                                                                        class="form-control" readonly>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="form-group  m-auto">
-                                                                                <label>Prix :</label>
-
-                                                                                <div class="input-group">
-                                                                                    <div class="input-group-prepend">
-                                                                                        <span class="input-group-text"><i
-                                                                                                class="fas fa-money-check-alt"></i></span>
+                                                                            <div class="col-6">
+                                                                                <div class="form-group  m-auto">
+                                                                                    <label>Prix :</label>
+        
+                                                                                    <div class="input-group">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i
+                                                                                                    class="fas fa-money-check-alt"></i></span>
+                                                                                        </div>
+                                                                                        <input type="number" name="prixBillet"
+                                                                                            class="form-control">
                                                                                     </div>
-                                                                                    <input type="number" name="prixBillet"
-                                                                                        class="form-control">
                                                                                 </div>
                                                                             </div>
+        
+        
                                                                         </div>
-
+        
                                                                         <div class="row mt-4">
                                                                             <div class="form-group  m-auto">
                                                                                 <label>Date Debut Offre:</label>
-
+        
                                                                                 <div class="input-group">
                                                                                     <div class="input-group-prepend">
                                                                                         <span class="input-group-text"><i
                                                                                                 class="far fa-calendar-alt"></i></span>
                                                                                     </div>
-                                                                                    <input type="date"
-                                                                                        name="dateDebutValidite"
+                                                                                    <input type="date" name="dateDebutValidite"
                                                                                         class="form-control"
                                                                                         data-inputmask-alias="datetime"
                                                                                         data-inputmask-inputformat="dd/mm/yyyy"
@@ -293,14 +381,13 @@
                                                                             </div>
                                                                             <div class="form-group m-auto">
                                                                                 <label>Date Fin Offre:</label>
-
+        
                                                                                 <div class="input-group">
                                                                                     <div class="input-group-prepend">
                                                                                         <span class="input-group-text"><i
                                                                                                 class="far fa-calendar-alt"></i></span>
                                                                                     </div>
-                                                                                    <input type="date"
-                                                                                        name="dateFinValidite"
+                                                                                    <input type="date" name="dateFinValidite"
                                                                                         class="form-control"
                                                                                         data-inputmask-alias="datetime"
                                                                                         data-inputmask-inputformat="dd/mm/yyyy"
@@ -308,43 +395,48 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-
+        
                                                                         <div class="form-group mt-4">
                                                                             <label>Description de l'offre:</label>
-
+        
                                                                             <div class="input-group">
                                                                                 <div class="input-group-prepend">
                                                                                     <span class="input-group-text"></i><i
                                                                                             class="fas fa-info-circle"></i></span>
                                                                                 </div>
-                                                                                <textarea type="text" name="description" class="form-control"></textarea>
+                                                                                <textarea type="text" name="description"
+                                                                                    class="form-control"></textarea>
                                                                             </div>
                                                                         </div>
-
+        
                                                                         <div class="form-group mt-4">
-                                                                            <label>Certification sur l'honneur:</label>
-
+                                                                            <label> <b>Certification sur l'honneur:</b></label>
+                                                                        <span class="text-danger"> En cochant cette case, je m'engage sur la disponibilite du billet.</span>
+        
                                                                             <div class="input-group">
-
-                                                                                <input type="checkbox" name="engagement"
-                                                                                    value="1" class="form-control"
-                                                                                    required>
+        
+                                                                                <input  type="checkbox" name="engagement"
+                                                                                    value="1" class="form-control text-success" required>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                         </div>
-                                                        </form>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Annuler</button>
-
+        
+                                                            <button type="button" class="btn btn-danger"
+                                                                data-bs-dismiss="modal">Fermer</button>
+                                                            <button type="submit"
+                                                                class="btn btn-flat btn-success">Soumettre</button>
+        
                                                         </div>
-
+                                                        </form>
+        
+        
                                                     </div>
                                                 </div>
                                             </div>
-
+        
                                         </td>
                                     </tr>
                                 </tbody>
