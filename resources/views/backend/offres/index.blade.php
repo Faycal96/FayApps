@@ -68,48 +68,53 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Gestion des Utilisateurs</h3>
-                    </div>
-                    <!-- /.card-header -->
+                    <div class="card-header">Liste des Offres</div>
                     <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addOffreModal">
+                            Ajouter une nouvelle offre
+                        </button>
+                        <table class="table table-bordered table-striped">
                             <thead>
-                                @php
-                                    $i=1
-                                @endphp
                                 <tr>
-                                    <th>#</th>
-                                    <th>Lieu Depart</th>
-                                    <th>Lieu Arrivée</th>
-                                    <th>Date Depart</th>
-                                    <th>Date Arrivée</th>
-                                    <th>Num Ordre Mission</th>
-                                    <th>Durée</th>
-                                    <th>Action</th>
+                                    <th>Code Demande</th>
+                                    <th>Prix Minimum</th>
+
+                                    <th>Date Debut Offre</th>
+                                    <th>Date Fin Offre</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
-                            @foreach ($offres as $offre)
-                                <tbody>
-                                    <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>{{ $offre->lieuDepart }}</td>
-                                        <td>{{ $offre->lieuArrivee }}</td>
-                                        <td>{{ $offre->DateDepart }}</td>
-                                        <td>{{ $offre->DateArrivee }}</td>
-                                        <td>{{ $offre->numeroOrdreMission }}</td>
-                                        <td>{{ $offre->duree }}</td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            @endforeach
+                            <tbody>
+                                @foreach ($offres as $offre)
+                                @if ($offre->agence->user_id == auth()->id())
+                                <tr>
+                                    <td>{{ $offre->code_offre}}</td>
 
+                                    <td>{{ $offre->prixBillet }}</td>
+
+                                    <td>{{ \Carbon\Carbon::parse($offre->dateDebutValidite)->format('d M Y à H:i:s') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($offre->dateFinValidite)->format('d M Y à H:i:s') }}</td>
+
+                                    <td>{{ $offre->description }}</td>
+                                    <td>
+                                        <!-- Edit Button -->
+                                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editOffreModal{{ $offre->id }}">
+                                            Modifier
+                                        </button>
+
+                                        <!-- Delete Button -->
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteOffreModal{{ $offre->id }}">
+                                            Supprimer
+                                        </button>
+                                    </td>
+                                </tr>
+                                @endif
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
-                    <!-- /.card-body -->
                 </div>
-                <!-- /.card -->
-            </div>
             <!-- /.col -->
         </div>
         <!-- /.row -->

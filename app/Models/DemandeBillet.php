@@ -16,4 +16,11 @@ class DemandeBillet extends Model
     // ];
 
     protected $guarded = [];
+
+
+    public function offres()
+    {
+        return $this->hasMany(Offre::class, 'demande_id');
+    }
+
 }

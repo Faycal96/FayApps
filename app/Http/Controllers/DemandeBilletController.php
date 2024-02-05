@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDemandeBilletRequest;
 use App\Http\Requests\UpdateDemandeBilletRequest;
 use App\Models\DemandeBillet;
+use App\Models\Offre;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,11 +14,17 @@ class DemandeBilletController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(DemandeBillet $demande)
     {
+         // Récupère l'offre avec le prix le plus bas pour la demande spécifiée
+         $offreMinPrix = Offre::where('demande_id', $demande->id)
+         ->orderBy('prixBillet', 'asc') // Trie par prixBillet en ordre croissant
+         ->first();
+
         //
         return view('backend.demandes.index', [
             'demandes' => DemandeBillet::latest('id')->paginate(10000000000),
+            'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
         ]);
     }
 
@@ -87,16 +94,16 @@ class DemandeBilletController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(DemandeBillet $demandeBillet)
+    public function show(DemandeBillet $demande)
     {
-        //
-        //dd($demandeBillet);
-
-        //dd(DemandeBillet::join('offres', 'demande_billets.id', '=', 'offres.demande_id')->where('demande_billets.id', 'like', $demandeBillet)->max('prixBillet'));
-        //dd(DemandeBillet::join('offres', 'demande_billets.id', '=', 'offres.demande_id')->where('demande_billets.id', '=', $demandeBillet)->get());
+        $offreMinPrix = Offre::where('demande_id', $demande->id)
+                             ->with('agence') // Charge la relation agence
+                             ->orderBy('prixBillet', 'asc')
+                             ->first();
 
         return view('backend.demandes.show', [
-            'demande' => $demandeBillet,
+            'demande' => $demande,
+            'offreMinPrix' => $offreMinPrix,
         ]);
     }
 
