@@ -96,6 +96,12 @@
                 @canany(['create-user', 'edit-user', 'delete-user'])
                     <li><a class="nav-link" href="{{ route('users.index') }}">Gestion des utilisateurs</a></li>
                 @endcanany
+                @canany(['create-demande-billet','propose-demande-billet'])
+                <li><a class="nav-link" href="{{ route('demandes.index') }}">Gestion des demandes</a></li>
+            @endcanany
+            @canany(['propose-demande-billet'])
+            <li><a class="nav-link" href="{{ route('offres.index') }}">Gestion des offres</a></li>
+        @endcanany
 
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -103,7 +109,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
@@ -112,6 +118,7 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
+
                     </div>
                 </li>
             @endguest
@@ -285,17 +292,30 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-               @canany(['create-role', 'edit-role', 'delete-role'])
+               @canany(['create-demande-billet','propose-demande-billet'])
                         <li class="nav-item">
-                            <a href="pages/calendar.html" class="nav-link">
+                            <a href="{{ route('demandes.index') }}" class="nav-link">
                                 <i class="nav-icon far fa-calendar-alt"></i>
                                 <p>
-                                    Gestion des Roles
+                                    Gestion des demandes
                                     <span class="badge badge-info right">2</span>
                                 </p>
                             </a>
                         </li>
                         @endcanany
+                        @canany(['propose-demande-billet'])
+                        <li class="nav-item">
+                           <a href="{{ route('offres.index') }}" class="nav-link">
+                                <i class="nav-icon far fa-calendar-alt"></i>
+                                <p>
+                                    Gestion des offres
+                                    <span class="badge badge-info right">2</span>
+                                </p>
+                            </a>
+                        </li>
+                        @endcanany
+
+
 
                     @canany(['create-user', 'edit-user', 'delete-user'])
                         <li class="nav-item">

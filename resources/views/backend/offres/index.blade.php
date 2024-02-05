@@ -75,6 +75,9 @@
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
+                                @php
+                                    $i=1
+                                @endphp
                                 <tr>
                                     <th>#</th>
                                     <th>Lieu Depart</th>
@@ -89,7 +92,7 @@
                             @foreach ($offres as $offre)
                                 <tbody>
                                     <tr>
-                                        <td>{{ $offre->id }}</td>
+                                        <td>{{ $i }}</td>
                                         <td>{{ $offre->lieuDepart }}</td>
                                         <td>{{ $offre->lieuArrivee }}</td>
                                         <td>{{ $offre->DateDepart }}</td>
