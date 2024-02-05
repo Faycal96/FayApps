@@ -10,10 +10,18 @@ class DemandeBillet extends Model
     use HasFactory;
 
     protected $table = 'demande_billets';
+ 
+
 
     // protected $fillable = [
     //     'name', 'address', 'type',
     // ];
 
     protected $guarded = [];
+
+    public function offres()
+{
+    return $this->hasMany(Offre::class, 'demande_id');
+}
+
 }
