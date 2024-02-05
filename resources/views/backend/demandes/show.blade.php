@@ -69,60 +69,66 @@
         </div>
 
 
+        
         <div class="card-footer bg-dark-primary">
-            <!-- Bouton de validation -->
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#validateModal{{ $demande->id }}">
-                <i class="bi bi-check-lg"></i> Valider
-            </button>
+            <!-- Bouton de validation déclenche le modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#validateModal">
+    <i class="bi bi-check-lg"></i> Valider
+</button>
 
-            <!-- Modèle de validation -->
-            <div class="modal fade" id="validateModal{{ $demande->id }}" tabindex="-1" aria-labelledby="validateModalLabel{{ $demande->id }}" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="validateModalLabel{{ $demande->id }}">Validation de la Demande</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('demandes.edit', $demande->id) }}" method="post">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="motifValidation" class="form-label">Motif de validation</label>
-                                    <textarea class="form-control" id="motifValidation" name="motifValidation" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-success">Confirmer la validation</button>
-                            </form>
-                        </div>
+<!-- Modal de validation -->
+<div class="modal fade" id="validateModal" tabindex="-1" aria-labelledby="validateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="validateModalLabel">Validation de l'offre</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('offres.valider', ['offre' => $offreMinPrix->id]) }}" method="POST">
+    @csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="motif" class="form-label">Motif de validation</label>
+                        <textarea class="form-control" id="motif" name="motif" required></textarea>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+          <!-- Bouton de rejet déclenche le modal -->
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">
+    <i class="bi bi-x-lg"></i> Rejeter
+</button>
+
+<!-- Modal de rejet -->
+<div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rejectModalLabel">Rejet de l'offre</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-            <!-- Bouton de rejet -->
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal{{ $demande->id }}">
-                <i class="bi bi-x-lg"></i> Rejeter
-            </button>
-
-            <!-- Modèle de rejet -->
-            <div class="modal fade" id="rejectModal{{ $demande->id }}" tabindex="-1" aria-labelledby="rejectModalLabel{{ $demande->id }}" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="rejectModalLabel{{ $demande->id }}">Rejet de la Demande</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('demandes.edit', $demande->id) }}" method="post">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="motifRejet" class="form-label">Motif du rejet</label>
-                                    <textarea class="form-control" id="motifRejet" name="motifRejet" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-danger">Confirmer le rejet</button>
-                            </form>
-                        </div>
+            <form action="{{ route('offres.rejeter', ['offre' => $offreMinPrix->id]) }}" method="POST">
+                @csrf
+                <!-- Si vous souhaitez changer la méthode HTTP utilisée par le formulaire (par ex., pour PATCH, PUT, DELETE), ajoutez @method('VOTRE_METHODE') -->
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="motifRejet" class="form-label">Motif du rejet</label>
+                        <textarea class="form-control" id="motifRejet" name="motifRejet" required></textarea>
                     </div>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Confirmer le rejet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
             <!-- Bouton de retour -->
             <a href="{{ route('demandes.index') }}" class="btn btn-secondary"><i class="bi bi-box-arrow-in-left"></i> Retour</a>

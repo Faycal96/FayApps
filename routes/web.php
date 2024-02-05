@@ -40,6 +40,8 @@ Route::patch('/demandes/{demande}/toggleStatus', [DemandeBilletController::class
 
 Route::get('registerdaf', [RegisterDafController::class, 'afficherFormulaire'])->name('registerdaf');
 Route::post('/storeDaf', [RegisterDafController::class, 'enregistrer'])->name('storeDaf');
+Route::post('/offres/{offre}/valider', [OffreController::class, 'valider'])->name('offres.valider');
+Route::post('/offres/{offre}/rejeter', [OffreController::class, 'rejeter'])->name('offres.rejeter');
 
 // Route::post('registerdaf', [ControllersRegisterDafController::class, 'enregistrer'])->name('storeDaf');
 
