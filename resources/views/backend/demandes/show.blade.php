@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container">
+   
+    </div>
     <div class="card">
         <div class="card-header bg-gray-dark text-white">
             <h3 class="card-title">Détail de l'offre</h3> {{-- Header personnalisé avec une plus grande police --}}
@@ -9,38 +11,59 @@
 
         <div class="card-body bg-light">
             <div class="row">
-                <!-- Numéro Ordre de Mission et Lieu Départ -->
-                <div class="col-md-6 mb-3">
-                    <i class="bi bi-file-earmark-text me-2"></i><strong>Numéro Ordre de Mission :</strong> {{ $demande->numeroOrdreMission }}
+                 <!-- Numéro Ordre de Mission et Lieu Départ -->
+                 <div class="col-md-6 mb-3">
+                    <i class="bi bi-file-earmark-text me-2"></i><strong>Code de la demande :</strong> {{ $demande->code_demande }}
                 </div>
                 <div class="col-md-6 mb-3">
-                    <i class="bi bi-geo-alt me-2"></i><strong>Lieu Départ :</strong> {{ $demande->lieuDepart }}
+                    <i class="bi bi-geo-alt me-2"></i><strong>Code de l'offre :</strong> {{ $offreMinPrix->code_offre }}
                 </div>
-
+               
+               
+              
                 <!-- Lieu Arrivée et Date Départ -->
+                
+              
                 <div class="col-md-6 mb-3">
-                    <i class="bi bi-geo me-2"></i><strong>Lieu Arrivée :</strong> {{ $demande->lieuArrivee }}
+                    <i class="bi bi-geo-alt me-2"></i><strong>Ville de Départ :</strong> {{ $demande->lieuDepart }}
                 </div>
                 <div class="col-md-6 mb-3">
-                    <i class="bi bi-calendar-event me-2"></i><strong>Date Départ :</strong> {{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}
+                    <i class="bi bi-geo me-2"></i><strong>Ville d'arrivée :</strong> {{ $demande->lieuArrivee }}
+                </div>  
+
+                <div class="col-md-6 mb-3">
+                    <i class="bi bi-calendar-event me-2"></i><strong>Date de depart :</strong> {{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}
                 </div>
 
                 <!-- Date Arrivée et Durée -->
                 <div class="col-md-6 mb-3">
-                    <i class="bi bi-calendar-check me-2"></i><strong>Date Arrivée :</strong> {{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}
+                    <i class="bi bi-calendar-check me-2"></i><strong>Date de retour :</strong> {{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}
                 </div>
+               
+
                 <div class="col-md-6 mb-3">
-                    <i class="bi bi-hourglass-split me-2"></i><strong>Durée :</strong> {{ $demande->duree }}
+                    <i class="bi bi-building me-2"></i><strong>Agence Accreditée :</strong> {{ $offreMinPrix->agence->nomAgence }} <!-- Assurez-vous que 'nom' est le bon champ dans votre table agences -->
                 </div>
 
-                <!-- Description du besoin -->
-                <div class="col-12 mb-3">
-                    <i class="bi bi-textarea-t me-2"></i><strong>Description du besoin :</strong> {{ $demande->description }}
+                <div class="col-md-6 mb-3">
+                    <i class="bi bi-building me-2"></i><strong>Adresse de l'agence :</strong> {{ $offreMinPrix->agence->user->telephone }} <!-- Assurez-vous que 'nom' est le bon champ dans votre table agences -->
                 </div>
+
+                <div class="col-6 mb-3">
+                    <i class="bi bi-textarea-t me-2"></i><strong>Observation de l'offre :</strong> {{ $offreMinPrix->description }}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <i class="bi bi-hourglass-split me-2"></i><strong>Valable jusqu'au:</strong> {{ \Carbon\Carbon::parse($offreMinPrix->dateFinValidite)->format('d M Y à H:i:s') }}
+                </div>
+
+                
+               
 
                 <!-- Prix affiché avec style personnalisé -->
-                <div class="col-12 mb-3 text-center">
-                    <h4><i class="bi bi-currency-dollar me-2"></i><strong>Prix :</strong> <span class="btn-info btn-sm">{{ $offreMinPrix->prixBillet ?? 'Non disponible' }}</span></h4>
+                <p></p>
+                <div class="col-8 mb-2 text-center">
+                    <h3><i class="bi bi-currency-euro me-3"></i><strong>Prix :</strong> <span class="btn-info btn-sm">{{ $offreMinPrix->prixBillet ?? 'Non disponible' }}</span></h3>
                 </div>
             </div>
         </div>

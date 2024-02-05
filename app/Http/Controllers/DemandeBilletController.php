@@ -96,24 +96,17 @@ class DemandeBilletController extends Controller
      */
     public function show(DemandeBillet $demande)
     {
-        // Assurez-vous que $demandeBillet est une instance chargée correctement
-      
-        
-        // Récupère l'offre avec le prix le plus bas pour la demande spécifiée
         $offreMinPrix = Offre::where('demande_id', $demande->id)
-                             ->orderBy('prixBillet', 'asc') // Trie par prixBillet en ordre croissant
-                             ->first(); // Obtient la première entrée, qui devrait être l'offre la moins chère
+                             ->with('agence') // Charge la relation agence
+                             ->orderBy('prixBillet', 'asc')
+                             ->first();
     
-        // Afficher l'offre minimale pour débogage
-       //dd($offreMinPrix->prixBillet);
-    
-        // Si vous n'avez plus besoin de dumper la variable, continuez avec la logique de la vue
         return view('backend.demandes.show', [
             'demande' => $demande,
-            'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
+            'offreMinPrix' => $offreMinPrix,
         ]);
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */

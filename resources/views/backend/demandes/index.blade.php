@@ -69,7 +69,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Gestion des Utilisateurs</h3>
+                        <h3 class="card-title">Gestion des demandes</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -121,7 +121,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6 form-group">
-                                                                <label>Date Départ:</label>
+                                                                <label>Date de depart:</label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                                                     <input type="date" name="dateDepart" class="form-control">
@@ -130,7 +130,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-6 form-group">
-                                                                <label>Date Arrivée:</label>
+                                                                <label>Date de retour:</label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
                                                                     <input type="date" name="dateArrivee" class="form-control">
@@ -181,6 +181,7 @@
                             </thead>
                             @foreach ($demandes as $demande)
                                 <tbody>
+                                    @if ($demande->user_id == auth()->id() || auth()->user()->hasRole(['Agence Voyage']))
                                     <tr>
                                         <td>{{ $demande->id }}</td>
                                         <td>{{ $demande->numeroOrdreMission }}</td>
@@ -234,6 +235,7 @@
                         <i class="bi bi-hourglass-split me-2"></i><strong>Durée :</strong> {{ $demande->duree }}
                     </div>
 
+                   
                     <!-- Description du besoin -->
                     <div class="col-12 mb-3">
                         <i class="bi bi-textarea-t me-2"></i><strong>Description du besoin :</strong> {{ $demande->description }}
@@ -375,7 +377,7 @@
                                                                         </div>
         
                                                                         <div class="row mt-4">
-                                                                            <div class="form-group  m-auto">
+                                                                            {{-- <div class="form-group  m-auto">
                                                                                 <label>Date Debut Offre:</label>
         
                                                                                 <div class="input-group">
@@ -389,9 +391,9 @@
                                                                                         data-inputmask-inputformat="dd/mm/yyyy"
                                                                                         data-mask>
                                                                                 </div>
-                                                                            </div>
+                                                                            </div> --}}
                                                                             <div class="form-group m-auto">
-                                                                                <label>Date Fin Offre:</label>
+                                                                                <label>Valable jusqu'au:</label>
         
                                                                                 <div class="input-group">
                                                                                     <div class="input-group-prepend">
@@ -408,7 +410,7 @@
                                                                         </div>
         
                                                                         <div class="form-group mt-4">
-                                                                            <label>Description de l'offre:</label>
+                                                                            <label>Observation de l'offre:</label>
         
                                                                             <div class="input-group">
                                                                                 <div class="input-group-prepend">
@@ -450,9 +452,10 @@
         
                                         </td>
                                     </tr>
+                                    @endif
                                 </tbody>
                             @endforeach
-
+                            
                         </table>
                     </div>
                     <!-- /.card-body -->

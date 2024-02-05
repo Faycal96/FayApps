@@ -87,6 +87,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($offres as $offre)
+                                @if ($offre->agence->user_id == auth()->id())
                                 <tr>
                                     <td>{{ $offre->code_offre}}</td>
                                   
@@ -108,6 +109,7 @@
                                         </button>
                                     </td>
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
