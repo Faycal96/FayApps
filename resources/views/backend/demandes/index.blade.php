@@ -259,14 +259,18 @@
 </div>
 
 
-
+                                            @if($demande->offres->isEmpty())
                                             @canany(['create-demande-billet'])
+                                           
                                             <button type="button" class="btn btn-warning btn-sm">
                                                 <a class="text-white" href="{{ route('demandes.edit', $demande) }}">
                                                     <i class="bi bi-pencil-square"></i> Modifier
                                                 </a>
                                             </button>
+                                           
                                             @endcanany
+                                            @endif
+
                                             @if($demande->offres->isNotEmpty())
 
                                             @canany(['create-demande-billet'])
@@ -277,39 +281,40 @@
                                                 </a>
                                             </button>
                                             @endcanany
-@endif
+                                            @endif
+                                                                    @if($demande->offres->isEmpty())
+                                                                                @canany(['create-demande-billet'])
+                                                                                <!-- Bouton pour déclencher le modal de suppression d'une demande -->
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDemandeModal{{ $demande->id }}">
+                                        <i class="bi bi-trash"></i> Supprimer
+                                    </button>
 
-                                            @canany(['create-demande-billet'])
-                                            <!-- Bouton pour déclencher le modal de suppression d'une demande -->
-<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDemandeModal{{ $demande->id }}">
-    <i class="bi bi-trash"></i> Supprimer
-</button>
+                                    <!-- Modal de suppression d'une demande -->
+                                    <div class="modal fade" id="deleteDemandeModal{{ $demande->id }}" tabindex="-1" aria-labelledby="deleteDemandeModalLabel{{ $demande->id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteDemandeModalLabel{{ $demande->id }}">Confirmer la Suppression</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Êtes-vous sûr de vouloir supprimer cette demande ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                    <form action="{{ route('demandes.destroy', $demande->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-<!-- Modal de suppression d'une demande -->
-<div class="modal fade" id="deleteDemandeModal{{ $demande->id }}" tabindex="-1" aria-labelledby="deleteDemandeModalLabel{{ $demande->id }}" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteDemandeModalLabel{{ $demande->id }}">Confirmer la Suppression</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Êtes-vous sûr de vouloir supprimer cette demande ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <form action="{{ route('demandes.destroy', $demande->id) }}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-                                            @endcanany
-                                            </button>
+                                           @endcanany
+                                         </button>
+                                         @endif
 
 
 
