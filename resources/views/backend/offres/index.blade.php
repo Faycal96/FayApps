@@ -71,15 +71,14 @@
                     <div class="card-header">Liste des Offres</div>
                     <div class="card-body">
 
-                        <table class="table table-bordered table-striped">
+                        <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Code Demande</th>
                                     <th>Prix Minimum</th>
-
-                                    <th>Date Debut Offre</th>
-                                    <th>Date Fin Offre</th>
-                                    <th>Description</th>
+                                    <th>Validité</th>
+                                    <th>Observation</th>
+                                    <th>statut</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -91,10 +90,17 @@
 
                                     <td>{{ $offre->prixBillet }}</td>
 
-                                    <td>{{ \Carbon\Carbon::parse($offre->dateDebutValidite)->format('d M Y à H:i:s') }}</td>
+                                    {{-- <td>{{ \Carbon\Carbon::parse($offre->dateDebutValidite)->format('d M Y à H:i:s') }}</td> --}}
                                     <td>{{ \Carbon\Carbon::parse($offre->dateFinValidite)->format('d M Y à H:i:s') }}</td>
 
                                     <td>{{ $offre->description }}</td>
+                                    @if ($offre->etats == "validée")
+                                        <td> <span class="badge bg-success">Validée</span></td>
+                                    @else
+                                        <td><span class="badge bg-danger">En attente</span></td>
+                                    @endif
+
+
                                     <td>
                                         <!-- Edit Button -->
                                         <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editOffreModal{{ $offre->id }}">

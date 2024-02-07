@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
+    @if (isset(Auth::user()->agence))
     <div class="row">
         <div class="col-lg-3 col-6">
             <!-- small box -->
@@ -9,7 +10,7 @@
                 <div class="inner">
                     <h3>150</h3>
 
-                    <p>Total des utilisateurs</p>
+                    <p>Total de mes Propositions</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
@@ -24,7 +25,7 @@
                 <div class="inner">
                     <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-                    <p>Total DAF</p>
+                    <p>Propositions Retenues</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -33,7 +34,7 @@
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        {{-- <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-warning">
                 <div class="inner">
@@ -46,7 +47,7 @@
                 </div>
                 <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-        </div>
+        </div> --}}
         <!-- ./col -->
         <div class="col-lg-3 col-6">
             <!-- small box -->
@@ -54,7 +55,7 @@
                 <div class="inner">
                     <h3>65</h3>
 
-                    <p>Utilisateurs desactivés</p>
+                    <p>Propositions rejettées</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
@@ -64,6 +65,57 @@
         </div>
         <!-- ./col -->
     </div>
+        @else
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>150</h3>
+
+                        <p>Total Demandes</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>53</h3>
+
+                        <p>Total offres retenues </p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>65</h3>
+
+                        <p>Total Demandes sans Offres</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-12">
