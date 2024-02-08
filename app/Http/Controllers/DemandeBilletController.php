@@ -75,6 +75,7 @@ class DemandeBilletController extends Controller
         //$request->merge(['etat' => 'ACTIF']);
 
         DemandeBillet::create($request->all());
+    
 
         return redirect()->route('demandes.index')
             ->with('success', 'Votre demande a été enregistrée.');

@@ -254,7 +254,7 @@
                                 <td>{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d M Y à H:i:s') }}</td>
                                 @if ($demande->etat ==1)
 
-                                <td> <span class="badge bg-success">Encours</span></td>
+                                <td> <span class="badge bg-success">En cours</span></td>
                                 @else
                                 <td><span class="badge bg-danger">Fermée</span></td>
                                 @endif
@@ -344,7 +344,7 @@
                                     </div>
 
 
-                                    @if($demande->offres->isEmpty())
+                                    @if($demande->offres->isEmpty() )
                                     @canany(['create-demande-billet'])
 
                                     <button type="button" class="btn btn-warning btn-sm">
@@ -356,7 +356,7 @@
                                     @endcanany
                                     @endif
 
-                                    @if($demande->offres->isNotEmpty())
+                                    @if($demande->offres->isNotEmpty() && $demande->etat ==0)
 
                                     @canany(['create-demande-billet'])
 
@@ -413,13 +413,14 @@
 
                                     <!-- Bouton de déclenchement -->
 
-
+                                    @if($demande->etat ==1)
                                     @canany(['propose-demande-billet'])
                                     <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
                                         data-bs-target="#activateOffreModal{{ $demande->id }}">
                                         <i class="bi bi-toggle-on"></i> Faire une offre
                                     </button>
                                     @endcanany
+                                    @endif
                                     <!-- Modal d'activation -->
                                     <div class="modal fade" id="activateOffreModal{{ $demande->id }}" tabindex="-1"
                                         aria-labelledby="activateOffreModalLabel{{ $demande->id }}" aria-hidden="true">
