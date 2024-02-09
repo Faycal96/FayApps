@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Notifications;
+
+use App\Models\AgenceAcredite;
+use App\Models\DemandeBillet;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+
+class DemandeCreatedNotification extends Notification
+{
+    use Queueable;
+
+    /**
+     * Create a new notification instance.
+     */
+    private $demande;
+
+    public function __construct(DemandeBillet $demande)
+    {
+        $this->demande = $demande;
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @return array<int, string>
+     */
+    public function via(object $notifiable): array
+    {
+        return ['mail'];
+    }
+
+    public function toMail($notifiable)
+    {
+       
+        return (new MailMessage)
+                    ->subject('Nouvelle Demande Créée')
+                    ->greeting('Bonjour ' . $notifiable->name . ' !')
+                    ->line('Une nouvelle demande de billet a été créée avec une durée de ' . $this->demande->duree . ' heures.')
+                    ->action('Voir la Demande', url('/demandes/' . $this->demande->id))
+                    ->line('Si vous avez des questions, n\'hésitez pas à contacter l\'administrateur.')
+                    ->line('Merci d\'utiliser notre application !');
+    }
+    
+    
+
+    public function toArray($notifiable)
+    {
+        return [
+            //
+        ];
+    }
+}
