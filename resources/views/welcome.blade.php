@@ -131,19 +131,10 @@
 
         <div class="carousel-inner" role="listbox">
 
-          <!-- Slide 1 -->
-          <div class="carousel-item active" style="background-image: url(frontend/assets/img/slide/slide3.jpg)">
-            <div class="carousel-container">
-              {{-- <div class="carousel-content">
-                <h2 class="animate__animated animate__fadeInDown">Welcome to <span>Eterna</span></h2>
-                <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
-                <a href="" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
-              </div> --}}
-            </div>
-          </div>
+
 
           <!-- Slide 2 -->
-          <div class="carousel-item" style="background-image: url(frontend/assets/img/slide/slide1.jpg)">
+          <div  class=" active carousel-item" style="background-image: url(frontend/assets/img/slide/slide1.jpg)">
             <div class="carousel-container">
               {{-- <div class="carousel-content">
                 <h2 class="animate__animated fanimate__adeInDown">Lorem <span>Ipsum Dolor</span></h2>
@@ -153,26 +144,17 @@
             </div>
           </div>
 
-          <!-- Slide 3 -->
-          <div class="carousel-item" style="background-image: url(frontend/assets/img/slide/slide2.jpg)">
-            <div class="carousel-container">
-              {{-- <div class="carousel-content">
-                <h2 class="animate__animated animate__fadeInDown">Sequi ea <span>Dime Lara</span></h2>
-                <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
-                <a href="" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
-              </div> --}}
-            </div>
-          </div>
+
 
         </div>
 
-        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+        {{-- <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
           <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
-        </a>
+        </a> --}}
 
-        <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+        {{-- <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
           <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-        </a>
+        </a> --}}
 
       </div>
     </div>
@@ -399,7 +381,7 @@
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/ -->
-        Designed by <a href="https://mdenp.com/">MTDPCE</a>
+        Designed by <a href="https://mdenp.com/">pool MTDPCE</a>
       </div>
     </div>
   </footer><!-- End Footer -->

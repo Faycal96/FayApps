@@ -19,6 +19,10 @@
 
     <!-- Font Awesome -->
 
+    <link rel="stylesheet" href=" {{ asset('backend/assets/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet"
+        href=" {{ asset('backend/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+
 
     <link href="{{ asset('backend/assets/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <!-- Ionicons -->
@@ -39,6 +43,17 @@
         rel="stylesheet">
     <link href="{{ asset('backend/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}"
         rel="stylesheet">
+
+
+    <!-- jQuery -->
+    <script src="{{ asset('backend/assets/plugins/jquery/jquery.min.js') }}"></script>
+
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('backend/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Select2 -->
+    <script src="{{ asset('backend/assets/plugins/select2/js/select2.full.min.js') }}"></script>
+
 
     <!-- Theme style -->
 
@@ -455,6 +470,8 @@
 
     <!-- DataTables  & Plugins -->
 
+    <script src="{{ asset('backend/assets/plugins/select2/js/select2.full.min.js') }}"></script>
+
     <script src="{{ asset('backend/assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('backend/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('backend/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
@@ -471,9 +488,24 @@
     <script src="{{ asset('backend/assets/dist/js/pages/dashboard.js') }}"></script>
     <script src="{{ asset('frontend/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
+    <link href="{{ asset('backend/assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
+    {{-- <script src="{{ asset('backend/assets/plugins/jquery/jquery.min.js') }}"></script> --}}
+    {{-- <script src="path/to/bootstrap.min.js"></script> --}}
+    {{-- <script src="{{ asset('backend/assets/plugins') }}/to/select2.min.js"></script> --}}
+
+
+
 
     <script>
         $(function() {
+            //Initialize Select2 Elements
+    $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+            theme: 'bootstrap4'
+            })
+
             $("#example1").DataTable({
                 "responsive": true,
                 "lengthChange": false,

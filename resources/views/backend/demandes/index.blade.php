@@ -65,57 +65,59 @@
         </div>
         <!-- ./col -->
     </div>
-        @else
-        <div class="row">
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>150</h3>
+    @else
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>150</h3>
 
-                        <p>Total Demandes</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+                    <p>Total Demandes</p>
                 </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>53</h3>
-
-                        <p>Total offres retenues </p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
                 </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <!-- ./col -->
-
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3>65</h3>
-
-                        <p>Total Demandes sans Offres</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                    </div>
-                    <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
         </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>53</h3>
+
+                    <p>Total offres retenues </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>65</h3>
+
+                    <p>Total Demandes sans Offres</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
     @endif
+
+
 
     <div class="row">
         <div class="col-12">
@@ -144,15 +146,20 @@
                             <div class="modal-content">
                                 <div class="modal-header bg-gray-dark text-white">
                                     <h5 class="modal-title" id="newDemandeModalLabel">Faire une nouvelle demande</h5>
+
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <form method="POST" action="{{ route('demandes.store') }}">
                                     @csrf
                                     <div class="modal-body">
+                                        <h6 class="text-center"> <span class="text-danger "> Les champs précédés
+                                                d'étoile rouge sont obligatoires</span> </h6>
+                                        <div class="row">
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-6 form-group">
-                                                <label>Numero Ordre de Mission:</label>
+                                                <label>Numero Ordre de Mission</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i
                                                             class="fas fa-file-alt"></i></span>
@@ -160,7 +167,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 form-group">
-                                                <label>Lieu Départ:</label>
+                                                <label>Lieu Départ <sup class="text-danger">*</sup> </label>
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i
                                                             class="fas fa-map-marker-alt"></i></span>
@@ -168,9 +175,27 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+
+                                            <div class=" col-md-6 form-group">
+                                                <label>Minimal</label>
+                                                <select class="form-control select2bs4" style="width: 100%;">
+                                                    <option selected="selected">Alabama</option>
+                                                    <option>Alaska</option>
+                                                    <option>California</option>
+                                                    <option>Delaware</option>
+                                                    <option>Tennessee</option>
+                                                    <option>Texas</option>
+                                                    <option>Washington</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
                                         <div class="row">
                                             <div class="col-md-6 form-group">
-                                                <label>Lieu Arrivée:</label>
+                                                <label>Lieu d'Arrivée <sup class="text-danger">*</sup></label>
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i
                                                             class="fas fa-map-marker-alt"></i></span>
@@ -178,7 +203,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 form-group">
-                                                <label>Date de depart:</label>
+                                                <label>Date de depart <sup class="text-danger">*</sup></label>
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i
                                                             class="fas fa-calendar-alt"></i></span>
@@ -188,7 +213,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 form-group">
-                                                <label>Date de retour:</label>
+                                                <label>Date de retour <sup class="text-danger">*</sup></label>
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i
                                                             class="fas fa-calendar-check"></i></span>
@@ -196,16 +221,17 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 form-group">
-                                                <label>Durée:</label>
+                                                <label>Délai de Reception en Heures <sup
+                                                        class="text-danger">*</sup></label>
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                                                    <input type="text" name="duree" class="form-control">
+                                                    <input type="number" name="duree" value="24" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12 form-group">
-                                                <label>Description du besoin:</label>
+                                                <label>Besoin specifique:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i
                                                             class="fas fa-align-left"></i></span>
@@ -215,9 +241,10 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Annuler</button>
-                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> <i
+                                                class="bi bi-x"></i> Annuler</button>
+                                        <button type="submit" class="btn btn-success"> <i
+                                                class="bi bi-check"></i>Enregistrer</button>
                                     </div>
                                 </form>
                             </div>
@@ -421,6 +448,11 @@
                                     </button>
                                     @endcanany
                                     @endif
+
+                                    <!-- Button pour ouvrir la modal -->
+
+
+
                                     <!-- Modal d'activation -->
                                     <div class="modal fade" id="activateOffreModal{{ $demande->id }}" tabindex="-1"
                                         aria-labelledby="activateOffreModalLabel{{ $demande->id }}" aria-hidden="true">
