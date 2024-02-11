@@ -22,5 +22,9 @@ class DemandeBillet extends Model
     {
         return $this->hasMany(Offre::class, 'demande_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

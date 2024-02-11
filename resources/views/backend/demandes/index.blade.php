@@ -185,10 +185,11 @@
                                                                 <label>Description du besoin:</label>
                                                                 <div class="input-group">
                                                                     <span class="input-group-text"><i class="fas fa-align-left"></i></span>
-                                                                    <textarea name="description" class="form-control"></textarea>
+                                                                    <textarea name="description" class="form-control" placeholder="Merci de detailler vos besoins en specifiant votre compagnie de choix, si vous voulez des escales, et d'autres informations pertinentes "></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -210,7 +211,7 @@
                                     <th>Lieu Arrivée</th>
                                     <th>Date Depart</th>
                                     <th>Date Retour</th>
-
+                                    <th>Statut</th>
                                     <th>Délai</th>
                                     <th>Action</th>
                                 </tr>
@@ -228,7 +229,12 @@
                                         <td>{{ \Carbon\Carbon::parse($demande->dateDepart)->format('d M Y à H:i:s') }}</td>
                                          <td>{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d M Y à H:i:s') }}</td>
 
+                                         @if ($demande->etat ==1)
 
+                                         <td> <span class="badge bg-success">En cours</span></td>
+                                         @else
+                                         <td><span class="badge bg-danger">Fermée</span></td>
+                                         @endif
 
                                          <td>{{ $demande->duree.'Heures' }}</td>
                                         <td>
@@ -238,60 +244,79 @@
                                             <i class="bi bi-eye"></i> Détails
                                         </button>
                                         <!-- Modal de détails de la demande -->
-<div class="modal fade" id="detailDemandeModal" tabindex="-1" aria-labelledby="detailDemandeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-gray-dark text-white">
-                <h5 class="modal-title" id="detailDemandeModalLabel">Détails de la Demande</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body bg-light">
-                <div class="row">
-                    <!-- Numéro Ordre de Mission et Lieu Départ -->
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-file-earmark-text me-2"></i><strong>Numéro Ordre de Mission :</strong> {{ $demande->numeroOrdreMission }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-geo-alt me-2"></i><strong>Lieu Départ :</strong> {{ $demande->lieuDepart }}
-                    </div>
-
-                    <!-- Lieu Arrivée et Date Départ -->
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-geo me-2"></i><strong>Lieu Arrivée :</strong> {{ $demande->lieuArrivee }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-calendar-event me-2"></i><strong>Date Départ :</strong> {{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}
-                    </div>
-
-                    <!-- Date Arrivée et Durée -->
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-calendar-check me-2"></i><strong>Date Arrivée :</strong> {{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <i class="bi bi-hourglass-split me-2"></i><strong>Durée :</strong> {{ $demande->duree }}
-                    </div>
-
-
-                    <!-- Description du besoin -->
-                    <div class="col-12 mb-3">
-                        <i class="bi bi-textarea-t me-2"></i><strong>Description du besoin :</strong> {{ $demande->description }}
-                    </div>
-                     {{-- <!-- Description du besoin -->
-                     <div class="col-12 mb-3">
-                        <i class="bi bi-textarea-t me-2"></i><strong>Description du besoin :</strong> {{ $demande->prix_minimum }}
-                    </div> --}}
-                    {{-- @if($demande->offres->isNotEmpty())
-                    <div>Prix minimum: {{ $demande->offres->first()->prixBillet }}</div>
-                @else
-                    <div>Pas d'offres disponibles</div>
-                @endif --}}
-                </div>
-            </div>
-            <div class="modal-footer bg-dark-primary">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-            </div>
-        </div>
-    </div>
+                                        <div class="modal fade" id="detailDemandeModal" tabindex="-1" aria-labelledby="detailDemandeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-gray-dark text-white">
+                                                        <h5 class="modal-title" id="detailDemandeModalLabel">Détails de la Demande</h5>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body bg-light">
+                                                        <div class="row">
+                                                            <!-- Numéro Ordre de Mission -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <label class="form-label"><i class="bi bi-file-earmark-text me-2"></i><strong>Numéro Ordre de Mission :</strong></label>
+                                                                <div class="input-group">
+                                                                    <input type="text" value="{{ $demande->numeroOrdreMission }}" class="form-control" readonly>
+                                                                </div>
+                                                            </div>
+                                        
+                                                            <!-- Lieu Départ -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <label class="form-label"><i class="bi bi-geo-alt me-2"></i><strong>Lieu Départ :</strong></label>
+                                                                <div class="input-group">
+                                                                    <input type="text" value="{{ $demande->lieuDepart }}" class="form-control" readonly>
+                                                                </div>
+                                                            </div>
+                                        
+                                                            <!-- Lieu Arrivée -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <label class="form-label"><i class="bi bi-geo me-2"></i><strong>Lieu Arrivée :</strong></label>
+                                                                <div class="input-group">
+                                                                    <input type="text" value="{{ $demande->lieuArrivee }}" class="form-control" readonly>
+                                                                </div>
+                                                            </div>
+                                        
+                                                            <!-- Date Départ -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <label class="form-label"><i class="bi bi-calendar-event me-2"></i><strong>Date Départ :</strong></label>
+                                                                <div class="input-group">
+                                                                    <input type="text" value="{{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}" class="form-control" readonly>
+                                                                </div>
+                                                            </div>
+                                        
+                                                            <!-- Date Arrivée -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <label class="form-label"><i class="bi bi-calendar-check me-2"></i><strong>Date Arrivée :</strong></label>
+                                                                <div class="input-group">
+                                                                    <input type="text" value="{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}" class="form-control" readonly>
+                                                                </div>
+                                                            </div>
+                                        
+                                                            <!-- Durée -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <label class="form-label"><i class="bi bi-hourglass-split me-2"></i><strong>Durée :</strong></label>
+                                                                <div class="input-group">
+                                                                    <input type="text" value="{{ $demande->duree }}" class="form-control" readonly>
+                                                                </div>
+                                                            </div>
+                                        
+                                                            <!-- Description du besoin -->
+                                                            <div class="col-12 mb-3">
+                                                                <label class="form-label"><i class="bi bi-textarea-t me-2"></i><strong>Description du besoin :</strong></label>
+                                                                <div class="input-group">
+                                                                    <textarea class="form-control" readonly>{{ $demande->description }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer bg-dark-primary">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
 </div>
 
 
@@ -400,6 +425,57 @@
                                                                             <input type="hidden" name="demande_id" value="{{ $demande->id }}">
 
                                                                             <div class="col-6">
+                                                                                <div class="form-group m-auto">
+                                                                                    <label>Classe du billet:</label>
+                                                                                    <div class="input-group">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-plane"></i></span>
+                                                                                        </div>
+                                                                                        <input type="text" value="{{ $demande->classe_billet }}" class="form-control" readonly>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-6">
+                                                                                <div class="form-group m-auto">
+                                                                                    <label>Lieu de départ:</label>
+                                                                                    <div class="input-group">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                                                                        </div>
+                                                                                        <input type="text" value="{{ $demande->lieuDepart }}" class="form-control" readonly>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            <!-- Lieu d'arrivée -->
+                                                                            <div class="col-6">
+                                                                                <div class="form-group m-auto">
+                                                                                    <label>Lieu d'arrivée:</label>
+                                                                                    <div class="input-group">
+                                                                                        <div class="input-group-prepend">
+                                                                                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                                                                        </div>
+                                                                                        <input type="text" value="{{ $demande->lieuArrivee }}" class="form-control" readonly>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            
+                                                                        </div>
+                                                                        <!-- Description -->
+                                                                        <div class="col-12 mt-4">
+                                                                            <div class="form-group">
+                                                                                <label>Description de la demande:</label>
+                                                                                <textarea class="form-control" readonly>{{ $demande->description }}</textarea>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col-6">
                                                                                 <div class="form-group  m-auto">
                                                                                     <label>Prix :</label>
 
@@ -413,26 +489,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-
-
-                                                                        </div>
-
-                                                                        <div class="row mt-4">
-                                                                            {{-- <div class="form-group  m-auto">
-                                                                                <label>Date Debut Offre:</label>
-
-                                                                                <div class="input-group">
-                                                                                    <div class="input-group-prepend">
-                                                                                        <span class="input-group-text"><i
-                                                                                                class="far fa-calendar-alt"></i></span>
-                                                                                    </div>
-                                                                                    <input type="date" name="dateDebutValidite"
-                                                                                        class="form-control"
-                                                                                        data-inputmask-alias="datetime"
-                                                                                        data-inputmask-inputformat="dd/mm/yyyy"
-                                                                                        data-mask>
-                                                                                </div>
-                                                                            </div> --}}
+                                                                            <div class="col-6">
                                                                             <div class="form-group m-auto">
                                                                                 <label>Valable jusqu'au:</label>
 
@@ -449,19 +506,20 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                        </div>
+                                                                        
 
                                                                         <div class="form-group mt-4">
                                                                             <label>Observation de l'offre:</label>
-
                                                                             <div class="input-group">
                                                                                 <div class="input-group-prepend">
-                                                                                    <span class="input-group-text"></i><i
-                                                                                            class="fas fa-info-circle"></i></span>
+                                                                                    <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
                                                                                 </div>
-                                                                                <textarea type="text" name="description"
-                                                                                    class="form-control"></textarea>
+                                                                                <textarea type="text" name="description" class="form-control" 
+                                                                                    placeholder="Merci de detailler votre offre, en specifiant le nombre des escales, la compagnie de trasport et d'autres informations pertinentes votre billet"></textarea>
                                                                             </div>
                                                                         </div>
+                                                                        
 
                                                                         <div class="form-group mt-4">
                                                                             <label> <b>Certification sur l'honneur:</b></label>
