@@ -196,7 +196,7 @@
                                                 <label>Nom Complet du Passager </label>
                                                 <div class="input-group">
                                                     <input type="text" name="nomCompletPassager"
-                                                        class="form-control    value="{{ old('nomCompletPassager') }}"
+                                                        class="form-control    value=" {{ old('nomCompletPassager') }}"
                                                         autocomplete="off">
                                                 </div>
                                             </div>
@@ -378,7 +378,8 @@
                                                             <!-- Icône FontAwesome -->
                                                         </span>
                                                     </div>
-                                                    <select name="lieuDepart" required class="form-control custom-select">
+                                                    <select name="lieuDepart" required
+                                                        class="form-control custom-select">
                                                         @foreach ($cities as $city)
                                                         <option value="{{ $city->city }}">{{ $city->city }} - {{
                                                             $city->country }}</option>
@@ -400,7 +401,8 @@
                                                             <!-- Icône FontAwesome -->
                                                         </span>
                                                     </div>
-                                                    <select name="lieuArrivee" required class="form-control custom-select">
+                                                    <select name="lieuArrivee" required
+                                                        class="form-control custom-select">
                                                         @foreach ($cities as $city)
                                                         <option value="{{ $city->city }}">{{ $city->city }} - {{
                                                             $city->country }}</option>
@@ -431,7 +433,7 @@
                                                 <label>Delai de Reception:</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                                                    <input type="text"  name="duree" class="form-control" required>
+                                                    <input type="text" name="duree" class="form-control" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -444,7 +446,8 @@
                                                         <!-- Icône FontAwesome pour la classe du billet -->
                                                     </span>
                                                 </div>
-                                                <select name="classe_billet" class="form-control custom-select" required>
+                                                <select name="classe_billet" class="form-control custom-select"
+                                                    required>
                                                     <option value="economique">Économique</option>
                                                     <option value="affaire">Affaire</option>
                                                 </select>
@@ -513,8 +516,8 @@
                                 <td>{{ $demande->duree.' Heures' }}</td>
                                 <td>
                                     <!-- Bouton pour ouvrir le modal de détails -->
-                                    <button title="Voir Détails" type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#detailDemandeModal">
+                                    <button title="Voir Détails" type="button" class="btn btn-primary btn-sm"
+                                        data-bs-toggle="modal" data-bs-target="#detailDemandeModal">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                     <!-- Modal de détails de la demande -->
@@ -631,115 +634,103 @@
                 <button title="Modifier" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                     data-bs-target="#modifDemandeModal{{ $demande->id }}">
 
-                        <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil-square"></i>
 
                 </button>
 
                 <div class="modal fade" id="modifDemandeModal{{ $demande->id }}" tabindex="-1"
-                aria-labelledby="detailDemandeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header bg-gray-dark text-white">
-                            <h5 class="modal-title" id="detailDemandeModalLabel">Modification de la demande</h5>
-                            <button type="button" class="btn-close btn-close-white"
-                                data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body bg-light">
-                            <div class="row">
-                                <!-- Numéro Ordre de Mission -->
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><i
-                                            class="bi bi-file-earmark-text me-2"></i><strong>Numéro
-                                            Ordre de Mission :</strong></label>
-                                    <div class="input-group">
-                                        <input type="text"
-                                            value="{{ $demande->numeroOrdreMission }}"
-                                            class="form-control"  >
+                    aria-labelledby="detailDemandeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-gray-dark text-white">
+                                <h5 class="modal-title" id="detailDemandeModalLabel">Modification de la demande</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body bg-light">
+                                <div class="row">
+                                    <!-- Numéro Ordre de Mission -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i
+                                                class="bi bi-file-earmark-text me-2"></i><strong>Numéro
+                                                Ordre de Mission :</strong></label>
+                                        <div class="input-group">
+                                            <input type="text" value="{{ $demande->numeroOrdreMission }}"
+                                                class="form-control">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Lieu Départ -->
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><i
-                                            class="bi bi-geo-alt me-2"></i><strong>Lieu
-                                            Départ
-                                            :</strong></label>
-                                    <div class="input-group">
-                                        <input type="text" value="{{ $demande->lieuDepart }}"
-                                            class="form-control"  >
+                                    <!-- Lieu Départ -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="bi bi-geo-alt me-2"></i><strong>Lieu
+                                                Départ
+                                                :</strong></label>
+                                        <div class="input-group">
+                                            <input type="text" value="{{ $demande->lieuDepart }}" class="form-control">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Lieu Arrivée -->
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><i
-                                            class="bi bi-geo me-2"></i><strong>Lieu Arrivée
-                                            :</strong></label>
-                                    <div class="input-group">
-                                        <input type="text" value="{{ $demande->lieuArrivee }}"
-                                            class="form-control"  >
+                                    <!-- Lieu Arrivée -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="bi bi-geo me-2"></i><strong>Lieu Arrivée
+                                                :</strong></label>
+                                        <div class="input-group">
+                                            <input type="text" value="{{ $demande->lieuArrivee }}" class="form-control">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Date Départ -->
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><i
-                                            class="bi bi-calendar-event me-2"></i><strong>Date
-                                            Départ :</strong></label>
-                                    <div class="input-group">
-                                        <input type="text"
-                                            value="{{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}"
-                                            class="form-control"  >
+                                    <!-- Date Départ -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="bi bi-calendar-event me-2"></i><strong>Date
+                                                Départ :</strong></label>
+                                        <div class="input-group">
+                                            <input type="text"
+                                                value="{{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}"
+                                                class="form-control">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Date Arrivée -->
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><i
-                                            class="bi bi-calendar-check me-2"></i><strong>Date
-                                            Arrivée :</strong></label>
-                                    <div class="input-group">
-                                        <input type="text"
-                                            value="{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}"
-                                            class="form-control"  >
+                                    <!-- Date Arrivée -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="bi bi-calendar-check me-2"></i><strong>Date
+                                                Arrivée :</strong></label>
+                                        <div class="input-group">
+                                            <input type="text"
+                                                value="{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}"
+                                                class="form-control">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Durée -->
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><i
-                                            class="bi bi-hourglass-split me-2"></i><strong>Delai
-                                            de Reception :</strong></label>
-                                    <div class="input-group">
-                                        <input type="text"
-                                            value="{{ $demande->duree.' Heures' }}"
-                                            class="form-control"  >
+                                    <!-- Durée -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i
+                                                class="bi bi-hourglass-split me-2"></i><strong>Delai
+                                                de Reception :</strong></label>
+                                        <div class="input-group">
+                                            <input type="text" value="{{ $demande->duree.' Heures' }}"
+                                                class="form-control">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Description du besoin -->
-                                <div class="col-12 mb-3">
-                                    <label class="form-label"><i
-                                            class="bi bi-textarea-t me-2"></i><strong>Description
-                                            du besoin :</strong></label>
-                                    <div class="input-group">
-                                        <textarea class="form-control"
-                                             >{{ $demande->description }}</textarea>
+                                    <!-- Description du besoin -->
+                                    <div class="col-12 mb-3">
+                                        <label class="form-label"><i
+                                                class="bi bi-textarea-t me-2"></i><strong>Description
+                                                du besoin :</strong></label>
+                                        <div class="input-group">
+                                            <textarea class="form-control">{{ $demande->description }}</textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer bg-dark-primary">
-                            <button type="button" class="btn btn-danger"
-                                data-bs-dismiss="modal">Fermer</button>
+                            <div class="modal-footer bg-dark-primary">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
                                 <button type="submit" class="btn btn-success"
-                                data-bs-dismiss="modal">Enregistrer</button>
+                                    data-bs-dismiss="modal">Enregistrer</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
 
                 @endcanany
                 @endif
