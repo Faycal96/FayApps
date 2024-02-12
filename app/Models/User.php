@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $this->hasOne(AgenceAcredite::class, 'user_id', 'id');
     }
 
+    public function ministere()
+    {
+        return $this->hasOne(Ministere::class,'id','id_m');
+    }
+
     /**
      * The attributes that should be cast.
      *
