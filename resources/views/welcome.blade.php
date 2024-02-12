@@ -59,7 +59,7 @@
       </div>
 
       <nav id="navbar" class="navbar">
-        <ul>
+        {{-- <ul> --}}
           {{-- <li><a class="active" href="index.html">Accueil</a></li>;
           <li><a href="contact.html">Contact</a></li> --}}
           {{-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -143,36 +143,26 @@
           </div>
 
           <!-- Slide 2 -->
-          <div class="carousel-item" style="background-image: url(frontend/assets/img/slide/slide1.jpg)">
+          {{-- <div class="carousel-item" style="background-image: url(frontend/assets/img/slide/slide1.jpg)">
             <div class="carousel-container">
-              {{-- <div class="carousel-content">
-                <h2 class="animate__animated fanimate__adeInDown">Lorem <span>Ipsum Dolor</span></h2>
-                <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
-                <a href="" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
-              </div> --}}
             </div>
-          </div>
+          </div> --}}
 
           <!-- Slide 3 -->
-          <div class="carousel-item" style="background-image: url(frontend/assets/img/slide/slide2.jpg)">
+          {{-- <div class="carousel-item" style="background-image: url(frontend/assets/img/slide/slide2.jpg)">
             <div class="carousel-container">
-              {{-- <div class="carousel-content">
-                <h2 class="animate__animated animate__fadeInDown">Sequi ea <span>Dime Lara</span></h2>
-                <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
-                <a href="" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
-              </div> --}}
             </div>
-          </div>
+          </div> --}}
 
         </div>
 
-        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+        {{-- <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
           <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
         </a>
 
         <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
           <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-        </a>
+        </a> --}}
 
       </div>
     </div>
@@ -206,7 +196,7 @@
           <div class="col-lg-6">
             <div class="icon-box">
                 <i class="bi bi-building"></i>
-              <h3><a href="{{ route('register') }}">Je suis une agence acreditée</a></h3>
+              <h3><a href="{{ route('login') }}">Je suis une agence acreditée</a></h3>
               <p>Description d'une agence acreditée</p>
             </div>
           </div>
@@ -215,7 +205,7 @@
             <div class="icon-box">
               {{-- <i class="bi bi-binoculars"></i> --}}
               <i class="bi bi-person"></i>
-              <h3><a href="{{ route('registerdaf') }}">Je suis un agent du Ministère</a></h3>
+              <h3><a href="{{ route('login') }}">Je suis un agent du Ministère</a></h3>
               <p>cette espace est reservé au DAF des differents Ministère</p>
             </div>
           </div>
