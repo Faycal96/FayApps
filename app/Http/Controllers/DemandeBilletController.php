@@ -80,7 +80,7 @@ class DemandeBilletController extends Controller
         })->get();
 
         // Envoyer une notification à chaque agence
-        foreach ($users as $user) {
+        
             // Vous pouvez récupérer des informations supplémentaires de l'agence si nécessaire
             // $agence = AgenceAcredite::where('user_id', $user->id)->first();
 
@@ -105,7 +105,7 @@ class DemandeBilletController extends Controller
         $duree = $request->duree;
         $description = $request->description;
         */
-    }
+    
     }
 
 

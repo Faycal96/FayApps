@@ -97,7 +97,7 @@
                                     @if ($offre->etats == "validée")
                                         <td> <span class="badge bg-success">Validée</span></td>
                                     @else
-                                        <td><span class="badge bg-danger">En attente</span></td>
+                                        <td><span class="badge bg-warning">En attente</span></td>
                                     @endif
 
 
