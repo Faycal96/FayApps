@@ -768,7 +768,28 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <div class="row mt-4">
+                                                <div class="col-12">
+                                                    <div class="form-group m-auto">
+                                                        <label>Compagnie:</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><i class="fas fa-plane-departure"></i></span>
+                                                            </div>
+                                                            <select name="compagnie" class="form-control" id="compagnieSelect">
+                                                                <option value="">Sélectionnez une compagnie</option>
+                                                                <option value="Ethiopian Airlines">Ethiopian Airlines</option>
+                                                                <option value="Kenya Airways">Kenya Airways</option>
+                                                                <option value="South African Airways">South African Airways</option>
+                                                                <option value="EgyptAir">EgyptAir</option>
+                                                                <option value="RwandAir">RwandAir</option>
+                                                                <option value="Autre">Autre</option>
+                                                            </select>
+                                                            <input type="text" name="compagnie" id="autreCompagnieInput" class="form-control d-none" placeholder="Nom de la compagnie">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <div class="form-group mt-4">
                                                 <label>Observation de l'offre:</label>
@@ -826,5 +847,15 @@
 </div>
 <!-- /.row -->
 </div><!-- /.container-fluid -->
-
+<script>
+    document.getElementById('compagnieSelect').addEventListener('change', function () {
+        var value = this.value;
+        var autreCompagnieInput = document.getElementById('autreCompagnieInput');
+        if (value === 'Autre') {
+            autreCompagnieInput.classList.remove('d-none');
+        } else {
+            autreCompagnieInput.classList.add('d-none');
+        }
+    });
+    </script>
 @endsection
