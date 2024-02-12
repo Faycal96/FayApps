@@ -75,12 +75,12 @@
                     <div class="card-body">
                    {{-- Bouton pour ouvrir le modal de création de demande --}}
                    @canany(['create-demande-billet'])
-                   <div class="col-3 offset-7">
+                   {{-- <div class="col-3 offset-7">
                     <button type="button" class="btn btn-success btn-sm my-2" data-bs-toggle="modal"
                         data-bs-target="#newDemandeModal">
                         <i class="bi bi-plus-circle"></i> Faire une nouvelle demande
                     </button>
-                </div>
+                </div> --}}
 
                 @if (session('success'))
                 <div class="alert alert-success alert-dismissible" role="alert">
@@ -104,9 +104,9 @@
 
                       <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <a  class="d-sm-inline-block btn btn-success btn-icon-split">
+                            <a title="Faire une nouvelle Demande"  class="d-sm-inline-block btn btn-success btn-icon-split">
                                 <span class="icon text-white">
-                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-plus"> Nouvelle Demande</i>
                                 </span>
                             </a>
                         </button>
@@ -137,9 +137,9 @@
                                         </div>
                                         <!-- Lieu de Départ avec icône -->
                                         <div class="col-md-6 form-group">
-                                            <label>Nom Complet du Passager <sup class="text-danger">*</sup></label>
+                                            <label>Nom Complet du Passager  </label>
                                             <div class="input-group">
-                                                <input type="text" wire:model='nomCompletPassager' name="nomCompletPassager"   class="form-control  @error('nomCompletPassager') is-invalid @enderror" value="{{ old('nomCompletPassager') }}" autocomplete="off">
+                                                <input type="text"   name="nomCompletPassager"   class="form-control    value="{{ old('nomCompletPassager') }}" autocomplete="off">
                                             </div>
                                         </div>
 
@@ -157,7 +157,7 @@
                                                 <select   wire:model='lieuDepart' name="lieuDepart" class="form-control select2bs4 custom-select"   value="{{ old('lieuDepart') }}" autocomplete="off" style="width: 100%;">
                                                     <option value="">Veuillez sélectionner une Ville</option>
                                                     @foreach ($cities as $city)
-                                                    <option>{{ $city->city }}</option>
+                                                    <option>{{ $city->city.' - '.$city->country }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -169,7 +169,7 @@
                                                 <select  wire:model='lieuArrivee' name="lieuArrivee" class="form-control select2bs4 custom-select  "   value="{{ old('lieuArrivee') }}" autocomplete="off"  style="width: 100%;">
                                                     <option value="">Veuillez sélectionner une Ville</option>
                                                     @foreach ($cities as $city)
-                                                    <option>{{ $city->city }}</option>
+                                                    <option>{{ $city->city.' - '.$city->country  }}</option>
                                                     @endforeach
                                                 </select>
 
@@ -181,7 +181,7 @@
                                             <label>Date de depart <sup class="text-danger">*</sup></label>
                                             <div class="input-group">
                                                 {{-- <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span> --}}
-                                                <input type="date" name="dateDepart"  wire:model='dateDepart' class="form-control  " value="{{ old('dateDepart') }}" autocomplete="off" >
+                                                <input type="date" name="dateDepart"   class="form-control  " value="{{ old('dateDepart') }}" autocomplete="off" >
                                             </div>
                                         </div>
 
@@ -189,7 +189,7 @@
                                             <label>Date de retour <sup class="text-danger">*</sup></label>
                                             <div class="input-group">
                                                 {{-- <span class="input-group-text"><i class="fas fa-calendar-check"></i></span> --}}
-                                                <input type="date" name="dateArrivee"  wire:model='dateArrivee' class="form-control " value="{{ old('dateArrivee') }}" autocomplete="off">
+                                                <input type="date" name="dateArrivee"    class="form-control " value="{{ old('dateArrivee') }}" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
@@ -198,7 +198,7 @@
                                         <div class="col-md-6 form-group">
                                             <label>Classe du Billet <sup class="text-danger">*</sup></label>
                                             <div class="input-group">
-                                                <select name="classe_billet" wire:model='classe_billet' class="form-control custom-select @error('classe_billet') is-invalid @enderror" value="{{ old('classe_billet') }}" autocomplete="off">
+                                                <select name="classe_billet"  class="form-control custom-select @error('classe_billet') is-invalid @enderror" value="{{ old('classe_billet') }}" autocomplete="off">
                                                     <option value="">Veuillez Choisir la classe su billet</option>
                                                     <option value="economique">Économique</option>
                                                     <option value="affaire">Affaire</option>
@@ -210,7 +210,7 @@
                                             <label>Délai de Reception en Heures <sup class="text-danger">*</sup></label>
                                             <div class="input-group">
                                                 {{-- <span class="input-group-text"><i class="fas fa-clock"></i></span> --}}
-                                                <input type="number" name="duree" wire:model='duree' class="form-control @error('duree') is-invalid  @enderror" value="{{ old('duree') }}" autocomplete="off">
+                                                <input type="number" name="duree"   class="form-control @error('duree') is-invalid  @enderror" value="{{ old('duree') }}" autocomplete="off">
 
                                             </div>
                                         </div>
@@ -222,7 +222,7 @@
                                             <label>Description du besoin:</label>
                                             <div class="input-group">
                                                 {{-- <span class="input-group-text"><i class="fas fa-align-left"></i></span> --}}
-                                                <textarea name="description" wire:model='description' class="form-control @error('description') is-invalid @enderror" value="{{ old('description') }}" autocomplete="off"></textarea>
+                                                <textarea name="description"   class="form-control @error('description') is-invalid @enderror" value="{{ old('description') }}" autocomplete="off"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -235,16 +235,8 @@
 
                         </div>
 
-
-
                     </div>
                   </div>
-
-
-
-
-
-
 
 
                @endcanany
@@ -373,7 +365,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
+
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -444,7 +436,7 @@
                                                                     <input type="text" value="{{ $demande->numeroOrdreMission }}" class="form-control" readonly>
                                                                 </div>
                                                             </div>
-                                        
+
                                                             <!-- Lieu Départ -->
                                                             <div class="col-md-6 mb-3">
                                                                 <label class="form-label"><i class="bi bi-geo-alt me-2"></i><strong>Lieu Départ :</strong></label>
@@ -452,7 +444,7 @@
                                                                     <input type="text" value="{{ $demande->lieuDepart }}" class="form-control" readonly>
                                                                 </div>
                                                             </div>
-                                        
+
                                                             <!-- Lieu Arrivée -->
                                                             <div class="col-md-6 mb-3">
                                                                 <label class="form-label"><i class="bi bi-geo me-2"></i><strong>Lieu Arrivée :</strong></label>
@@ -460,7 +452,7 @@
                                                                     <input type="text" value="{{ $demande->lieuArrivee }}" class="form-control" readonly>
                                                                 </div>
                                                             </div>
-                                        
+
                                                             <!-- Date Départ -->
                                                             <div class="col-md-6 mb-3">
                                                                 <label class="form-label"><i class="bi bi-calendar-event me-2"></i><strong>Date Départ :</strong></label>
@@ -468,7 +460,7 @@
                                                                     <input type="text" value="{{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}" class="form-control" readonly>
                                                                 </div>
                                                             </div>
-                                        
+
                                                             <!-- Date Arrivée -->
                                                             <div class="col-md-6 mb-3">
                                                                 <label class="form-label"><i class="bi bi-calendar-check me-2"></i><strong>Date Arrivée :</strong></label>
@@ -476,7 +468,7 @@
                                                                     <input type="text" value="{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}" class="form-control" readonly>
                                                                 </div>
                                                             </div>
-                                        
+
                                                             <!-- Durée -->
                                                             <div class="col-md-6 mb-3">
                                                                 <label class="form-label"><i class="bi bi-hourglass-split me-2"></i><strong>Durée :</strong></label>
@@ -484,7 +476,7 @@
                                                                     <input type="text" value="{{ $demande->duree }}" class="form-control" readonly>
                                                                 </div>
                                                             </div>
-                                        
+
                                                             <!-- Description du besoin -->
                                                             <div class="col-12 mb-3">
                                                                 <label class="form-label"><i class="bi bi-textarea-t me-2"></i><strong>Description du besoin :</strong></label>
@@ -500,7 +492,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
 </div>
 
 
@@ -516,7 +508,7 @@
                                             @endcanany
                                             @endif
 
-                                            @if($demande->offres->isNotEmpty())
+                                            @if($demande->offres->isNotEmpty() && $demande->etat ==0)
 
                                             @canany(['create-demande-billet'])
 
@@ -634,7 +626,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            
+
                                                                             <!-- Lieu d'arrivée -->
                                                                             <div class="col-6">
                                                                                 <div class="form-group m-auto">
@@ -647,8 +639,8 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            
-                                                                            
+
+
                                                                         </div>
                                                                         <!-- Description -->
                                                                         <div class="col-12 mt-4">
@@ -691,7 +683,7 @@
                                                                             </div>
                                                                         </div>
                                                                         </div>
-                                                                        
+
 
                                                                         <div class="form-group mt-4">
                                                                             <label>Observation de l'offre:</label>
@@ -699,11 +691,11 @@
                                                                                 <div class="input-group-prepend">
                                                                                     <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
                                                                                 </div>
-                                                                                <textarea type="text" name="description" class="form-control" 
+                                                                                <textarea type="text" name="description" class="form-control"
                                                                                     placeholder="Merci de detailler votre offre, en specifiant le nombre des escales, la compagnie de trasport et d'autres informations pertinentes votre billet"></textarea>
                                                                             </div>
                                                                         </div>
-                                                                        
+
 
                                                                         <div class="form-group mt-4">
                                                                             <label> <b>Certification sur l'honneur:</b></label>

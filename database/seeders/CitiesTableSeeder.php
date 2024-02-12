@@ -48,7 +48,7 @@ class CitiesTableSeeder extends Seeder
             });
 
             // Prendre uniquement les 3 premières villes
-            $topThreeCities = array_slice($cities, 0, 5);
+            $topThreeCities = array_slice($cities, 0, 10);
 
             // Insérer les villes dans la base de données
             foreach ($topThreeCities as $city) {
