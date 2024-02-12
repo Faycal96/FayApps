@@ -69,6 +69,8 @@
     <link href="{{ asset('backend/assets/plugins/summernote/summernote-bs4.min.css') }}" rel="stylesheet">
 </head>
 
+
+
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
@@ -523,6 +525,85 @@
             });
         });
     </script>
+
+
+<script>
+$(document).ready(function() {
+    // Utilisation de Select2 pour l'autocomplétion
+    $('#cities').select2({
+        placeholder: 'Rechercher une ville...',
+        ajax: {
+            url: '/cities', // URL de l'endpoint pour récupérer les données d'autocomplétion
+            dataType: 'json',
+            delay: 250,
+            processResults: function(data) {
+                return {
+                    results: data.data, // Assurez-vous d'accéder à la propriété 'data' des résultats paginés
+                    pagination: {
+                        more: data.next_page_url ? true : false // Activer la pagination si une page suivante est disponible
+                    }
+                };
+            },
+            cache: true
+        },
+        templateResult: formatCity // Appel de la fonction pour le rendu de l'option
+    });
+
+    // Fonction pour formater le rendu de l'option
+    function formatCity(city) {
+    if (!city.id) {
+        return city.city;
+    }
+
+    var cityOption = '<option value="' + city.id + '">' + city.city + '</option>';
+    return $(cityOption);
+}
+});
+
+$(document).ready(function() {
+    // Utilisation de Select2 pour l'autocomplétion
+    $('#cities2').select2({
+        placeholder: 'Rechercher une ville...',
+        ajax: {
+            url: '/cities', // URL de l'endpoint pour récupérer les données d'autocomplétion
+            dataType: 'json',
+            delay: 250,
+            processResults: function(data) {
+                return {
+                    results: data.data, // Assurez-vous d'accéder à la propriété 'data' des résultats paginés
+                    pagination: {
+                        more: data.next_page_url ? true : false // Activer la pagination si une page suivante est disponible
+                    }
+                };
+            },
+            cache: true
+        },
+        templateResult: formatCity
+    });
+
+    function formatCity(city) {
+    if (!city.id) {
+        return city.city;
+    }
+
+    var cityOption = '<option value="' + city.id + '">' + city.city + '</option>';
+    return $(cityOption);
+}
+});
+</script>
+
+<script>
+
+Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Your work has been saved",
+  showConfirmButton: false,
+  timer: 1500
+});
+</script>
+
+
 
 </body>
 

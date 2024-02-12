@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDemandeBilletRequest;
 use App\Http\Requests\UpdateDemandeBilletRequest;
+use App\Models\AgenceAcredite;
+use App\Models\City;
 use App\Models\DemandeBillet;
 use App\Models\Offre;
+use App\Models\User;
+use App\Notifications\DemandeCreatedNotification;
 use Carbon\Carbon;
+use Illuminate\Notifications\AnonymousNotifiable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
+
+
 
 class DemandeBilletController extends Controller
 {
@@ -20,11 +28,13 @@ class DemandeBilletController extends Controller
          $offreMinPrix = Offre::where('demande_id', $demande->id)
          ->orderBy('prixBillet', 'asc') // Trie par prixBillet en ordre croissant
          ->first();
+         $cities = City::all();
 
         //
         return view('backend.demandes.index', [
             'demandes' => DemandeBillet::latest('id')->paginate(10000000000),
             'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
+            'cities'=> $cities,
         ]);
     }
 
@@ -48,8 +58,7 @@ class DemandeBilletController extends Controller
         //recuperer le maximum de id
         $id = DemandeBillet::max('id');
 
-        //verifier si id existe et si il est differrent de null
-        // creer le code
+
         if (isset($id)) {
             $code = 'BF-MTDPCE-OM-'.DemandeBillet::max('id') + 001;
         } else {
@@ -58,39 +67,47 @@ class DemandeBilletController extends Controller
 
         $dateDepart = $request->dateDepart;
         $dateArrivee = $request->dateArrivee;
-        // dd((Carbon::now()->format('d/m/Y')));
-        // if ($dateDepart->lt(Carbon::now()->format('d/m/Y'))) {
 
-        // // }
-        // if ($dateArrivee->lt($dateDepart)) {
-
-        // }
-        /*
-        $request->merge(['dateDepart' => $dateDepart]);
-        $request->merge(['dateArrivee' => $dateArrivee]);
-        */
         $request->merge(['user_id' => Auth::id()]);
         $request->merge(['created_by' => Auth::user()->name]);
         $request->merge(['code_demande' => $code]);
         //$request->merge(['etat' => 'ACTIF']);
+        $demande = DemandeBillet::create($request->all());
 
-        DemandeBillet::create($request->all());
-    
 
-        return redirect()->route('demandes.index')
-            ->with('success', 'Votre demande a été enregistrée.');
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'Agence Voyage');
+        })->get();
+
+        // Envoyer une notification à chaque agence
+        foreach ($users as $user) {
+            // Vous pouvez récupérer des informations supplémentaires de l'agence si nécessaire
+            // $agence = AgenceAcredite::where('user_id', $user->id)->first();
+
+            // Ensuite, notifier l'utilisateur (qui est une agence dans ce cas)
+            foreach ($users as $user) {
+                $user->notify(new \App\Notifications\DemandeCreatedNotification($demande, $user));
+
+            }
+
+            return redirect()->route('demandes.index')->with('success', 'Votre demande a été enregistrée.');
+
+
+        // return redirect()->route('demandes.index')
+        //     ->with('success', 'Votre demande a été enregistrée.');
 
         /*
         $numeroOrdreMission = $request->numeroOrdreMission;
         $lieuDepart = $request->lieuDepart;
         $lieuArrivee = $request->lieuArrivee;
-        $dateDepart = $request->dateDepart;
+         $dateDepart= $request->dateDepart;
         $dateArrivee = $request->dateArrivee;
         $duree = $request->duree;
         $description = $request->description;
         */
-
     }
+    }
+
 
     /**
      * Display the specified resource.

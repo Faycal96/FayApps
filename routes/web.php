@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\DemandeBilletController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OffreController;
@@ -35,7 +36,7 @@ Route::patch('/users/{user}/activer', [UserController::class, 'activer'])->name(
 Route::patch('/users/{user}/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
 
 Route::post('/offres/offre/{demande}', [OffreController::class, 'offre'])->name('offres.offre');
-
+Route::get('/cities', [CityController::class, 'index']);
 Route::patch('/demandes/{demande}/toggleStatus', [DemandeBilletController::class, 'toggleStatus'])->name('demandes.toggleStatus');
 
 Route::get('registerdaf', [RegisterDafController::class, 'afficherFormulaire'])->name('registerdaf');
