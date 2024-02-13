@@ -25,6 +25,17 @@ class DemandeBilletController extends Controller
      */
     public function index(DemandeBillet $demande)
     {
+
+         // Récupérer l'utilisateur connecté
+    $user = Auth::user();
+
+    if ($user) {
+        // Compter le nombre de demandes de l'utilisateur connecté
+        $nombreDemandes = $user->demandes->count();
+    } else {
+        // Si aucun utilisateur n'est connecté, définir le nombre de demandes sur 0
+        $nombreDemandes = 0;
+    }
          // Récupère l'offre avec le prix le plus bas pour la demande spécifiée
          $offreMinPrix = Offre::where('demande_id', $demande->id)
          ->orderBy('prixBillet', 'asc') // Trie par prixBillet en ordre croissant
@@ -36,6 +47,7 @@ class DemandeBilletController extends Controller
             'demandes' => DemandeBillet::latest('id')->paginate(10000000000),
             'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
             'cities'=> $cities,
+            'nombreDemandes' => $nombreDemandes, // Passer le nombre de demandes à la vue
         ]);
     }
 
@@ -81,7 +93,7 @@ class DemandeBilletController extends Controller
         })->get();
 
         // Envoyer une notification à chaque agence
-        
+
             // Vous pouvez récupérer des informations supplémentaires de l'agence si nécessaire
             // $agence = AgenceAcredite::where('user_id', $user->id)->first();
 
@@ -106,7 +118,7 @@ class DemandeBilletController extends Controller
         $duree = $request->duree;
         $description = $request->description;
         */
-    
+
     }
 
 
