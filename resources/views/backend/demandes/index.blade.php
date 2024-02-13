@@ -7,7 +7,7 @@
     <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-    <h5 class="alert-heading">{{session('success')}}</h5>
+    <span class="alert-heading">{{session('success')}}</span>
 
 </div>
 
@@ -27,7 +27,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>{{ $nombreOffres }}</h3>
                     <p>Total de mes Propositions</p>
 
                 </div>
@@ -42,7 +42,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>53</h3>
+                    <h3>{{ $nombreOfrresValidees }}</h3>
                     <p>Propositions Retenues</p>
 
                 </div>
@@ -59,8 +59,8 @@
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>65</h3>
-                    <p>Propositions rejettées</p>
+                    <h3>{{ $nombreOfrresRejettees }}</h3>
+                    <p>Propositions  non Retenues</p>
 
                 </div>
                 <div class="icon">
@@ -94,7 +94,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>53</h3>
+                    <h3>0</h3>
 
                     <p>Total offres retenues </p>
                 </div>
@@ -111,7 +111,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>65</h3>
+                    <h3>0</h3>
 
                     <p>Total Demandes sans Offres</p>
                 </div>
@@ -772,7 +772,7 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                 <form action="{{ route('demandes.destroy', $demande->id) }}" method="post">
                                     @csrf
-                                    @method('DELETE')
+                                    {{-- @method('DELETE') --}}
                                     <button type="submit" class="btn btn-danger">Supprimer</button>
                                 </form>
                             </div>
@@ -786,13 +786,16 @@
 
 
                 <!-- Bouton de déclenchement -->
-
+                @if ($demande->etat == 1)
                 @canany(['propose-demande-billet'])
                 <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
                     data-bs-target="#activateOffreModal{{ $demande->id }}">
                     <i class="bi bi-toggle-on"></i> Faire une offre
                 </button>
                 @endcanany
+                @endif
+
+
                 <!-- Modal d'activation -->
                 <div class="modal fade" id="activateOffreModal{{ $demande->id }}" tabindex="-1"
                     aria-labelledby="activateOffreModalLabel{{ $demande->id }}" aria-hidden="true">

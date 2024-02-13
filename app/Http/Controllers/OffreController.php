@@ -31,7 +31,7 @@ class OffreController extends Controller
     public function offre(DemandeBillet $demande)
     {
         //
-        dd($demande);
+        // dd($demande);
         // Auth::id();
         // $demande_billets = DemandeBillet::where('etat', '=', false)
         //where('user_id', '=', Auth::id())
@@ -141,6 +141,7 @@ class OffreController extends Controller
         $offre->etats = 'validée';
         $offre->motif = $request->motif;
         $offre->save();
+
     // Récupérer les informations nécessaires
     $offreDetails = [
         'demandeId' => $offre->demande->code_demande, // Assurez-vous que l'offre a une relation 'demande'
@@ -156,8 +157,11 @@ class OffreController extends Controller
     // Envoyer la notification
     $agence->notify(new \App\Notifications\OffreValideeNotification($offreDetails));
 
-    return redirect()->back()->with('success', 'L\'offre a été validée avec succès.');
-}
+ 
+
+        return redirect()->back()->with('success', 'L\'offre a été validée avec succès.');
+    }
+
     public function rejeter(Request $request, $offreId)
 {
     $offre = Offre::findOrFail($offreId);

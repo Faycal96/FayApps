@@ -10,7 +10,7 @@ class AgenceAcredite extends Model
 {
     use HasFactory,Notifiable;
 
- 
+
     protected $table = 'agence_acredites';
 
 
@@ -32,6 +32,8 @@ class AgenceAcredite extends Model
     {
         return $this->hasOne(User::class,'id','user_id');
     }
+
+  
 
     public function savePdfFile($pdfFilePath)
     {

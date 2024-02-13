@@ -38,6 +38,8 @@ Route::patch('/users/{user}/toggleStatus', [UserController::class, 'toggleStatus
 Route::post('/offres/offre/{demande}', [OffreController::class, 'offre'])->name('offres.offre');
 Route::get('/cities', [CityController::class, 'index']);
 Route::patch('/demandes/{demande}/toggleStatus', [DemandeBilletController::class, 'toggleStatus'])->name('demandes.toggleStatus');
+Route::post('/demandes/{id}', [DemandeBilletController::class, 'destroy'])->name('demandes.destroy');
+
 
 Route::get('registerdaf', [RegisterDafController::class, 'afficherFormulaire'])->name('registerdaf');
 Route::post('/storeDaf', [RegisterDafController::class, 'enregistrer'])->name('storeDaf');

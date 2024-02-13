@@ -12,7 +12,7 @@
                         @csrf
                         <!-- Nom de l'Agence -->
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nom de l\'Agence') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nom de l\'Agence') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-building"></i></span>
@@ -28,7 +28,7 @@
 
                         <!-- Adresse Email -->
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Adresse Email') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Adresse Email') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
@@ -44,7 +44,7 @@
 
                         <!-- Adresse de l'Agence -->
                         <div class="row mb-3">
-                            <label for="adressAgence" class="col-md-4 col-form-label text-md-end">{{ __('Adresse Agence') }}</label>
+                            <label for="adressAgence" class="col-md-4 col-form-label text-md-end">{{ __('Adresse Agence') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
@@ -60,7 +60,7 @@
 
                         <!-- Date de création -->
                         <div class="row mb-3">
-                            <label for="dateCreationAgence" class="col-md-4 col-form-label text-md-end">{{ __('Date de Création') }}</label>
+                            <label for="dateCreationAgence" class="col-md-4 col-form-label text-md-end">{{ __('Date de Création') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
@@ -76,7 +76,7 @@
 
                         <!-- Numéro IFU -->
                         <div class="row mb-3">
-                            <label for="numeroIfu" class="col-md-4 col-form-label text-md-end">{{ __('Numéro IFU') }}</label>
+                            <label for="numeroIfu" class="col-md-4 col-form-label text-md-end">{{ __('Numéro IFU') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-id-card"></i></span>
@@ -92,7 +92,7 @@
 
                         <!-- Téléphone -->
                         <div class="row mb-3">
-                            <label for="telephone" class="col-md-4 col-form-label text-md-end">{{ __('Téléphone') }}</label>
+                            <label for="telephone" class="col-md-4 col-form-label text-md-end">{{ __('Téléphone') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -108,7 +108,7 @@
 
                         <!-- RCCM -->
                         <div class="row mb-3">
-                            <label for="rccm" class="col-md-4 col-form-label text-md-end">{{ __('Registre de Commerce') }}</label>
+                            <label for="rccm" class="col-md-4 col-form-label text-md-end">{{ __('Registre de Commerce') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
@@ -124,7 +124,7 @@
 
                         <!-- Password -->
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
@@ -140,7 +140,7 @@
 
                         <!-- Confirm Password -->
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
