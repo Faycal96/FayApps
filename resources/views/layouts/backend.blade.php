@@ -230,7 +230,7 @@
                                 <i class="nav-icon far fa-calendar-alt"></i>
                                 <p>
                                     Gestion des offres
-                                    <span class="badge badge-info right">2</span>
+                                    <span class="badge badge-info right"> </span>
                                 </p>
                             </a>
                         </li>
@@ -244,7 +244,7 @@
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Gestion des utilisateur
-                                    <span class="badge badge-info right">2</span>
+                                    <span class="badge badge-info right"> </span>
                                 </p>
                             </a>
                         </li>
@@ -266,12 +266,6 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0">Tableau de bord</h1>
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-                                <li class="breadcrumb-item active">Tableau de bord</li>
-                            </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->

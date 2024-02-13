@@ -196,13 +196,13 @@
 
                             <div class="text-center">
                                 {{-- <div class="col-md-8 offset-md-4"> --}}
-                                    <h3><a href="{{ route('login') }}"> Je n'ai pas de compte.</a> </h3>
-                                    <a href="{{ route('register') }}">
+                                    <h3><a class="btn btn-primary" href="{{ route('login') }}"> Je n'ai pas de compte.</a> </h3>
+                                    {{-- <a href="{{ route('register') }}">
                                         Agence |
                                     </a>
                                     <a href="{{ route('registerdaf') }}">
                                         DAF
-                                    </a>
+                                    </a> --}}
                                     {{--
                                 </div> --}}
                             </div>

@@ -19,9 +19,25 @@ class OffreController extends Controller
 
     public function index()
     {
+
+         // Récupérer l'utilisateur connecté
+    $user = Auth::user();
+
+        if ($user->agence) {
+            $nombreOffres = $user->agence->offres->count();
+            $nombreOfrresValidees = $user->agence->offres->where('etats', 'validée')->count();
+            $nombreOfrresRejettees = $user->agence->offres->where('etats', 'rejetée')->count();
+        } else {
+            $nombreOffres = 0;
+            $nombreOfrresValidees = 0;
+            $nombreOfrresRejettees = 0;
+        }
         //
         return view('backend.offres.index', [
             'offres' => Offre::latest('id')->paginate(10000000000),
+            'nombreOffres' =>$nombreOffres,
+            'nombreOfrresValidees' =>$nombreOfrresValidees,
+            'nombreOfrresRejettees' =>$nombreOfrresRejettees,
         ]);
     }
 
@@ -75,7 +91,7 @@ class OffreController extends Controller
         //verifier si id existe et si il est differrent de null
         // creer le code
         if (isset($id)) {
-            $code = 'BF-MTDPCE-OM-'.Offre::max('id') + 001;
+            $code = 'BF-MTDPCE-OM-' . Offre::max('id') + 001;
         } else {
             $code = 'BF-MTDPCE-OM-001';
         }
@@ -142,37 +158,33 @@ class OffreController extends Controller
         $offre->motif = $request->motif;
         $offre->save();
 
-    // Récupérer les informations nécessaires
-    $offreDetails = [
-        'demandeId' => $offre->demande->code_demande, // Assurez-vous que l'offre a une relation 'demande'
-        'prix' => $offre->prixBillet,
-        'offreId' => $offre->id,
-    ];
+        // Récupérer les informations nécessaires
+        $offreDetails = [
+            'demandeId' => $offre->demande->code_demande, // Assurez-vous que l'offre a une relation 'demande'
+            'prix' => $offre->prixBillet,
+            'offreId' => $offre->id,
+        ];
 
-    // Trouver l'agence à notifier
-    $agence = $offre->agence->user;
+        // Trouver l'agence à notifier
+        $agence = $offre->agence->user;
 
-    // Assurez-vous d'avoir une relation 'agence' ou similaire
+        // Assurez-vous d'avoir une relation 'agence' ou similaire
 
-    // Envoyer la notification
-    $agence->notify(new \App\Notifications\OffreValideeNotification($offreDetails));
+        // Envoyer la notification
+        $agence->notify(new \App\Notifications\OffreValideeNotification($offreDetails));
 
 
 
         return redirect()->route('demandes.index')->with('success', 'L\'offre a été validée avec succès.');
-
     }
 
     public function rejeter(Request $request, $offreId)
-{
-    $offre = Offre::findOrFail($offreId);
-    $offre->etats = 'rejetée'; // Ou tout autre valeur représentant l'état rejeté
-    $offre->motif = $request->motif; // Assurez-vous que le champ existe dans votre base de données
-    $offre->save();
+    {
+        $offre = Offre::findOrFail($offreId);
+        $offre->etats = 'rejetée'; // Ou tout autre valeur représentant l'état rejeté
+        $offre->motif = $request->motif; // Assurez-vous que le champ existe dans votre base de données
+        $offre->save();
 
-    return redirect()->route('demandes.index')->with('error', 'L\'offre a été rejetée.');
-}
-
-
-
+        return redirect()->route('demandes.index')->with('error', 'L\'offre a été rejetée.');
+    }
 }

@@ -40,6 +40,8 @@ Route::get('/cities', [CityController::class, 'index']);
 Route::patch('/demandes/{demande}/toggleStatus', [DemandeBilletController::class, 'toggleStatus'])->name('demandes.toggleStatus');
 Route::post('/demandes/{id}', [DemandeBilletController::class, 'destroy'])->name('demandes.destroy');
 
+Route::put('/demandes/update/{id}', [DemandeBilletController::class, 'update'])->name('demandes.update');
+
 
 Route::get('registerdaf', [RegisterDafController::class, 'afficherFormulaire'])->name('registerdaf');
 Route::post('/storeDaf', [RegisterDafController::class, 'enregistrer'])->name('storeDaf');

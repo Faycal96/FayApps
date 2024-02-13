@@ -23,12 +23,16 @@
     @if (isset(Auth::user()->agence))
 
     <div class="row">
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-4">
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>{{ $nombreOffres }}</h3>
-                    <p>Total de mes Propositions</p>
+                    @if ($nombreOffres <= 1)
+                    <p>Proposition au totale</p>
+                    @else
+                    <p>Propositions au totales</p>
+                    @endif
 
                 </div>
                 <div class="icon">
@@ -38,12 +42,16 @@
             </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-4">
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
                     <h3>{{ $nombreOfrresValidees }}</h3>
+                    @if ($nombreOfrresValidees <= 1)
+                    <p>Proposition Retenue</p>
+                    @else
                     <p>Propositions Retenues</p>
+                    @endif
 
                 </div>
                 <div class="icon">
@@ -54,13 +62,16 @@
         </div>
         <!-- ./col -->
 
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-4">
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
                     <h3>{{ $nombreOfrresRejettees }}</h3>
-                    <p>Propositions  non Retenues</p>
+                    @if ($nombreOfrresRejettees <= 1)
+                    <p>Proposition non Retenue</p>
+                    @else
+                    <p>Propositions non Retenues</p>
+                    @endif
 
                 </div>
                 <div class="icon">
@@ -508,9 +519,9 @@
 
                                 @if ($demande->etat ==1)
 
-                                <td> <span class="badge bg-success">En cours</span></td>
-                                @else
-                                <td><span class="badge bg-danger">Fermée</span></td>
+                                    <td> <span class="badge bg-success">En cours</span></td>
+                                    @else
+                                    <td><span class="badge bg-danger">Fermée</span></td>
                                 @endif
 
                                 <td>{{ $demande->duree.' Heures' }}</td>
@@ -633,11 +644,9 @@
 
                 <button title="Modifier" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                     data-bs-target="#modifDemandeModal{{ $demande->id }}">
-
                     <i class="bi bi-pencil-square"></i>
 
                 </button>
-
                 <div class="modal fade" id="modifDemandeModal{{ $demande->id }}" tabindex="-1"
                     aria-labelledby="detailDemandeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -647,90 +656,98 @@
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="modal-body bg-light">
-                                <div class="row">
-                                    <!-- Numéro Ordre de Mission -->
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label"><i
-                                                class="bi bi-file-earmark-text me-2"></i><strong>Numéro
-                                                Ordre de Mission :</strong></label>
-                                        <div class="input-group">
-                                            <input type="text" value="{{ $demande->numeroOrdreMission }}"
-                                                class="form-control">
+                            <form action="{{ route('demandes.update', ['demande' => $demande->id]) }}" method="POST">
+                                @method('PUT')
+                                @csrf
+                                <div class="modal-body bg-light">
+                                    <div class="row">
+                                        <!-- Numéro Ordre de Mission -->
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label"><i
+                                                    class="bi bi-file-earmark-text me-2"></i><strong>Numéro
+                                                    Ordre de Mission :</strong></label>
+                                            <div class="input-group">
+                                                <input type="text" name="numeroOrdreMission" value="{{ $demande->numeroOrdreMission }}"
+                                                    class="form-control">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Lieu Départ -->
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label"><i class="bi bi-geo-alt me-2"></i><strong>Lieu
-                                                Départ
-                                                :</strong></label>
-                                        <div class="input-group">
-                                            <input type="text" value="{{ $demande->lieuDepart }}" class="form-control">
+                                        <!-- Lieu Départ -->
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label"><i class="bi bi-geo-alt me-2"></i><strong>Lieu
+                                                    Départ
+                                                    :</strong></label>
+                                            <div class="input-group">
+                                                <input type="text" name="lieuDepart" value="{{ $demande->lieuDepart }}" class="form-control">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Lieu Arrivée -->
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label"><i class="bi bi-geo me-2"></i><strong>Lieu Arrivée
-                                                :</strong></label>
-                                        <div class="input-group">
-                                            <input type="text" value="{{ $demande->lieuArrivee }}" class="form-control">
+                                        <!-- Lieu Arrivée -->
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label"><i class="bi bi-geo me-2"></i><strong>Lieu Arrivée
+                                                    :</strong></label>
+                                            <div class="input-group">
+                                                <input type="text" name="lieuArrivee" value="{{ $demande->lieuArrivee }}" class="form-control">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Date Départ -->
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label"><i class="bi bi-calendar-event me-2"></i><strong>Date
-                                                Départ :</strong></label>
-                                        <div class="input-group">
-                                            <input type="text"
-                                                value="{{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}"
-                                                class="form-control">
+                                        <!-- Date Départ -->
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label"><i class="bi bi-calendar-event me-2"></i><strong>Date
+                                                    Départ :</strong></label>
+                                            <div class="input-group">
+                                                <input type="datetime" name="dateDepart"
+                                                    value="{{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}"
+                                                    class="form-control">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Date Arrivée -->
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label"><i class="bi bi-calendar-check me-2"></i><strong>Date
-                                                Arrivée :</strong></label>
-                                        <div class="input-group">
-                                            <input type="text"
-                                                value="{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}"
-                                                class="form-control">
+                                        <!-- Date Arrivée -->
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label"><i class="bi bi-calendar-check me-2"></i><strong>Date
+                                                    Arrivée :</strong></label>
+                                            <div class="input-group">
+                                                <input type="datetime" name="dateArrivee"
+                                                    value="{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}"
+                                                    class="form-control">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Durée -->
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label"><i
-                                                class="bi bi-hourglass-split me-2"></i><strong>Delai
-                                                de Reception :</strong></label>
-                                        <div class="input-group">
-                                            <input type="text" value="{{ $demande->duree.' Heures' }}"
-                                                class="form-control">
+                                        <!-- Durée -->
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label"><i
+                                                    class="bi bi-hourglass-split me-2"></i><strong>Delai
+                                                    de Reception :</strong></label>
+                                            <div class="input-group">
+                                                <input type="number" name="duree" value="{{ $demande->duree }}"
+                                                    class="form-control">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">Heures</span>
+                                                      </div>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Description du besoin -->
-                                    <div class="col-12 mb-3">
-                                        <label class="form-label"><i
-                                                class="bi bi-textarea-t me-2"></i><strong>Description
-                                                du besoin :</strong></label>
-                                        <div class="input-group">
-                                            <textarea class="form-control">{{ $demande->description }}</textarea>
+                                        <!-- Description du besoin -->
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label"><i
+                                                    class="bi bi-textarea-t me-2"></i><strong>Description
+                                                    du besoin :</strong></label>
+                                            <div class="input-group">
+                                                <textarea name="description" class="form-control">{{ $demande->description }}</textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer bg-dark-primary">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-success"
-                                    data-bs-dismiss="modal">Enregistrer</button>
-                            </div>
+                                <div class="modal-footer bg-dark-primary">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-success"
+                                        >Mettre à jour</button>
+                                </div>
+                           </form>
                         </div>
                     </div>
                 </div>
+
 
                 @endcanany
                 @endif
@@ -892,20 +909,20 @@
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group  m-auto">
-                                                        <label>Prix :</label>
+                                                        <label>Prix <sup class="text-danger">*</sup> </label>
 
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text"><i
                                                                         class="fas fa-money-check-alt"></i></span>
                                                             </div>
-                                                            <input type="number" name="prixBillet" class="form-control">
+                                                            <input type="number" name="prixBillet" class="form-control is-valid" required>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="form-group m-auto">
-                                                        <label>Valable jusqu'au:</label>
+                                                        <label>Valable jusqu'au <sup class="text-danger">*</sup></label>
 
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
@@ -914,7 +931,7 @@
                                                             </div>
                                                             <input type="date" name="dateFinValidite"
                                                                 class="form-control" data-inputmask-alias="datetime"
-                                                                data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+                                                                data-inputmask-inputformat="dd/mm/yyyy" data-mask required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -922,14 +939,14 @@
                                             <div class="row mt-4">
                                                 <div class="col-12">
                                                     <div class="form-group m-auto">
-                                                        <label>Compagnie:</label>
+                                                        <label>Compagnie <sup class="text-danger">*</sup></label>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text"><i
                                                                         class="fas fa-plane-departure"></i></span>
                                                             </div>
                                                             <select name="compagnie" class="form-control"
-                                                                id="compagnieSelect">
+                                                                id="compagnieSelect" required>
                                                                 <option value="">Sélectionnez une compagnie</option>
                                                                 <option value="Ethiopian Airlines">Ethiopian
                                                                     Airlines</option>
