@@ -1,6 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
+@canany(['create-demande-billet'])
 <div class="container-fluid">
     <div class="card">
         <div class="card-header bg-gray-dark text-white">
@@ -150,12 +151,14 @@
 
             </div>
         </div>
-
+        
         <div class="card-footer bg-dark-primary d-flex justify-content-center align-items-center ">
+            @if ($offreMinPrix->etats == "En attente")
             <!-- Bouton de validation déclenche le modal -->
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#validateModal">
                 <i class="bi bi-check-lg"></i> Valider
             </button>
+            
 
             <!-- Modal de validation -->
             <div class="modal fade" id="validateModal" tabindex="-1" aria-labelledby="validateModalLabel"
@@ -213,6 +216,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- Bouton de retour -->
             <a href="{{ route('demandes.index') }}" class="btn btn-secondary"><i class="bi bi-box-arrow-in-left"></i>
@@ -238,4 +242,5 @@
     </style>
 </div>
 </div>
+@endcanany
 @endsection
