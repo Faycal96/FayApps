@@ -6,6 +6,7 @@ use App\Http\Requests\StoreOffreRequest;
 use App\Http\Requests\UpdateOffreRequest;
 use App\Models\DemandeBillet;
 use App\Models\Offre;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OffreController extends Controller
@@ -30,7 +31,7 @@ class OffreController extends Controller
     public function offre(DemandeBillet $demande)
     {
         //
-        dd($demande);
+        // dd($demande);
         // Auth::id();
         // $demande_billets = DemandeBillet::where('etat', '=', false)
         //where('user_id', '=', Auth::id())
@@ -134,4 +135,25 @@ class OffreController extends Controller
     {
         //
     }
+    public function valider(Request $request, $offreId)
+    {
+        $offre = Offre::findOrFail($offreId);
+        $offre->etats = 'validée';
+        $offre->motif = $request->motif;
+        $offre->save();
+
+        return redirect()->back()->with('success', 'L\'offre a été validée avec succès.');
+    }
+    public function rejeter(Request $request, $offreId)
+{
+    $offre = Offre::findOrFail($offreId);
+    $offre->etats = 'rejetée'; // Ou tout autre valeur représentant l'état rejeté
+    $offre->motif = $request->motif; // Assurez-vous que le champ existe dans votre base de données
+    $offre->save();
+
+    return redirect()->back()->with('error', 'L\'offre a été rejetée.');
+}
+
+
+
 }

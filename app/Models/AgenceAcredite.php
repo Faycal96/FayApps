@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class AgenceAcredite extends Model
 {
-    use HasFactory;
+    use HasFactory,Notifiable;
 
- 
+
     protected $table = 'agence_acredites';
 
 
@@ -31,6 +32,13 @@ class AgenceAcredite extends Model
     {
         return $this->hasOne(User::class,'id','user_id');
     }
+
+    public function offre()
+    {
+        return $this->belongsTo(Offre::class, 'id', 'agence_id');
+    }
+
+
 
     public function savePdfFile($pdfFilePath)
     {

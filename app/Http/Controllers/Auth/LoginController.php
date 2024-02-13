@@ -53,6 +53,13 @@ class LoginController extends Controller
             return '/demandes'; // Chemin pour les utilisateurs standards
         }
 
+        // if ($user->hasRole(['Admin','Super Admin'])) {
+        //     return redirect('/users')->with('success', 'Vous êtes redirigé vers la gestion des utilisateurs.');
+        // } elseif ($user->hasRole('DAF MINISTERE') || $user->hasRole('Agence Voyage')) {
+        //     return redirect('/demandes')->with('success', 'Vous êtes redirigé vers la gestion des demandes.');
+        // }
+
+
 }
 protected function attemptLogin(Request $request)
 {

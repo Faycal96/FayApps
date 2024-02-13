@@ -9,7 +9,7 @@
                     <div class="inner">
                         <h3>150</h3>
 
-                        <p>Total des utilisateurs</p>
+                        <p>Total de mes Propositions</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
@@ -24,7 +24,7 @@
                     <div class="inner">
                         <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-                        <p>Total DAF</p>
+                        <p>Propositions Retenues</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-6">
+            {{-- <div class="col-lg-3 col-6">
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
@@ -46,7 +46,7 @@
                     </div>
                     <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-            </div>
+            </div> --}}
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
@@ -54,7 +54,7 @@
                     <div class="inner">
                         <h3>65</h3>
 
-                        <p>Utilisateurs desactivés</p>
+                        <p>Propositions rejettées</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -70,21 +70,15 @@
                 <div class="card">
                     <div class="card-header">Liste des Offres</div>
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addOffreModal">
-                            Ajouter une nouvelle offre
-                        </button>
-                        <table class="table table-bordered table-striped">
+
+                        <table id="example1" class="table table-bordered table-striped">
                             <thead>
-                                @php
-                                    $i=1
-                                @endphp
                                 <tr>
                                     <th>Code Demande</th>
                                     <th>Prix Minimum</th>
-
-                                    <th>Date Debut Offre</th>
-                                    <th>Date Fin Offre</th>
-                                    <th>Description</th>
+                                    <th>Validité</th>
+                                    <th>Observation</th>
+                                    <th>statut</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -96,10 +90,17 @@
 
                                     <td>{{ $offre->prixBillet }}</td>
 
-                                    <td>{{ \Carbon\Carbon::parse($offre->dateDebutValidite)->format('d M Y à H:i:s') }}</td>
+                                    {{-- <td>{{ \Carbon\Carbon::parse($offre->dateDebutValidite)->format('d M Y à H:i:s') }}</td> --}}
                                     <td>{{ \Carbon\Carbon::parse($offre->dateFinValidite)->format('d M Y à H:i:s') }}</td>
 
                                     <td>{{ $offre->description }}</td>
+                                    @if ($offre->etats == "validée")
+                                        <td> <span class="badge bg-success">Validée</span></td>
+                                    @else
+                                        <td><span class="badge bg-warning">En attente</span></td>
+                                    @endif
+
+
                                     <td>
                                         <!-- Edit Button -->
                                         <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editOffreModal{{ $offre->id }}">

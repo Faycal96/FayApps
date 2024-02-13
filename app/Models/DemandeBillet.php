@@ -10,7 +10,7 @@ class DemandeBillet extends Model
     use HasFactory;
 
     protected $table = 'demande_billets';
- 
+
 
 
     // protected $fillable = [
@@ -19,9 +19,19 @@ class DemandeBillet extends Model
 
     protected $guarded = [];
 
+
     public function offres()
-{
-    return $this->hasMany(Offre::class, 'demande_id');
-}
+    {
+        return $this->hasMany(Offre::class, 'demande_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+
 
 }
+
+
