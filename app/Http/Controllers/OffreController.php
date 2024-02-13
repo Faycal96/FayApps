@@ -142,7 +142,7 @@ class OffreController extends Controller
         $offre->motif = $request->motif;
         $offre->save();
 
-        return redirect()->back()->with('success', 'L\'offre a été validée avec succès.');
+        return redirect()->route('demandes.index')->with('success', 'L\'offre a été validée avec succès.');
     }
     public function rejeter(Request $request, $offreId)
 {
@@ -151,7 +151,7 @@ class OffreController extends Controller
     $offre->motif = $request->motif; // Assurez-vous que le champ existe dans votre base de données
     $offre->save();
 
-    return redirect()->back()->with('error', 'L\'offre a été rejetée.');
+    return redirect()->route('demandes.index')->with('error', 'L\'offre a été rejetée.');
 }
 
 
