@@ -106,7 +106,7 @@
           <nav id="navbar" class="navbar">
             <ul>
               <li><a class="active" href=" {{ route('welcome') }}">Accueil</a></li>
-              <li><a href="{{ route('login') }}">Compte</a></li>
+              {{-- <li><a href="{{ route('login') }}">Compte</a></li> --}}
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
           </nav><!-- .navbar -->

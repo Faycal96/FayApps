@@ -167,9 +167,22 @@ class DemandeBilletController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDemandeBilletRequest $request, DemandeBillet $demandeBillet)
+    public function update(Request $request, $demande)
     {
-        //
+
+        $demandeBillet = DemandeBillet::findOrFail($demande);
+
+        // Mettre à jour les attributs de la demande de billet avec les données du formulaire
+        $demandeBillet->dateDepart = Carbon::parse($request->input('dateDepart'))->format('Y-m-d');
+        $demandeBillet->dateArrivee = Carbon::parse($request->input('dateArrivee'))->format('Y-m-d');
+
+        $demandeBillet->update($request->all());
+
+
+
+    // Rediriger l'utilisateur vers une autre page avec un message de succès
+    return redirect()->route('demandes.index')->with('success', 'La demande  a été mise à jour avec succès.');
+
     }
 
     /**

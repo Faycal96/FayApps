@@ -2,68 +2,75 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>150</h3>
 
-                        <p>Total de mes Propositions</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+
+    @if (isset(Auth::user()->agence))
+
+    <div class="row">
+        <div class="col-lg-4">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ $nombreOffres }}</h3>
+                    @if ($nombreOffres <= 1)
+                    <p>Proposition au totale</p>
+                    @else
+                    <p>Propositions au totales</p>
+                    @endif
+
                 </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                        <p>Propositions Retenues</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
-            {{-- <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-warning">
-                    <div class="inner">
-                        <h3>44</h3>
-
-                        <p>Total Agence</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-person-add"></i>
-                    </div>
-                    <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div> --}}
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3>65</h3>
-
-                        <p>Propositions rejettées</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                    </div>
-                    <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
         </div>
+        <!-- ./col -->
+        <div class="col-lg-4">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ $nombreOfrresValidees }}</h3>
+                    @if ($nombreOfrresValidees <= 1)
+                    <p>Proposition Retenue</p>
+                    @else
+                    <p>Propositions Retenues</p>
+                    @endif
+
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+
+        <!-- ./col -->
+        <div class="col-lg-4">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ $nombreOfrresRejettees }}</h3>
+                    @if ($nombreOfrresRejettees <= 1)
+                    <p>Proposition non Retenue</p>
+                    @else
+                    <p>Propositions non Retenues</p>
+                    @endif
+
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+
+
+    @else
+    @endif
 
         <div class="row">
             <div class="col-12">
