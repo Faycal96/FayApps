@@ -142,8 +142,27 @@ class OffreController extends Controller
         $offre->motif = $request->motif;
         $offre->save();
 
+    // Récupérer les informations nécessaires
+    $offreDetails = [
+        'demandeId' => $offre->demande->code_demande, // Assurez-vous que l'offre a une relation 'demande'
+        'prix' => $offre->prixBillet,
+        'offreId' => $offre->id,
+    ];
+
+    // Trouver l'agence à notifier
+    $agence = $offre->agence->user;
+
+    // Assurez-vous d'avoir une relation 'agence' ou similaire
+
+    // Envoyer la notification
+    $agence->notify(new \App\Notifications\OffreValideeNotification($offreDetails));
+
+
+
         return redirect()->route('demandes.index')->with('success', 'L\'offre a été validée avec succès.');
+
     }
+
     public function rejeter(Request $request, $offreId)
 {
     $offre = Offre::findOrFail($offreId);

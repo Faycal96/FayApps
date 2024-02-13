@@ -21,5 +21,6 @@ class Offre extends Model
     {
         return $this->belongsTo(AgenceAcredite::class, 'agence_id');
     }
+    
 
 }

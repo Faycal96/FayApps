@@ -46,4 +46,9 @@ class AgenceAcredite extends Model
         $this->rccm = $pdfFilePath;
         $this->save();
     }
+    public function offres()
+{
+    return $this->hasMany(Offre::class, 'agence_id');
+}
+
 }
