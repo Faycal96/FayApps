@@ -28,13 +28,28 @@ class DemandeBilletController extends Controller
          // Récupérer l'utilisateur connecté
     $user = Auth::user();
 
-    if ($user) {
+    if ($user->ministere) {
         // Compter le nombre de demandes de l'utilisateur connecté
         $nombreDemandes = $user->demandes->count();
+
     } else {
         // Si aucun utilisateur n'est connecté, définir le nombre de demandes sur 0
         $nombreDemandes = 0;
+
     }
+
+    if($user->agence)
+    {
+        $nombreOffres = $user->agence->offre->count();
+        $nombreOfrresValidees = $user->agence->offre->where('etats', 'validée')->count();
+        $nombreOfrresRejettees = $user->agence->offre->where('etats', 'rejetée')->count();
+    }else{
+        $nombreOffres =0;
+        $nombreOfrresValidees= 0;
+        $nombreOfrresRejettees =0;
+    }
+
+
          // Récupère l'offre avec le prix le plus bas pour la demande spécifiée
          $offreMinPrix = Offre::where('demande_id', $demande->id)
          ->orderBy('prixBillet', 'asc') // Trie par prixBillet en ordre croissant
@@ -47,6 +62,9 @@ class DemandeBilletController extends Controller
             'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
             'cities'=> $cities,
             'nombreDemandes' => $nombreDemandes, // Passer le nombre de demandes à la vue
+            'nombreOffres' =>$nombreOffres,
+            'nombreOfrresValidees' =>$nombreOfrresValidees,
+            'nombreOfrresRejettees' =>$nombreOfrresRejettees,
         ]);
     }
 
@@ -156,8 +174,22 @@ class DemandeBilletController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DemandeBillet $demandeBillet)
+    public function destroy($id)
     {
-        //
+        // $demande = DemandeBillet::with('user')->find($id);
+        $demandeBillet = DemandeBillet::findOrFail($id);
+
+        // dd($demandeBillet->user_id);
+         // Vérifiez si la demande appartient à l'utilisateur connecté ou a les autorisations nécessaires pour la supprimer
+    if ($demandeBillet->user_id === Auth::user()->id) {
+        // Supprimer la demande
+        // dd($demandeBillet);
+        $demandeBillet->delete();
+
+        return redirect()->route('demandes.index')->with('success', 'La demande a été supprimée avec succès.');
+    } else {
+        // Retourner une réponse indiquant que l'utilisateur n'a pas les autorisations nécessaires pour supprimer la demande
+        return redirect()->route('demandes.index')->with('error', 'Vous n\'êtes pas autorisé à supprimer cette demande.');
+    }
     }
 }

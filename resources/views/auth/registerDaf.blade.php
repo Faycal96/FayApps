@@ -15,7 +15,7 @@
 
                         <!-- Nom -->
                         <div class="row mb-3">
-                            <label for="nom" class="col-md-4 col-form-label text-md-end">{{ __('Nom') }}</label>
+                            <label for="nom" class="col-md-4 col-form-label text-md-end">{{ __('Nom') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -31,7 +31,7 @@
 
                         <!-- Prénom -->
                         <div class="row mb-3">
-                            <label for="prenom" class="col-md-4 col-form-label text-md-end">{{ __('Prenom') }}</label>
+                            <label for="prenom" class="col-md-4 col-form-label text-md-end">{{ __('Prenom') }}<sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user-edit"></i></span>
@@ -47,7 +47,7 @@
 
                         <!-- Ministères -->
                         <div class="row mb-3">
-                            <label for="ministere" class="col-md-4 col-form-label text-md-end">{{ __('Ministeres') }}</label>
+                            <label for="ministere" class="col-md-4 col-form-label text-md-end">{{ __('Ministeres') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-building"></i></span>
@@ -63,7 +63,7 @@
 
                         <!-- Matricule -->
                         <div class="row mb-3">
-                            <label for="matricule" class="col-md-4 col-form-label text-md-end">{{ __('Matricule') }}</label>
+                            <label for="matricule" class="col-md-4 col-form-label text-md-end">{{ __('Matricule') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
@@ -79,7 +79,7 @@
 
                         <!-- Téléphone -->
                         <div class="row mb-3">
-                            <label for="telephone" class="col-md-4 col-form-label text-md-end">{{ __('Telephone') }}</label>
+                            <label for="telephone" class="col-md-4 col-form-label text-md-end">{{ __('Telephone') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -95,7 +95,7 @@
 
                         <!-- Email -->
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Address Email') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Address Email') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
@@ -111,7 +111,7 @@
 
                         <!-- Password -->
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
@@ -127,7 +127,7 @@
 
                         <!-- Confirm Password -->
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>

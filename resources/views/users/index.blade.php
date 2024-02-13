@@ -99,7 +99,7 @@
                                     <span class="badge bg-success">Activé</span>
                             @else
                             <span class="badge bg-danger">Desactivé</span>
-@endif
+                            @endif
                                 </td>
 
                                 <td>
@@ -125,7 +125,7 @@
                                                     </div>
                                                     <div class="modal-body bg-light">
                                                         <div class="row">
-                                                           
+
                                                             @if ($user->agenceAcredite)
                                                              <!-- Nom et Email -->
                                                              <div class="col-md-6 mb-3">
@@ -134,7 +134,7 @@
                                                             <div class="col-md-6 mb-3">
                                                                 <i class="bi bi-envelope-fill me-2"></i><strong>Email :</strong> {{ $user->email }}
                                                             </div>
-                                        
+
                                                             <!-- Téléphone et Adresse de l'Agence (si applicable) -->
                                                             <div class="col-md-6 mb-3">
                                                                 <i class="bi bi-telephone-fill me-2"></i><strong>Téléphone :</strong> {{ $user->telephone }}
@@ -142,7 +142,7 @@
                                                             <div class="col-md-6 mb-3">
                                                                 <i class="bi bi-building me-2"></i><strong>Adresse de l'Agence :</strong> {{ $user->agenceAcredite->adressAgence }}
                                                             </div>
-                                        
+
                                                             <!-- Numéro IFU et Date de Création de l'Agence -->
                                                             <div class="col-md-6 mb-3">
                                                                 <i class="bi bi-hash me-2"></i><strong>Numéro IFU :</strong> {{ $user->agenceAcredite->numeroIfu }}
@@ -150,10 +150,10 @@
                                                             <div class="col-md-6 mb-3">
                                                                 <i class="bi bi-calendar-event-fill me-2"></i><strong>Date de Création de l'Agence :</strong> {{ $user->agenceAcredite->dateCreationAgence }}
                                                             </div>
-                                        
+
                                                             <!-- RCCM -->
                                                             <div class="col-12 mb-3">
-                                                                <i class="bi bi-file-earmark-pdf-fill me-2"></i><strong>RCCM :</strong> 
+                                                                <i class="bi bi-file-earmark-pdf-fill me-2"></i><strong>RCCM :</strong>
                                                                 <a href="{{ asset('storage/' . str_replace('public/', '', $user->agenceAcredite->rccm)) }}" class="btn btn-info btn-sm" target="_blank">
                                                                     <i class="bi bi-download"></i> Télécharger RCCM
                                                                 </a>
@@ -166,7 +166,7 @@
                                                             <div class="col-md-6 mb-3">
                                                                 <i class="bi bi-envelope-fill me-2"></i><strong>Email :</strong> {{ $user->email }}
                                                             </div>
-                                        
+
                                                             <!-- Téléphone et Adresse de l'Agence (si applicable) -->
                                                             <div class="col-md-6 mb-3">
                                                                 <i class="bi bi-telephone-fill me-2"></i><strong>Téléphone :</strong> {{ $user->telephone }}
@@ -180,7 +180,7 @@
                                                             <div class="col-md-6 mb-3">
                                                                 <i class="bi bi-building me-2"></i><strong>Ministère :
                                                                 @foreach ($ministeres as $min)
-                                                                    
+
                                                                 </strong> {{ $user->id_m==$min->id ? $min->libelleLong : '' }}
                                                                 @endforeach
                                                             </div>
@@ -194,7 +194,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                                 
+
 
 
                                     @can('edit-user')

@@ -28,10 +28,8 @@ class DemandeBillet extends Model
     }
 
 
-    public function utilisateur()
-    {
-        return $this->belongsTo(User::class);
-    }
+
+    
 }
 
 

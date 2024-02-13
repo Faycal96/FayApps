@@ -31,7 +31,7 @@ class OffreController extends Controller
     public function offre(DemandeBillet $demande)
     {
         //
-        dd($demande);
+        // dd($demande);
         // Auth::id();
         // $demande_billets = DemandeBillet::where('etat', '=', false)
         //where('user_id', '=', Auth::id())
@@ -141,7 +141,7 @@ class OffreController extends Controller
         $offre->etats = 'validée';
         $offre->motif = $request->motif;
         $offre->save();
-    
+
         return redirect()->back()->with('success', 'L\'offre a été validée avec succès.');
     }
     public function rejeter(Request $request, $offreId)
