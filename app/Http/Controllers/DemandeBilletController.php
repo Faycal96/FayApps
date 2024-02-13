@@ -41,9 +41,9 @@ class DemandeBilletController extends Controller
 
     if($user->agence)
     {
-        $nombreOffres = $user->agence->offre->count();
-        $nombreOfrresValidees = $user->agence->offre->where('etats', 'validée')->count();
-        $nombreOfrresRejettees = $user->agence->offre->where('etats', 'rejetée')->count();
+        $nombreOffres = $user->agence->offres->count();
+        $nombreOfrresValidees = $user->agence->offres->where('etats', 'validée')->count();
+        $nombreOfrresRejettees = $user->agence->offres->where('etats', 'rejetée')->count();
     }else{
         $nombreOffres =0;
         $nombreOfrresValidees= 0;

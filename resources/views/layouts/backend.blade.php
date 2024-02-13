@@ -369,6 +369,10 @@
     {{-- <script src="{{ asset('backend/assets/plugins/jquery/jquery.min.js') }}"></script> --}}
     {{-- <script src="path/to/bootstrap.min.js"></script> --}}
     {{-- <script src="{{ asset('backend/assets/plugins') }}/to/select2.min.js"></script> --}}
+    <!-- Insérer avant la fermeture de la balise </body> -->
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 
 
 
