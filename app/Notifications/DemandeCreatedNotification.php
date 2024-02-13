@@ -30,7 +30,7 @@ class DemandeCreatedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     public function toMail($notifiable)
@@ -50,7 +50,10 @@ class DemandeCreatedNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'demande_id' => $this->demande->id,
+            'duree' => $this->demande->duree,
+            'message' => 'Une nouvelle demande de billet a été créée avec une durée de ' . $this->demande->duree . ' heures.'
         ];
     }
+    
 }

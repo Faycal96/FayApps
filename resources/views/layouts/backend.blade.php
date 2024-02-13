@@ -67,6 +67,9 @@
     <!-- summernote -->
 
     <link href="{{ asset('backend/assets/plugins/summernote/summernote-bs4.min.css') }}" rel="stylesheet">
+
+ 
+
 </head>
 
 
@@ -96,6 +99,35 @@
             </ul>
 
             <ul class="navbar-nav ml-auto">
+<!-- Exemple avec Bootstrap -->
+<li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="far fa-bell"></i>
+        <span class="badge badge-danger navbar-badge">{{ auth()->user()->unreadNotifications->count() }}</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        @foreach(auth()->user()->unreadNotifications as $notification)
+    <a href="{{ route('notifications.read', $notification->id) }}" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+                <img src="backend/assets/dist/img/user2-160x160.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                <div class="media-body">
+                    <h3 class="dropdown-item-title">
+                        Notification
+                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                    </h3>
+                    <p class="text-sm">{{ $notification->data['message'] }}</p>
+                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ $notification->created_at->diffForHumans() }}</p>
+                </div>
+            </div>
+            <!-- Message End -->
+        </a>
+        <div class="dropdown-divider"></div>
+        @endforeach
+        
+    </div>
+</li>
+
 
                 @guest
                 @if (Route::has('login'))
@@ -338,7 +370,10 @@
     {{-- <script src="path/to/bootstrap.min.js"></script> --}}
     {{-- <script src="{{ asset('backend/assets/plugins') }}/to/select2.min.js"></script> --}}
 
-
+   
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
     <script>
