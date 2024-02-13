@@ -11,6 +11,7 @@ use App\Models\Offre;
 use App\Models\User;
 use App\Notifications\DemandeCreatedNotification;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -148,4 +149,11 @@ class DemandeBilletController extends Controller
     {
         //
     }
+    public function markAsRead(Request $request, $id)
+{
+    $notification = auth()->user()->notifications()->findOrFail($id);
+    $notification->markAsRead();
+    return redirect()->back();
+}
+
 }

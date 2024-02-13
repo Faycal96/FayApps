@@ -43,6 +43,9 @@ Route::get('registerdaf', [RegisterDafController::class, 'afficherFormulaire'])-
 Route::post('/storeDaf', [RegisterDafController::class, 'enregistrer'])->name('storeDaf');
 Route::post('/offres/{offre}/valider', [OffreController::class, 'valider'])->name('offres.valider');
 Route::post('/offres/{offre}/rejeter', [OffreController::class, 'rejeter'])->name('offres.rejeter');
+Route::get('/notifications/read/{id}', [App\Http\Controllers\DemandeBilletController::class, 'markAsRead'])->name('notifications.read');
+
+
 
 // Route::post('registerdaf', [ControllersRegisterDafController::class, 'enregistrer'])->name('storeDaf');
 
