@@ -110,7 +110,7 @@
     <a href="{{ route('notifications.read', $notification->id) }}" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-                <img src="{{ asset('backend/assets/dist/img/user2-160x160.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                <img src="{{ asset('backend/assets/dist/img/armoirie.png') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                 <div class="media-body">
                     <h3 class="dropdown-item-title">
                         Notification

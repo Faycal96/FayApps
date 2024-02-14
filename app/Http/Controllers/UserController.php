@@ -36,13 +36,13 @@ class UserController extends Controller
     {
         // Récupère tous les utilisateurs et précharge les agences liées
         $users = User::with('agenceAcredite')->latest('id')->paginate(10000000000);
-        
+
         // Calcule les statistiques
         $totalUsers = User::count();
         $disabledUsers = User::where('is_active', 0)->count(); // Assurez-vous que 'is_active' est bien le nom de la colonne indiquant si un utilisateur est actif ou non
         $usersWithAgence = User::whereHas('agenceAcredite')->count(); // Utilisateurs associés à une agence
         $usersWithoutAgence = User::whereDoesntHave('agenceAcredite')->count(); // Utilisateurs non associés à une agence
-    
+
         // Retourne la vue avec les utilisateurs et les statistiques
         return view('users.index', [
             'users' => $users,
@@ -53,7 +53,7 @@ class UserController extends Controller
             'ministeres' =>Ministere::all(),
         ]);
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -61,7 +61,7 @@ class UserController extends Controller
     public function create(): View
     {
         return view('users.create', [
-            'roles' => Role::pluck('name')->all() 
+            'roles' => Role::pluck('name')->all()
         ]);
     }
     // public function createdaf(): View
@@ -109,7 +109,7 @@ class UserController extends Controller
      */
     public function show(User $user): View
     {
-      
+
         return view('users.show', [
             'user' => $user
         ]);
@@ -169,7 +169,7 @@ class UserController extends Controller
         $user->syncRoles([]);
         $user->delete();
         return redirect()->route('users.index')
-                ->withSuccess('User is deleted successfully.');
+                ->withSuccess('Utilisateur est supprimé avec succès !.');
     }
 
     public function toggleStatus(User $user)
@@ -177,7 +177,7 @@ class UserController extends Controller
         // Bascule l'état actif/inactif
         $user->is_active = !$user->is_active;
         $user->save();
-    
+
         // Vérifie l'état après l'enregistrement et envoie la notification appropriée
         if ($user->is_active) {
             // Si l'utilisateur est maintenant actif, envoie une notification d'activation
@@ -186,9 +186,9 @@ class UserController extends Controller
             // Sinon, envoie une notification de désactivation
             $user->notify(new \App\Notifications\AccountDeactivated());
         }
-    
+
         // Redirige l'utilisateur vers la page précédente avec un message de succès
         return back()->with('success', 'L\'état de l\'utilisateur a été mis à jour avec succès.');
     }
-    
+
 }
