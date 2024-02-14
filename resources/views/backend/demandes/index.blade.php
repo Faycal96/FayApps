@@ -639,7 +639,7 @@
                 </div>
 
 
-                @if($demande->offres->isEmpty())
+                @if($demande->offres->isEmpty() && $demande->etat ==1)
                 @canany(['create-demande-billet'])
 
                 <button title="Modifier" type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
@@ -752,7 +752,7 @@
                 @endcanany
                 @endif
 
-                @if($demande->offres->isNotEmpty() && $demande->etat ==0)
+                @if($demande->etat ==0)
 
                 @canany(['create-demande-billet'])
 
@@ -763,7 +763,7 @@
                 </button>
                 @endcanany
                 @endif
-                @if($demande->offres->isEmpty())
+                @if($demande->offres->isEmpty() && $demande->etat ==1)
                 @canany(['create-demande-billet'])
                 <!-- Bouton pour déclencher le modal de suppression d'une demande -->
                 <button title="Supprimer" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
