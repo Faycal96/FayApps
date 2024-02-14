@@ -225,7 +225,7 @@
             </div>
             <div class="credits">
 
-                Conçu par <a href="https://mdenp.com/">MTDPCE</a>
+                Conçu par <a href="https://mdenp.com/"> Pool DGTD / MTDPCE</a>
             </div>
         </div>
     </footer><!-- End Footer -->
