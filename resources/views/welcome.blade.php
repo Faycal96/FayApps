@@ -77,22 +77,7 @@
         </div>
     </header><!-- End Header -->
 
-    <p> @if(session('success'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <h5 class="alert-heading">{{session('success')}}</h5>
 
-        </div>
-
-        <script>
-            setTimeout(function() {
-                document.querySelector('.alert.alert-success').style.display = 'none';
-            }, 6000); // Le message flash disparaîtra après 5 secondes (5000 millisecondes)
-        </script>
-    @endif
-</p>
 
     <!-- ======= Hero Section ======= -->
     <section id="hero" style="height: 25rem !important">
@@ -121,45 +106,58 @@
                 </div>
 
             </div>
+
             <div class="col-md-5">
                 <div class="card">
                     <div class="card-header card-primary text-center"> Veuillez entrer vos identifiants ici</div>
 
+
+
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
+                            <div class="row col-md-8 mb-3 offset-3">
+                                <input type="hidden" name="email" class="@error('email') is-invalid @enderror">
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }} <sup class="text-danger">*</sup></strong>
+                                </span>
+                                @enderror
+
+
+                            </div>
 
                             <div class="row mb-3">
                                 <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Adresse Email')
-                                    }}</label>
+                                    }} <sup class="text-danger">*</sup></label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                                    @error('email')
+                                    {{-- @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Mot de Passe')
-                                    }}</label>
+                                    }} <sup class="text-danger">*</sup></label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
                                         required autocomplete="current-password">
 
-                                    @error('password')
+                                    {{-- @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
 

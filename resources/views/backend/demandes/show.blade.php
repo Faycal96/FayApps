@@ -1,8 +1,9 @@
-@extends('layouts.backend')
+@extends('layouts.backend') 
 
 @section('content')
 @canany(['create-demande-billet'])
 <div class="container-fluid">
+    @if($offreMinPrix)
     <div class="card">
         <div class="card-header bg-gray-dark text-white">
             <h3 class="card-title">Détail de l'offre</h3>
@@ -133,21 +134,21 @@
 
 
 
-                <div class="col-md-3 offset-1 col-sm-6 col-12">
-                    <label class="form-label"> <strong>Prix  du Billet:</strong></label>
-                    <div class="info-box">
-                      <span class="info-box-icon bg-warning"><i class="far fa-money-bill-alt"></i></span>
-
-                      <div class="info-box-content">
-                        <span class="info-box-text">Prix</span>
-                        <span class="info-box-number" style="font-size: 1.2em;">{{ $offreMinPrix->prixBillet.' FCFA' }}</span>
-
-                        {{-- <span class="info-box-number">{{  $offreMinPrix->prixBillet.'  FCFA' }}</span> --}}
-                      </div>
-                      <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                  </div>
+               <div class="col-md-3 offset-1 col-sm-6 col-12">
+   
+        <label class="form-label"><strong>Prix du Billet:</strong></label>
+        <div class="info-box">
+            <span class="info-box-icon bg-warning"><i class="far fa-money-bill-alt"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Prix</span>
+                <span class="info-box-number" style="font-size: 1.2em;">{{ $offreMinPrix->prixBillet.' FCFA' }}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+  
+</div>
+                  
 
             </div>
         </div>
@@ -222,6 +223,11 @@
             <a href="{{ route('demandes.index') }}" class="btn btn-secondary"><i class="bi bi-box-arrow-in-left"></i>
                 Retour</a>
         </div>
+        @else
+        <div class="alert alert-warning" role="alert">
+            Il n'y a pas eu d'offres satisfaisantes pour cette demande, veuillez faire une autre demande.
+        </div>
+        @endif
     </div>
 
     @endsection
