@@ -230,7 +230,7 @@
                                 <i class="nav-icon far fa-calendar-alt"></i>
                                 <p>
                                     Gestion des offres
-                                    <span class="badge badge-info right"> </span>
+
                                 </p>
                             </a>
                         </li>
@@ -244,7 +244,7 @@
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Gestion des utilisateur
-                                    <span class="badge badge-info right"> </span>
+                                    {{-- <span class="badge badge-info right"> </span> --}}
                                 </p>
                             </a>
                         </li>

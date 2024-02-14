@@ -81,8 +81,8 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Code Demande</th>
-                                    <th>Prix Minimum</th>
+                                    <th>Code</th>
+                                    <th>Prix</th>
                                     <th>Validité</th>
                                     <th>Observation</th>
                                     <th>statut</th>
@@ -103,21 +103,20 @@
                                     <td>{{ $offre->description }}</td>
                                     @if ($offre->etats == "validée")
                                         <td> <span class="badge bg-success">Validée</span></td>
-                                    @else
+                                    @elseif ($offre->etats == "rejetée")
+                                        <td><span class="badge bg-danger">Non retenue</span></td>
+                                        @else
                                         <td><span class="badge bg-warning">En attente</span></td>
                                     @endif
 
 
                                     <td>
                                         <!-- Edit Button -->
-                                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editOffreModal{{ $offre->id }}">
-                                            Modifier
+                                        <button type="button" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye"></i>
                                         </button>
 
-                                        <!-- Delete Button -->
-                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteOffreModal{{ $offre->id }}">
-                                            Supprimer
-                                        </button>
+
                                     </td>
                                 </tr>
                                 @endif
