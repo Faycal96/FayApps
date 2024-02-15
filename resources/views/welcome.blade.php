@@ -58,7 +58,7 @@
         <div class="container d-flex justify-content-between align-items-center">
 
             <div class="logo">
-                <h1><a href="index.html">AchatBillet</a></h1>
+                <h1><a href="">AchatBillet</a></h1>
 
             </div>
 
@@ -225,7 +225,7 @@
             </div>
             <div class="credits">
 
-                Conçu par <a href="https://mdenp.com/">MTDPCE</a>
+                Conçu par <a href="https://mdenp.com/"> Pool DGTD / MTDPCE</a>
             </div>
         </div>
     </footer><!-- End Footer -->
