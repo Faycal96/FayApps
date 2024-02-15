@@ -40,7 +40,7 @@ class DemandeCreatedNotification extends Notification
                     ->subject('Nouvelle Demande Créée')
                     ->greeting('Bonjour ' . $notifiable->name . ' !')
                     ->line('Une nouvelle demande de billet a été créée avec un délai de reception de ' . $this->demande->duree . ' heures.')
-                    ->action('Voir la Demande', url('/demandes/' . $this->demande->id))
+                    ->action('Voir la Demande', url('http://localhost:8000/'))
                     ->line('Si vous avez des questions, n\'hésitez pas à contacter l\'administrateur.')
                     ->line('Merci d\'utiliser notre application !');
     }

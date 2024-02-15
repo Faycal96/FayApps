@@ -108,7 +108,27 @@
             </div>
 
             <div class="col-md-5">
+                <div class="row">
+                    <p>
+                        @if(session('success'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <span class="alert-heading">{{session('success')}}</span>
+
+                    </div>
+
+                    <script>
+                        setTimeout(function() {
+                                document.querySelector('.alert.alert-success').style.display = 'none';
+                            }, 6000); // Le message flash disparaîtra après 5 secondes (5000 millisecondes)
+                    </script>
+                    @endif
+                    </p>
+                </div>
                 <div class="card">
+
                     <div class="card-header card-primary text-center"> Veuillez entrer vos identifiants ici</div>
 
 
@@ -116,11 +136,11 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
-                            <div class="row col-md-8 mb-3 offset-3">
+                            <div class="row col-md-11 mb-3 offset-1">
                                 <input type="hidden" name="email" class="@error('email') is-invalid @enderror">
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }} <sup class="text-danger">*</sup></strong>
+                                    <strong>{{ $message }} </strong>
                                 </span>
                                 @enderror
 

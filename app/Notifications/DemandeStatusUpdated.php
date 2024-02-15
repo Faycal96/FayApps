@@ -49,7 +49,7 @@ class DemandeStatusUpdated extends Notification
                     ->line('La demande avec le code ' . $this->demandeDetails['code_demande'] . 'vient de fermer.')
                     ->line('Nombre d\'offres reçues: ' . $this->demandeDetails['nombre_offres'])
                     // Ajoutez plus de lignes ici si nécessaire
-                    ->action('Voir la meilleure offre', url('/demandes/' . $this->demandeDetails['id']))
+                    ->action('Voir la meilleure offre', url('http://localhost:8000/'))
                     ->line('Merci d\'utiliser notre application !');
     }
 

@@ -35,7 +35,7 @@ class userNotification extends Notification
         ->greeting('Bonjour ' . $notifiable->name . ' !')
                     ->line('Votre compte a été créé avec succès.')
                     ->line('Votre compte est en cours de traitement et sera validé par l\'administrateur.')
-                    ->action('Visiter le site', url('/'))
+                    ->action('Visiter le site', url('http://localhost:8000/'))
                     ->line('Merci d\'utiliser notre application !');
     }
 
