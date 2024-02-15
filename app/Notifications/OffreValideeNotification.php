@@ -33,7 +33,7 @@ class OffreValideeNotification extends Notification
                     ->greeting('Bonjour !')
                     ->line('L\'offre pour la demande numéro ' . $this->offreDetails['demandeId'] . ' a été validée.')
                     ->line('Prix retenu : ' . $this->offreDetails['prix'])
-                    ->action('Voir l\'offre', url('/offres/' . $this->offreDetails['offreId']))
+                    ->action('Voir l\'offre', url('http://localhost:8000/'))
                     ->line('Merci d\'utiliser notre plateforme !');
     }
 

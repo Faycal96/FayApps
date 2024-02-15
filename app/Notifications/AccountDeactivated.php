@@ -41,7 +41,7 @@ class AccountDeactivated extends Notification
                     ->line('Si vous pensez que c’est une erreur, veuillez contacter l’administrateur.')
                     ->line('Merci d\'utiliser notre application !');
     }
-    
+
 
     public function toArray($notifiable)
     {

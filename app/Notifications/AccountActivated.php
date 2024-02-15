@@ -38,7 +38,7 @@ class AccountActivated extends Notification
                     ->subject('Activation de Compte')
                     ->greeting('Bonjour ' . $notifiable->name . ' !')
                     ->line('Nous sommes heureux de vous informer que votre compte a été activé avec succès.')
-                    ->action('Se Connecter', url('/login'))
+                    ->action('Se Connecter', url('http://localhost:8000/'))
                     ->line('Merci d\'utiliser notre application !');
     }
     public function toArray($notifiable)

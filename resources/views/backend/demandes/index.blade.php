@@ -677,7 +677,9 @@
                                             <label class="form-label"><i class="bi bi-geo-alt me-2"></i><strong>Lieu
                                                     Départ
                                                     :</strong></label>
+
                                             <div class="input-group">
+
                                                 <input type="text" name="lieuDepart" value="{{ $demande->lieuDepart }}" class="form-control">
                                             </div>
                                         </div>
@@ -708,7 +710,7 @@
                                         <!-- Date Arrivée -->
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label"><i class="bi bi-calendar-check me-2"></i><strong>Date
-                                                    Arrivée :</strong></label>
+                                                    Retour :</strong></label>
                                             <div class="input-group">
                                                 <input type="date" name="dateArrivee"
                                                 value="{{ date('Y-m-d', strtotime($demande->dateArrivee)) }}"
@@ -959,11 +961,11 @@
                                                                 <option value="Autre">Autre</option>
                                                             </select>
                                                             <input type="text" id="autreCompagnieInput" class="form-control d-none" placeholder="Nom de la compagnie">
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
 
                                             <div class="form-group mt-4">
@@ -1037,5 +1039,5 @@
 });
 
     </script>
-    
+
 @endsection
