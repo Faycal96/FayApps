@@ -528,16 +528,16 @@
                                 <td>
                                     <!-- Bouton pour ouvrir le modal de détails -->
                                     <button title="Voir Détails" type="button" class="btn btn-primary btn-sm"
-                                        data-bs-toggle="modal" data-bs-target="#detailDemandeModal">
+                                        data-bs-toggle="modal" data-bs-target="#detailDemandeModal{{ $demande->id }}">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                     <!-- Modal de détails de la demande -->
-                                    <div class="modal fade" id="detailDemandeModal" tabindex="-1"
+                                    <div class="modal fade" id="detailDemandeModal{{ $demande->id }}" tabindex="-1"
                                         aria-labelledby="detailDemandeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header bg-gray-dark text-white">
-                                                    <h5 class="modal-title" id="detailDemandeModalLabel">Détails de
+                                                    <h5 class="modal-title" id="detailDemandeModalLabel{{ $demande->id }}">Détails de
                                                         la
                                                         Demande</h5>
                                                     <button type="button" class="btn-close btn-close-white"
