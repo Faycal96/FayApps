@@ -528,16 +528,16 @@
                                 <td>
                                     <!-- Bouton pour ouvrir le modal de détails -->
                                     <button title="Voir Détails" type="button" class="btn btn-primary btn-sm"
-                                        data-bs-toggle="modal" data-bs-target="#detailDemandeModal">
+                                        data-bs-toggle="modal" data-bs-target="#detailDemandeModal{{ $demande->id }}">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                     <!-- Modal de détails de la demande -->
-                                    <div class="modal fade" id="detailDemandeModal" tabindex="-1"
+                                    <div class="modal fade" id="detailDemandeModal{{ $demande->id }}" tabindex="-1"
                                         aria-labelledby="detailDemandeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header bg-gray-dark text-white">
-                                                    <h5 class="modal-title" id="detailDemandeModalLabel">Détails de
+                                                    <h5 class="modal-title" id="detailDemandeModalLabel{{ $demande->id }}">Détails de
                                                         la
                                                         Demande</h5>
                                                     <button type="button" class="btn-close btn-close-white"
@@ -696,8 +696,11 @@
                                             <label class="form-label"><i class="bi bi-calendar-event me-2"></i><strong>Date
                                                     Départ :</strong></label>
                                             <div class="input-group">
-                                                <input type="datetime" name="dateDepart"
-                                                    value="{{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}"
+                                                {{-- <input type="date" name="dateDepart"
+                                                    value="{{ $demande->dateDepart->format('d-m-Y') }}"
+                                                    class="form-control"> --}}
+                                                    <input type="date" name="dateDepart"
+                                                    value="{{ date('Y-m-d', strtotime($demande->dateDepart)) }}"
                                                     class="form-control">
                                             </div>
                                         </div>
@@ -707,9 +710,9 @@
                                             <label class="form-label"><i class="bi bi-calendar-check me-2"></i><strong>Date
                                                     Arrivée :</strong></label>
                                             <div class="input-group">
-                                                <input type="datetime" name="dateArrivee"
-                                                    value="{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}"
-                                                    class="form-control">
+                                                <input type="date" name="dateArrivee"
+                                                value="{{ date('Y-m-d', strtotime($demande->dateArrivee)) }}"
+                                                class="form-control">
                                             </div>
                                         </div>
 
@@ -942,27 +945,25 @@
                                                         <label>Compagnie <sup class="text-danger">*</sup></label>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i
-                                                                        class="fas fa-plane-departure"></i></span>
+                                                                <span class="input-group-text"><i class="fas fa-plane-departure"></i></span>
                                                             </div>
-                                                            <select name="compagnie" class="form-control"
-                                                                id="compagnieSelect" required>
+                                                            <select name="compagnie" class="form-control" id="compagnieSelect" required>
                                                                 <option value="">Sélectionnez une compagnie</option>
-                                                                <option value="Ethiopian Airlines">Ethiopian
-                                                                    Airlines</option>
-                                                                <option value="Kenya Airways">Kenya Airways</option>
-                                                                <option value="South African Airways">South African
-                                                                    Airways</option>
-                                                                <option value="EgyptAir">EgyptAir</option>
-                                                                <option value="RwandAir">RwandAir</option>
+                                                                <option value="Ethiopian Airlines">Ethiopian Airlines</option>
+                                                                <option value="Air Burkina">Air Burkina</option>
+                                                                <option value="Air Ivoir">Air Ivoir</option>
+                                                                <option value="Air Mali">Air Mali</option>
+                                                                <option value="Air Alger">Air Alger</option>
+                                                                <option value="Royal Air Maroc">Royal Air Maroc</option>
+                                                                <option value="Brusel Airlines">Brusel Airlines</option>
                                                                 <option value="Autre">Autre</option>
                                                             </select>
-                                                            <input type="text" name="compagnie" id="autreCompagnieInput"
-                                                                class="form-control d-none"
-                                                                placeholder="Nom de la compagnie">
+                                                            <input type="text" id="autreCompagnieInput" class="form-control d-none" placeholder="Nom de la compagnie">
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
+                                                
                                             </div>
 
                                             <div class="form-group mt-4">
@@ -1022,14 +1023,19 @@
 <!-- /.row -->
 </div><!-- /.container-fluid -->
 <script>
-    document.getElementById('compagnieSelect').addEventListener('change', function () {
-        var value = this.value;
-        var autreCompagnieInput = document.getElementById('autreCompagnieInput');
-        if (value === 'Autre') {
-            autreCompagnieInput.classList.remove('d-none');
-        } else {
-            autreCompagnieInput.classList.add('d-none');
-        }
-    });
-</script>
+ document.getElementById('compagnieSelect').addEventListener('change', function () {
+    var autreCompagnieInput = document.getElementById('autreCompagnieInput');
+    if (this.value === 'Autre') {
+        autreCompagnieInput.classList.remove('d-none');
+        autreCompagnieInput.name = 'compagnie'; // Assurer que l'input a le bon nom pour la soumission
+        this.name = ''; // Temporairement retirer le nom du select pour éviter la soumission
+    } else {
+        autreCompagnieInput.classList.add('d-none');
+        autreCompagnieInput.name = ''; // Retirer le nom pour éviter la soumission de ce champ
+        this.name = 'compagnie'; // Restaurer le nom du select pour la soumission
+    }
+});
+
+    </script>
+    
 @endsection

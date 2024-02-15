@@ -41,8 +41,8 @@
         <div class="container d-flex justify-content-center justify-content-md-between">
             <div class="contact-info d-flex align-items-center">
                 <i class="bi bi-envelope d-flex align-items-center"><a
-                        href="mailto:contact@example.com">contact@example.com</a></i>
-                <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+                        href="mailto:contact@example.com">achatbillet@tic.gov.bf   </a></i>
+                <i class="bi bi-phone d-flex align-items-center ms-4"><span>+226 55 89 55 48</span></i>
             </div>
             <div class="social-links d-none d-md-flex align-items-center">
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
@@ -58,7 +58,7 @@
         <div class="container d-flex justify-content-between align-items-center">
 
             <div class="logo">
-                <h1><a href="index.html">AchatBillet</a></h1>
+                <h1><a href="">AchatBillet</a></h1>
 
             </div>
 
@@ -134,7 +134,7 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                        value="{{ old('email') }}" id="exampleInputEmail1" required autocomplete="email" autofocus>
 
                                     {{-- @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -225,7 +225,7 @@
             </div>
             <div class="credits">
 
-                Conçu par <a href="https://mdenp.com/">MTDPCE</a>
+                Conçu par <a href="https://mdenp.com/"> Pool DGTD / MTDPCE</a>
             </div>
         </div>
     </footer><!-- End Footer -->
