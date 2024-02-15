@@ -52,7 +52,7 @@ class DemandeStatusUpdated extends Notification
                     ->action('Voir la meilleure offre', url('/demandes/' . $this->demandeDetails['id']))
                     ->line('Merci d\'utiliser notre application !');
     }
-    
+
 
     /**
      * Get the array representation of the notification.
@@ -64,10 +64,10 @@ class DemandeStatusUpdated extends Notification
     {
         return [
             'demande_id' => $this->demandeDetails['id'],
-            'message' => 'La demande avec le code ' . $this->demandeDetails['code_demande'] . ' vient de fermer. Le nombre des offres recus est de ' . $this->demandeDetails['nombre_offres'] . '',
+            'message' => 'La demande avec le code ' . $this->demandeDetails['code_demande'] . ' vient de fermer. Le nombre des offres reçus est de ' . $this->demandeDetails['nombre_offres'] . '',
             'nombre_offres' => $this->demandeDetails['nombre_offres']
             // Vous pouvez ajouter plus de champs ici selon les informations que vous souhaitez afficher
         ];
     }
-    
+
 }

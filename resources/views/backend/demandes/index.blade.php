@@ -696,8 +696,11 @@
                                             <label class="form-label"><i class="bi bi-calendar-event me-2"></i><strong>Date
                                                     Départ :</strong></label>
                                             <div class="input-group">
-                                                <input type="datetime" name="dateDepart"
-                                                    value="{{ \Carbon\Carbon::parse($demande->dateDepart)->format('d/m/Y') }}"
+                                                {{-- <input type="date" name="dateDepart"
+                                                    value="{{ $demande->dateDepart->format('d-m-Y') }}"
+                                                    class="form-control"> --}}
+                                                    <input type="date" name="dateDepart"
+                                                    value="{{ date('Y-m-d', strtotime($demande->dateDepart)) }}"
                                                     class="form-control">
                                             </div>
                                         </div>
@@ -707,9 +710,9 @@
                                             <label class="form-label"><i class="bi bi-calendar-check me-2"></i><strong>Date
                                                     Arrivée :</strong></label>
                                             <div class="input-group">
-                                                <input type="datetime" name="dateArrivee"
-                                                    value="{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}"
-                                                    class="form-control">
+                                                <input type="date" name="dateArrivee"
+                                                value="{{ date('Y-m-d', strtotime($demande->dateArrivee)) }}"
+                                                class="form-control">
                                             </div>
                                         </div>
 
