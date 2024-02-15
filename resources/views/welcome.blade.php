@@ -116,7 +116,7 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
-                            <div class="row col-md-8 mb-3 offset-3">
+                            <div class="row col-md-11 mb-3 offset-1">
                                 <input type="hidden" name="email" class="@error('email') is-invalid @enderror">
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
