@@ -84,7 +84,7 @@ class RegisterController extends Controller
             return redirect()->back()->withInput()->withErrors(['error' => 'Erreur lors de la création de l\'utilisateur.']);
         }
 
-        $user['typeUtilisateur'] = "Agence";
+        $user['typeUtilisateur'] = "Usager";
         $user['name'] = $data['name'];
 
         //  dd($user['name']);

@@ -91,6 +91,9 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                    @can('create-user')
+            <a href="{{ route('users.create') }}" class="btn btn-success btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New User</a>
+        @endcan
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>

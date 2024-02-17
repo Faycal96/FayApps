@@ -50,17 +50,15 @@ class RegisterDafController extends Controller
             'password' => Hash::make($request->input('password')),
         ]);
 
-        $user['typeUtilisateur']= "DAF";
+        $user['typeUtilisateur']= "Fonctionnaire";
         $user['name']= $request->prenom.' '.$request->nom;
         $user['id_m']= $request->id_m;
         //  dd($user['name']);
         $user->save();
 
-        $clientRole = Role::where('name', 'DAF MINISTERE')->first();
-        if ($clientRole) {
-            $user->roles()->attach($clientRole);
-        }
-        $user->notify(new \App\Notifications\userNotification());
+        $user->assignRole($request->roles);
+     
+       // $user->notify(new \App\Notifications\userNotification());
 
 
         // Vous pouvez ajouter d'autres logiques ici si nécessaire

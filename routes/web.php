@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\ProcedureController;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\DemandeBilletController;
+use App\Http\Controllers\FieldController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OffreController;
 use App\Http\Controllers\RegisterDafController;
@@ -49,6 +52,8 @@ Route::post('/offres/{offre}/valider', [OffreController::class, 'valider'])->nam
 Route::post('/offres/{offre}/rejeter', [OffreController::class, 'rejeter'])->name('offres.rejeter');
 Route::get('/notifications/read/{id}', [App\Http\Controllers\DemandeBilletController::class, 'markAsRead'])->name('notifications.read');
 
+Route::get('procedures/{procedure}/applications/create', [ApplicationController::class, 'create'])->name('admin.applications.create');
+Route::post('procedures/{procedure}/applications', [ApplicationController::class, 'store'])->name('admin.applications.store');
 
 
 // Route::post('registerdaf', [ControllersRegisterDafController::class, 'enregistrer'])->name('storeDaf');
@@ -58,5 +63,8 @@ Route::resources([
     'users' => UserController::class,
     'demandes' => DemandeBilletController::class,
     'offres' => OffreController::class,
+    'procedures'=>ProcedureController::class,
+    'procedures.fields' => FieldController::class,
+    'procedures.applications' => ApplicationController::class,
 
 ]);

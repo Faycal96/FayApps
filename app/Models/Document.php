@@ -5,19 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ministere extends Model
+class Document extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'libelleCourt',
-        'libelleLong',
-        
+        'procedure_id',
+        'label',
     ];
-    public function procedures()
+    // Relation avec Procedure
+    public function procedure()
     {
-        return $this->hasMany(Procedure::class);
+        return $this->belongsTo(Procedure::class);
     }
-   
-    
-
 }
