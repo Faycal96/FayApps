@@ -26,7 +26,7 @@
 
                
                 <td>
-                    <a href="{{ route('procedures.applications.create', $procedure->id) }}" class="btn btn-sm btn-info">Gérer les champs</a>
+                    <a href="{{ route('procedures.applications.index', $procedure->id) }}" class="btn btn-sm btn-info">Gerer mes demandes</a>
                     <a href="{{ route('procedures.fields.index', $procedure->id) }}" class="btn btn-sm btn-info">Gérer les champs</a>
                     <a href="{{ route('procedures.show', $procedure->id) }}" class="btn btn-info">Voir</a>
                     <a href="{{ route('procedures.edit', $procedure->id) }}" class="btn btn-success">Éditer</a>

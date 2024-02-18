@@ -13,9 +13,18 @@ class ApplicationController extends Controller
     // Affiche la liste des demandes
     public function index(Procedure $procedure)
     {
-        $applications = Application::where('user_id', Auth::id())->get(); // Ajustez selon la logique de votre application
-        return view('admin.applications.index', compact('applications','procedure'));
+        $applications = Application::where('procedure_id', $procedure->id)
+                        ->with(['fields', 'user']) // Assurez-vous que la relation est bien définie
+                        ->get();
+    
+                        $uniqueFieldNames = $applications->flatMap(function ($application) {
+                            return $application->fields->pluck('label');
+                        })->unique()->sort()->values();
+    
+        // Correction: s'assurer que 'procedure' est inclus dans les données passées à la vue
+        return view('admin.applications.index', compact('applications', 'procedure','uniqueFieldNames'));
     }
+    
 
     // Montre le formulaire pour créer une nouvelle demande
     public function create(Procedure $procedure)
@@ -46,7 +55,5 @@ class ApplicationController extends Controller
             ]);
             $applicationField->save();
         }
-
-        return redirect()->route('procedures.fields.index', $procedure)->with('success', 'Application soumise avec succès.');
-    }
+}
 }

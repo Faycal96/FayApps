@@ -20,7 +20,12 @@
                     @case('date')
                         <input type="date" name="field_{{ $field->id }}" class="form-control">
                         @break
-                    {{-- Ajoutez d'autres types de champs ici --}}
+                        @case('number')
+                        <input type="number" name="field_{{ $field->id }}" class="form-control">
+                        @break
+                    @case('file')
+                        <input type="file" name="field_{{ $field->id }}" class="form-control">
+                        @break
                 @endswitch
             </div>
         @endforeach

@@ -36,4 +36,10 @@ class Application extends Model
     {
         return $this->hasMany(ApplicationDocument::class);
     }
+    public function fields()
+{
+    // Supposons que vous avez une table pivot personnalisée avec des valeurs de champ
+    return $this->belongsToMany(Field::class, 'application_fields')
+                ->withPivot('value');
+}
 }
