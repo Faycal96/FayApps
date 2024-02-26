@@ -14,8 +14,7 @@
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
@@ -31,11 +30,11 @@
 
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-        }
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                margin: 0;
+           }
 
         #hero {
             flex: 1;
@@ -43,13 +42,12 @@
 
         #footer {
             flex-shrink: 0;
-        }
+          }
     </style>
 
 </head>
 
 <body>
-
 
 
     <!-- ======= Top Bar ======= -->
@@ -97,7 +95,7 @@
 
                             <div class="carousel-inner" role="listbox">
                                 <!-- Slide 1 -->
-                                <div class=" carousel-item active" 
+                                <div class=" carousel-item active"
                                     style="background-image: url(frontend/assets/img/cover.png);">
                                     <div class="carousel-container"></div>
                                 </div>
@@ -159,7 +157,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-3">
-                        <h3><a class="btn btn-primary" href="{{ route('register') }}"> Je n'ai pas de compte.</a>
+                        <h3><a class="btn btn-primary" href="{{ route('login') }}"> Je n'ai pas de compte.</a>
                         </h3>
                     </div>
                 </div>
