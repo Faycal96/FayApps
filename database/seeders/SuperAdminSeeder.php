@@ -16,7 +16,7 @@ class SuperAdminSeeder extends Seeder
     {
         // Creating Super Admin User
         $superAdmin = User::create([
-            'name' => 'Super Admin', 
+            'name' => 'Super Admin',
             'email' => 'superadmin@gmail.com',
             'password' => Hash::make('12345678')
         ]);
@@ -24,14 +24,15 @@ class SuperAdminSeeder extends Seeder
 
         // Creating Admin User
         $admin = User::create([
-            'name' => 'Admin', 
+            'name' => 'Admin',
             'email' => 'admin@gmail.com',
+            'is_active'=>1,
             'password' => Hash::make('12345678')
         ]);
         $admin->assignRole('Admin');
 
         $agencevoyage = User::create([
-            'name' => 'agence voyage', 
+            'name' => 'agence voyage',
             'email' => 'agencevoyage@gmail.com',
             'password' => Hash::make('12345678')
         ]);
@@ -39,7 +40,7 @@ class SuperAdminSeeder extends Seeder
 
         // Creating Product Manager User
         $dafMinistere = User::create([
-            'name' => 'Daf Ministere', 
+            'name' => 'Daf Ministere',
             'email' => 'daf@gmail.com',
             'password' => Hash::make('12345678')
         ]);
