@@ -23,14 +23,24 @@ class FieldController extends Controller
     {
         $validatedData = $request->validate([
             'label' => 'required|string|max:255',
-            'type' => 'required|in:text,textarea,date,number,file',
-            // Ajoutez d'autres règles de validation selon vos besoins
+            'type' => 'required|in:text,textarea,date,number,file,email,select,radio,checkbox,time,range',
+            // 'options' n'est pas toujours présent, pas besoin de le valider ici
         ]);
-
+    
+        // Traiter les options si elles sont fournies pour un type approprié
+        if (($request->type === 'select' || $request->type === 'radio') && $request->has('options')) {
+            $options = array_map('trim', explode(',', $request->options)); // Sépare et nettoie les options
+            $validatedData['options'] = json_encode($options); // Convertit les options en JSON
+        } else {
+            $validatedData['options'] = null; // Aucune option fournie
+        }
+    
         $procedure->fields()->create($validatedData);
-
+    
         return redirect()->route('procedures.fields.index', $procedure)->with('success', 'Champ créé avec succès.');
     }
+    
+    
 
     public function show(Procedure $procedure, Field $field)
     {

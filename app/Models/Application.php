@@ -12,6 +12,7 @@ class Application extends Model
         'user_id',
         'procedure_id',
         'status',
+        'request_number',
     ];
     // Relation avec User
     public function user()

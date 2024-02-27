@@ -37,17 +37,36 @@ class ApplicationController extends Controller
 
     public function store(Request $request, Procedure $procedure)
     {
-        // Validation des données soumises ici...
-
-        $application = new Application();
-        $application->procedure_id = $procedure->id;
-        $application->user_id = Auth::id(); // Assurez-vous que l'utilisateur est connecté
-        $application->status = 'submitted';
+        $latestApplication = Application::latest()->first();
+        $nextId = $latestApplication ? ((int)substr($latestApplication->request_number, 5) + 1) : 1;
+        $uniqueRequestNumber = 'BFD00' . str_pad($nextId, 5, '0', STR_PAD_LEFT);
+    
+        $application = new Application([
+            'procedure_id' => $procedure->id,
+            'user_id' => Auth::id(), // Assurez-vous que l'utilisateur est connecté
+            'status' => 'submitted',
+            'request_number' => $uniqueRequestNumber,
+        ]);
         $application->save();
-
+    
         // Traiter les champs de formulaire dynamiques
         foreach ($procedure->fields as $field) {
-            $value = $request->input("field_{$field->id}", null);
+            $value = null; // Valeur par défaut
+            switch ($field->type) {
+                case 'file':
+                    if ($request->hasFile("field_{$field->id}")) {
+                        $file = $request->file("field_{$field->id}");
+                        $value = $file->store('public/documents'); // Chemin de stockage du fichier
+                    }
+                    break; 
+                case 'checkbox':
+                    $value = $request->input("field_{$field->id}", false) ? '1' : '0';
+                    break;
+                default:
+                    $value = $request->input("field_{$field->id}", null);
+                    break;
+            }
+    
             $applicationField = new ApplicationField([
                 'application_id' => $application->id,
                 'field_id' => $field->id,
@@ -55,5 +74,8 @@ class ApplicationController extends Controller
             ]);
             $applicationField->save();
         }
-}
+    
+        return redirect()->route('procedures.fields.index', $procedure)->with('success', 'Application soumise avec succès.');
+    }
+    
 }

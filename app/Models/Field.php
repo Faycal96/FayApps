@@ -8,11 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Field extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'options' => 'array', // Cela convertira automatiquement les champs options de JSON en tableau
+    ];
     protected $fillable = [
         'procedure_id',
         'label',
         'type',
         'required',
+        'options',
     ];
     // Relation avec Procedure
     public function procedure()
