@@ -1,56 +1,86 @@
 @extends('layouts.backend')
-
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Gestion des demandes pour la procedure de {{ $procedure->name }}</h3>
+        <h3 class="card-title">Gestion des demandes</h3>
     </div>
-    <!-- /.card-header -->
     <div class="card-body">
+        @if(auth()->user()->hasRole(['Client']))  
+        <a href="{{ route('procedures.applications.create', $procedure)  }}" class="btn btn-success btn-sm my-2"><i class="bi bi-plus-circle"></i>Faire une nouvelle demande</a>
+              
         
-<a href="{{ route('procedures.applications.create', $procedure)  }}" class="btn btn-success btn-sm my-2"><i class="bi bi-plus-circle"></i>Faire une nouvelle demande</a>
+        
+        @endif
+        
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Code de la demande</th>
+                    <th>Identité</th>
+                   
+                    <th>Date de soumission</th>
+                    <th>Statut</th>
+                    @if($procedure->is_paid) <th>Paiement</th>@endif
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($applications as $application)
+                <tr>
+                    <td>{{ $application->request_number }}</td>
+                    <td>{{ $application->user->name }}</td>
+                    
+                    <td>{{ $application->created_at->format('d M Y H:i:s') }}</td>
+                    <td>
+                        @switch($application->status)
+                            @case('submitted')<span class="badge bg-warning">En attente</span>@break
+                            @case('validated_by_agent')
+                            <span class="badge bg-warning">Receptionné</span>@break
+                            @case('validated_by_superior')<span class="badge bg-success">Approuvé</span>@break
+                            @default<span class="badge bg-danger">Rejeté</span>
+                        @endswitch
+                    </td>
+                    @if($procedure->is_paid)
+                    <td>
+                        @if ($application->payment_status == 'non payé')
+                                    <span class="badge bg-warning">Non payé</span>
+                                @else
+                                    <span class="badge bg-success">Payé</span>
+                                    @endif
+                       
+                    </td>
+                    @endif
+                    <td>
+                        @if($procedure->is_paid && $application->payment_status == 'non payé' && auth()->user()->hasRole(['Client']) && $application->status == 'submitted')
+                        <a href="{{ route('admin.payments.create', ['procedure' => $application->procedure_id, 'application' => $application->id]) }}" class="btn btn-success btn-sm">Payer</a>
+                        @endif
+                        
+                        @if ($application->status == 'submitted' && auth()->user()->hasRole(['Client']) || $application->motif == 'document_incomplet' && auth()->user()->hasRole(['Client']))
+                        <!-- Bouton de modification -->
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $application->id }}">
+                            <i class="bi bi-pencil"></i> Modifier
+                        </button>
+                        @endif
+                        @if ($application->status == 'submitted' && auth()->user()->hasRole(['Client']) )
 
-
- 
-    
-    <table id="example1" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Code de la demande</th>  
-                <th>Identité</th>
-                <th>Email</th>
-                <th>Date de soumission</th>
-                <th>Statut</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($applications as $application)
-            <tr>
-                <td>{{ $application->request_number}}</td>
-                <td>{{ $application->user->name}}</td>               
-                <td>{{ $application->user->email }}</td>
-                <td>{{ $application->created_at->format('d M Y H:i:s') }}</td>
-                <td>
-                    @switch($application->status)
-                        @case('submitted')
-                            <span class="badge bg-warning">En attente</span>
-                            @break
-                        @case('approved')
-                            <span class="badge bg-success">Approuvé</span>
-                            @break
-                        @default
-                            <span class="badge bg-danger">Rejeté</span>
-                    @endswitch
-                </td>
-               
-            <td>
-                <button type="button" class="btn btn-primary btn-sm detailButton" data-bs-toggle="modal"
+                        <!-- Bouton de suppression -->
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $application->id }}">
+                            <i class="bi bi-trash"></i> Supprimer
+                        </button>
+                        @endif
+                        @if ($application->status == 'validated_by_superior' && auth()->user()->hasRole(['Client']))
+                        @if ($application->document_path)
+                            <a href="{{ asset('storage/' . str_replace('public/', '', $application->document_path)) }}" class="btn btn-info btn-sm" target="_blank">
+                                <i class="bi bi-download"></i> Télécharger le Document
+                            </a>
+                        @endif
+                    @endif
+                                
+                        <button type="button" class="btn btn-primary btn-sm detailButton" data-bs-toggle="modal"
                         data-bs-target="#applicationDetailModal{{ $application->id }}">
                     <i class="bi bi-eye"></i> Détails
                 </button>
-            </td>
-            @php
+                @php
 $iconMap = [
     'text' => 'bi-fonts',
     'email' => 'bi-envelope-fill',
@@ -68,15 +98,15 @@ $iconMap = [
 @endphp
 
             <!-- Modal pour les détails d'une application -->
-         <div class="modal fade" id="applicationDetailModal{{ $application->id }}" tabindex="-1" aria-labelledby="applicationDetailModalLabel{{ $application->id }}" aria-hidden="true">
+           <div class="modal fade" id="applicationDetailModal{{ $application->id }}" tabindex="-1" aria-labelledby="applicationDetailModalLabel{{ $application->id }}" aria-hidden="true">
             
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-         <div class="modal-content">
-            <div class="modal-header bg-gray-dark text-white">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                 <div class="modal-content">
+                <div class="modal-header bg-gray-dark text-white">
                 <h5 class="modal-title" id="applicationDetailModalLabel">Détails de la Demande</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body bg-light">
+              </div>
+              <div class="modal-body bg-light">
                 
                 
                     <div class="row">
@@ -110,24 +140,194 @@ $iconMap = [
                 
 
             
-        </div>
-            <div class="modal-footer">
+                </div>
+              <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+             </div>
+             </div>
+            </div>
+        </div>
+    
+    
+    
+                        @if(auth()->user()->hasRole('Agent') && $application->status == 'submitted' &&   $procedure->is_paid=='0'
+                        || auth()->user()->hasRole('Agent') && $application->status == 'submitted' &&   $procedure->is_paid  && $application->payment_status == 'payé'
+                        )
+                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#validateModalAgent{{ $application->id }}">Valider</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModalAgent{{ $application->id }}">Rejeter</button>
+                        @elseif(auth()->user()->hasRole('Superieur') && $application->status == 'validated_by_agent' &&   $procedure->is_paid=='0'
+                        || auth()->user()->hasRole('Superieur') && $application->status == 'validated_by_agent' &&   $procedure->is_paid  && $application->payment_status == 'payé'
+                        )
+                       
+                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#validateModalSuperior{{ $application->id }}">Valider</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModalSuperior{{ $application->id }}">Rejeter</button>
+                        @endif
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" class="text-center">Aucune demande trouvée!</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+@foreach($applications as $application)
+<div class="modal fade" id="editModal{{ $application->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modifier la demande</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('admin.applications.update', ['procedure' => $procedure->id, 'application' => $application->id]) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <!-- Dynamically generated fields based on the procedure -->
+                    @foreach ($procedure->fields as $field)
+                        @php
+                            $applicationField = $application->fields->where('field_id', $field->id)->first();
+                            $value = $applicationField ? $applicationField->value : '';
+                        @endphp
+                        <div class="mb-3">
+                            <label class="form-label">{{ $field->label }}</label>
+                            @include('partials.field', ['field' => $field, 'value' => $value])
+                        </div>
+                    @endforeach
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-warning">Modifier</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modale de suppression -->
+<div class="modal fade" id="deleteModal{{ $application->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmez la suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer cette demande ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <form action="{{ route('admin.applications.destroy', ['procedure' => $procedure->id, 'application' => $application->id]) }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-            
-            </tr>
-            @empty
-            <tr>
-                <td colspan="7" class="text-center">Aucune réponse trouvée pour cette procédure!</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
-
+@if(auth()->user()->hasRole('Agent') && $application->status == 'submitted')
+<div class="modal fade" id="validateModalAgent{{ $application->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Validation de la demande</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('applications.validate.agent', $application->id) }}" method="POST">@csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="motif" class="col-form-label">Motif (optionnel):</label>
+                        <textarea class="form-control" id="motif" name="motif"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-success">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+<div class="modal fade" id="rejectModalAgent{{ $application->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Rejet de la demande</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('applications.reject.agent', $application->id) }}" method="POST">@csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="motif" class="col-form-label">Motif (obligatoire):</label>
+                        <select class="form-select" id="motif" name="motif" required >
+                            <option value="infructueux">Infructueux</option>
+                            <option value="document_incomplet">Document incomplet</option>
+                        </select>
+                       
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-danger">Rejeter</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+@elseif(auth()->user()->hasRole('Superieur') && $application->status == 'validated_by_agent')
+<div class="modal fade" id="validateModalSuperior{{ $application->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Validation de la demande</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('applications.validate.superior', $application->id) }}" method="POST"enctype="multipart/form-data">@csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="motif" class="col-form-label">Motif (optionnel):</label>
+                        <textarea class="form-control" id="motif" name="motif"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="document">Document</label>
+                        <input type="file" class="form-control" id="document" name="document">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-success">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="rejectModalSuperior{{ $application->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Rejet de la demande</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('applications.reject.superior', $application->id) }}" method="POST">@csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="motif" class="col-form-label">Motif (obligatoire):</label>
+                        <textarea class="form-control" id="motif" name="motif" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-danger">Rejeter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endif
+@endforeach
 @endsection

@@ -36,7 +36,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+    public function procedures()
+    {
+        return $this->belongsToMany(Procedure::class,'procedure_user');
+    }
     public function agence()
     {
         return $this->hasOne(AgenceAcredite::class, 'user_id', 'id');

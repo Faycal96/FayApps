@@ -111,7 +111,7 @@ class RegisterController extends Controller
 
             $agence->savePdfFile($pdfPath);
         }
-        $clientRole = Role::where('name', 'Agence Voyage')->first();
+        $clientRole = Role::where('name', 'Client')->first();
         if ($clientRole) {
             $user->roles()->attach($clientRole);
         }

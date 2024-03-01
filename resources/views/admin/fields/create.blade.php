@@ -25,6 +25,7 @@
                 <option value="checkbox">Case à cocher</option>
                 <option value="time">Heure</option>
                 <option value="file">Fichier</option>
+               
                 <option value="number">Nombre</option>
                 <option value="range">Plage</option>
        

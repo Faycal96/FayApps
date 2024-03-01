@@ -60,7 +60,9 @@
                 
                 @endswitch
             </div>
+            
         @endforeach
+     
         <button type="submit" class="btn btn-primary">Soumettre</button>
     </form>
 </div>

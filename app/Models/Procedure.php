@@ -12,6 +12,10 @@ class Procedure extends Model
         'name',
         'ministry_id',
         'status',
+        'description',
+        'is_paid',
+        'amount',
+        
     ];
     // Relation avec Field
     public function fields()
@@ -32,6 +36,11 @@ class Procedure extends Model
     }
     public function ministere()
     {
-        return $this->belongsTo(Ministere::class);
+        return $this->belongsTo(Ministere::class,'ministry_id');
     }
+    public function users()
+{
+    return $this->belongsToMany(User::class,'procedure_user');
+}
+
 }
