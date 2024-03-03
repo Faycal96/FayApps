@@ -54,7 +54,7 @@ class RegisterDafController extends Controller
         $user['name']= $request->prenom.' '.$request->nom;
         $user['id_m']= $request->id_m;
         //  dd($user['name']);
-        $user->save();
+        $user->save(); 
 
         $user->assignRole($request->roles);
      
@@ -65,7 +65,7 @@ class RegisterDafController extends Controller
 
         // Redirigez ou affichez une vue
         // return view('welcome')->with('success', 'Votre compte a été créé avec succès et est en attente de validation !!');
-        return redirect()->route('welcome')->with('success', 'Votre compte a été créé avec succès et est en attente de validation !!');
+        return redirect()->route('users.index')->with('success', 'Votre compte a été créé avec succès et est en attente de validation !!');
 
         // return redirect($this->redirectPath())->with('success', 'Votre compte a été Créee avec success et en attente de Validation !! !');
     }

@@ -1,10 +1,10 @@
-@extends('layouts.header')
+@extends('layouts.backend')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h3 class="text-center mt-3 mb-3">Inscription d'un Agent du ministère</h3>
+            <h3 class="text-center mt-3 mb-3">Creation d'un compte Agent</h3>
             <div class="card">
 
                 <div class="card-header">{{ __('Register') }}</div>

@@ -1,11 +1,170 @@
-@extends('layouts.backend')
-@section('content')
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Gestion des demandes</h3>
+ @extends('layouts.backend')
+  @section('content')
+   <div class="container-fluid">
+ 
+
+    @if(auth()->user()->hasRole(['Client']))  
+
+    <div class="row">
+        <div class="col-lg-3">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ $userStats['total'] }}</h3>
+                    @if ($userStats['total']<= 1)
+                    <p>Total des demandes</p>
+                    @else
+                    <p>Total des demandes</p>
+                    @endif
+
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{  $userStats['validated']  }}</h3>
+                    @if ( $userStats['validated'] <= 1)
+                    <p>Demandes validées</p>
+                    @else
+                    <p>Demandes Validées</p>
+                    @endif
+
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>{{  $userStats['submitted']  }}</h3>
+                    @if ( $userStats['submitted'] <= 1)
+                    <p>Demandes deposées</p>
+                    @else
+                    <p>Demandes deposées</p>
+                    @endif
+
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+   
+
+        <div class="col-lg-3">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ $userStats['rejected'] }}</h3>
+                    @if ($userStats['rejected'] <= 1)
+                    <p>Demandes Rejetées</p>
+                    @else
+                    <p>Demandes Rejetées</p>
+                    @endif
+
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
     </div>
-    <div class="card-body">
+
+
+    @elseif(auth()->user()->hasRole(['Agent','Superieur']))
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ $procedureStats['total'] }}</h3>
+
+                    <p>Total Demandes</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ $procedureStats['validated'] }}</h3>
+
+                    <p>Total demandes validées </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ $procedureStats['rejected'] }}</h3>
+
+                    <p>Total Demandes rejetées</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>{{ $procedureStats['submitted'] }}</h3>
+
+                    <p>Total Demandes soumises</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <!-- ./col -->
+    </div>
+    @endif
+
+
+
+
+    
+     <div class="card">
+        <div class="col-12">
+      <div class="card-header">
+        <h3 class="card-title">Gestion des demandes de {{ $procedure->name }}</h3>
+      </div>
+      <div class="card-body">
         @if(auth()->user()->hasRole(['Client']))  
+       
         <a href="{{ route('procedures.applications.create', $procedure)  }}" class="btn btn-success btn-sm my-2"><i class="bi bi-plus-circle"></i>Faire une nouvelle demande</a>
               
         
@@ -13,18 +172,18 @@
         @endif
         
         <table id="example1" class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Code de la demande</th>
-                    <th>Identité</th>
-                   
-                    <th>Date de soumission</th>
-                    <th>Statut</th>
-                    @if($procedure->is_paid) <th>Paiement</th>@endif
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
+                <thead>
+                    <tr>
+                        <th>Code de la demande</th>
+                        <th>Identité</th>
+                    
+                        <th>Date de soumission</th>
+                        <th>Statut</th>
+                        @if($procedure->is_paid) <th>Paiement</th>@endif
+                        <th>Action</th>
+                    </tr>
+                </thead>
+              <tbody>
                 @forelse ($applications as $application)
                 <tr>
                     <td>{{ $application->request_number }}</td>
@@ -81,24 +240,24 @@
                     <i class="bi bi-eye"></i> Détails
                 </button>
                 @php
-$iconMap = [
-    'text' => 'bi-fonts',
-    'email' => 'bi-envelope-fill',
-    'phone' => 'bi-telephone-fill',
-    'address' => 'bi-geo-alt-fill',
-    'date' => 'bi-calendar-event',
-    'number' => 'bi-hash',
-    'url' => 'bi-link-45deg',
-    'textarea' => 'bi-textarea-t',
-    'select' => 'bi-list-ul',
-    'checkbox' => 'bi-check-square',
-    'file' => 'bi-file-earmark-arrow-down', // Icône pour les champs de type fichier
-    // Ajoutez d'autres types et leurs icônes ici
-];
-@endphp
+                $iconMap = [
+                    'text' => 'bi-fonts',
+                    'email' => 'bi-envelope-fill',
+                    'phone' => 'bi-telephone-fill',
+                    'address' => 'bi-geo-alt-fill',
+                    'date' => 'bi-calendar-event',
+                    'number' => 'bi-hash',
+                    'url' => 'bi-link-45deg',
+                    'textarea' => 'bi-textarea-t',
+                    'select' => 'bi-list-ul',
+                    'checkbox' => 'bi-check-square',
+                    'file' => 'bi-file-earmark-arrow-down', // Icône pour les champs de type fichier
+                    // Ajoutez d'autres types et leurs icônes ici
+                ];
+                @endphp
 
             <!-- Modal pour les détails d'une application -->
-           <div class="modal fade" id="applicationDetailModal{{ $application->id }}" tabindex="-1" aria-labelledby="applicationDetailModalLabel{{ $application->id }}" aria-hidden="true">
+             <div class="modal fade" id="applicationDetailModal{{ $application->id }}" tabindex="-1" aria-labelledby="applicationDetailModalLabel{{ $application->id }}" aria-hidden="true">
             
               <div class="modal-dialog modal-dialog-centered modal-lg">
                  <div class="modal-content">
@@ -140,13 +299,13 @@ $iconMap = [
                 
 
             
-                </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-             </div>
-             </div>
-            </div>
-        </div>
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
     
     
     
@@ -171,11 +330,14 @@ $iconMap = [
                 @endforelse
             </tbody>
         </table>
+       </div>
+      </div>
     </div>
 </div>
-@foreach($applications as $application)
-<div class="modal fade" id="editModal{{ $application->id }}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+</div>
+       @foreach($applications as $application)
+      <div class="modal fade" id="editModal{{ $application->id }}" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Modifier la demande</h5>
@@ -204,11 +366,11 @@ $iconMap = [
             </form>
         </div>
     </div>
-</div>
+ </div>
 
 
-<!-- Modale de suppression -->
-<div class="modal fade" id="deleteModal{{ $application->id }}" tabindex="-1" aria-hidden="true">
+ <!-- Modale de suppression -->
+ <div class="modal fade" id="deleteModal{{ $application->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -228,10 +390,10 @@ $iconMap = [
             </div>
         </div>
     </div>
-</div>
+ </div>
 
-@if(auth()->user()->hasRole('Agent') && $application->status == 'submitted')
-<div class="modal fade" id="validateModalAgent{{ $application->id }}" tabindex="-1" aria-hidden="true">
+ @if(auth()->user()->hasRole('Agent') && $application->status == 'submitted')
+ <div class="modal fade" id="validateModalAgent{{ $application->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -252,8 +414,8 @@ $iconMap = [
             </form>
         </div>
     </div>
-</div>
-<div class="modal fade" id="rejectModalAgent{{ $application->id }}" tabindex="-1" aria-hidden="true">
+ </div>
+ <div class="modal fade" id="rejectModalAgent{{ $application->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -278,9 +440,9 @@ $iconMap = [
             </form>
         </div>
     </div>
-</div>
-@elseif(auth()->user()->hasRole('Superieur') && $application->status == 'validated_by_agent')
-<div class="modal fade" id="validateModalSuperior{{ $application->id }}" tabindex="-1" aria-hidden="true">
+ </div>
+ @elseif(auth()->user()->hasRole('Superieur') && $application->status == 'validated_by_agent')
+ <div class="modal fade" id="validateModalSuperior{{ $application->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -305,8 +467,8 @@ $iconMap = [
             </form>
         </div>
     </div>
-</div>
-<div class="modal fade" id="rejectModalSuperior{{ $application->id }}" tabindex="-1" aria-hidden="true">
+ </div>
+ <div class="modal fade" id="rejectModalSuperior{{ $application->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -327,7 +489,11 @@ $iconMap = [
             </form>
         </div>
     </div>
-</div>
+ </div>
 @endif
 @endforeach
+
+
+
+
 @endsection

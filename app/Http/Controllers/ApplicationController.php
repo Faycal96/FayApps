@@ -11,19 +11,43 @@ use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     // Affiche la liste des demandes
     public function index(Procedure $procedure)
     {
+        $userId = auth()->id(); // ID de l'utilisateur connecté
+    
         $applications = Application::where('procedure_id', $procedure->id)
-                        ->with(['fields', 'user']) // Assurez-vous que la relation est bien définie
+                        ->with(['fields', 'user'])
                         ->get();
     
-                        $uniqueFieldNames = $applications->flatMap(function ($application) {
-                            return $application->fields->pluck('label');
-                        })->unique()->sort()->values();
+        $userApplications = $applications->where('user_id', $userId);
     
-        // Correction: s'assurer que 'procedure' est inclus dans les données passées à la vue
-        return view('admin.applications.index', compact('applications', 'procedure','uniqueFieldNames'));
+        // Statistiques pour l'utilisateur connecté
+        $userStats = [
+            'total' => $userApplications->count(),
+            'rejected' => $userApplications->where('status', 'rejected_by_superior')->count(),
+            'validated' => $userApplications->where('status', 'validated_by_superior')->count(),
+            'submitted' => $userApplications->where('status', 'submitted')->count(),
+        ];
+    
+        // Statistiques pour la procédure
+        $procedureStats = [
+            'total' => $applications->count(),
+            'rejected' => $applications->where('status', 'rejected_by_superior')->count(),
+            'validated' => $applications->where('status', 'validated_by_superior')->count(),
+            'submitted' => $applications->where('status', 'submitted')->count(),
+        ];
+    
+        $uniqueFieldNames = $applications->flatMap(function ($application) {
+            return $application->fields->pluck('label');
+        })->unique()->sort()->values();
+    
+        // Passage des données à la vue
+        return view('admin.applications.index', compact('applications', 'procedure', 'uniqueFieldNames', 'userStats', 'procedureStats'));
     }
     
 

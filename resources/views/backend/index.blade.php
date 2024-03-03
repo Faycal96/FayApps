@@ -1,66 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>edemande</title>
-        <!-- Favicon-->
-        <link href="{{ asset('frontend/assets/img/armoirie.png') }}" rel="icon">
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-        <link href={{ asset('accueil/css/styles.css') }} rel="stylesheet" />
-    </head>
-    <body>
-        <!-- Responsive navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container px-lg-5">
-                <a class="navbar-brand" href="/">edemande</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <!-- Liens accessibles à tous les utilisateurs -->
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Accueil</a></li>
-                       
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                
-                        <!-- Liens visibles seulement pour les utilisateurs authentifiés -->
-                        @auth
-                            <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
-                            <!-- Exemple de condition basée sur le rôle de l'utilisateur -->
-                            @if(Auth::user()->role == 'admin')
-                                <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
-                            @endif
-                            <!-- Lien pour se déconnecter -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    Déconnexion
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </li>
-                        @endauth
-                
-                        <!-- Lien pour les visiteurs non authentifiés -->
-                        @guest
-                            
-                            <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Inscription</a></li>
-                        @endguest
-                    </ul>
-                </div>
-                
-            </div>
-        </nav>
-        <!-- Header-->
+@extends('layouts.demandes')
+@section('content')
         <header class="py-5">
             <div class="container px-lg-5">
                 <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
@@ -171,16 +110,4 @@
                 @endforeach
             </div>
         </section>
-        
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">© Copyright edemande. Tous droit reservés
-                Conçu par Pool DGTD / MTDPCE</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src= {{ asset('accueil/js/scripts.js') }}></script>
-       
-    </body>
-</html>
+        @endsection

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>billetAvion</title>
+    <title>edemande</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -188,7 +188,7 @@
             <a href="index3.html" class="brand-link">
                 <img src="{{ asset('frontend/assets/img/armoirie.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">BilletAvion</span>
+                <span class="brand-text font-weight-light">edemande</span>
             </a>
 
             <!-- Sidebar -->

@@ -59,8 +59,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'adressAgence' =>['required', 'string', 'max:255'],
-            'numeroIfu' =>['required', 'string', 'max:255'],
+            'adressAgence' =>[ 'string', 'max:255'],
+            'numeroIfu' =>[ 'string', 'max:255'],
             // 'rccm' => 'required|mimes:pdf|max:10240',
         ]);
     }
@@ -118,7 +118,7 @@ class RegisterController extends Controller
 
         $user->notify(new \App\Notifications\userNotification());
 
-        return view('welcome')->with('success', 'Votre compte a été Créee avec success et en attente de Validation !!');
+        return view('backend.index')->with('success', 'Votre compte a été Créee avec success et en attente de Validation !!');
 
     }
 
