@@ -59,9 +59,11 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'adressAgence' =>[ 'string', 'max:255'],
-            'numeroIfu' =>[ 'string', 'max:255'],
-            // 'rccm' => 'required|mimes:pdf|max:10240',
+            // Rendre les champs suivants optionnels :
+            'rccm' => ['nullable', 'mimes:pdf', 'max:10240'], // Optionnel, doit être un fichier PDF si présent
+            'adressAgence' => ['nullable', 'string', 'max:255'], // Optionnel
+            'numeroIfu' => ['nullable', 'string', 'max:255'], // Optionnel
+            'dateCreationAgence' => ['nullable', 'date'], // Optionnel, doit être une date valide si présent
         ]);
     }
 
@@ -76,51 +78,53 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'telephone' =>$data['telephone'],
+            'telephone' => $data['telephone'],
             'password' => Hash::make($data['password']),
         ]);
-
+    
+        // Assurez-vous que la création de l'utilisateur a réussi avant de continuer
         if (!$user) {
             return redirect()->back()->withInput()->withErrors(['error' => 'Erreur lors de la création de l\'utilisateur.']);
         }
-
         $user['typeUtilisateur'] = "Usager";
         $user['name'] = $data['name'];
-
-        //  dd($user['name']);
-
+      
         $user->save();
-
-      $agence =  AgenceAcredite::create([
+        // Configurez les valeurs par défaut pour les champs optionnels
+        $rccm = $data['rccm'] ?? null; // Utilisez l'opérateur null coalescent pour gérer les cas où 'rccm' n'existe pas
+        $adressAgence = $data['adressAgence'] ?? null;
+        $numeroIfu = $data['numeroIfu'] ?? null;
+        $dateCreationAgence = $data['dateCreationAgence'] ?? null;
+    
+        $agence = AgenceAcredite::create([
             'user_id' => $user->id,
             'nomAgence' => $data['name'],
-            'adressAgence' => $data['adressAgence'],
-            'numeroIfu' => $data['numeroIfu'],
-            'dateCreationAgence' => $data['dateCreationAgence'],
-            'rccm' =>$data['rccm'],
+            'adressAgence' => $adressAgence,
+            'numeroIfu' => $numeroIfu,
+            'dateCreationAgence' => $dateCreationAgence,
+            'rccm' => $rccm,
             // ... autres champs de l'agence
         ]);
-
-
-
-        // Enregistrez le fichier PDF
-        if ($data['rccm'] && is_uploaded_file($data['rccm'])) {
-            $pdfFile = $data['rccm'];
+    
+        // Enregistrez le fichier PDF si 'rccm' est présent et est un fichier téléchargé
+        if (!empty($rccm) && is_uploaded_file($rccm)) {
+            $pdfFile = $rccm;
             $pdfFileName = time() . '_' . $pdfFile->getClientOriginalName();
             $pdfPath = $pdfFile->storeAs('public/pdf_files', $pdfFileName);
-
-            $agence->savePdfFile($pdfPath);
+    
+            $agence->savePdfFile($pdfPath); // Assurez-vous que cette méthode existe et est correctement définie dans votre modèle `AgenceAcredite`
         }
+    
         $clientRole = Role::where('name', 'Client')->first();
         if ($clientRole) {
             $user->roles()->attach($clientRole);
         }
-
-        $user->notify(new \App\Notifications\userNotification());
-
-        return view('backend.index')->with('success', 'Votre compte a été Créee avec success et en attente de Validation !!');
-
+    
+        // $user->notify(new \App\Notifications\userNotification());
+    
+        return view('backend.index')->with('success', 'Votre compte a été créé avec succès, veuillez cliquer le bouton Connexion pour se connecter !');
     }
+    
 
 
 }

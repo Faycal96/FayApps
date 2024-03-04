@@ -34,25 +34,44 @@ class UserController extends Controller
      */
     public function index(): View
     {
+        // ID du ministère de l'utilisateur connecté
+        $userMinistereId = auth()->user()->id_m;
+    
         // Récupère tous les utilisateurs et précharge les agences liées
-        $users = User::with('agenceAcredite')->latest('id')->paginate(10000000000);
-
-        // Calcule les statistiques
+        $users = User::with('agenceAcredite')->latest('id')->paginate(10); // Pagination ajustée pour l'exemple
+    
+        // Statistiques générales
         $totalUsers = User::count();
-        $disabledUsers = User::where('is_active', 0)->count(); // Assurez-vous que 'is_active' est bien le nom de la colonne indiquant si un utilisateur est actif ou non
-        $usersWithAgence = User::whereHas('agenceAcredite')->count(); // Utilisateurs associés à une agence
-        $usersWithoutAgence = User::whereDoesntHave('agenceAcredite')->count(); // Utilisateurs non associés à une agence
-
-        // Retourne la vue avec les utilisateurs et les statistiques
+        $disabledUsers = User::where('is_active', 0)->count();
+        $usersWithAgence = User::whereHas('agenceAcredite')->count();
+        $usersWithoutAgence = User::whereDoesntHave('agenceAcredite')->count();
+    
+        // Statistiques spécifiques au ministère de l'utilisateur connecté
+        $totalUsersByMinistere = User::where('id_m', $userMinistereId)->count();
+        $disabledUsersByMinistere = User::where('id_m', $userMinistereId)->where('is_active', 0)->count();
+        $activatedUsersByMinistere = User::where('id_m', $userMinistereId)->where('is_active', 1)->count();
+        $usersWithAgenceByMinistere = User::where('id_m', $userMinistereId)->whereHas('agenceAcredite')->count();
+        $usersWithoutAgenceByMinistere = User::where('id_m', $userMinistereId)->whereDoesntHave('agenceAcredite')->count();
+    
+        // Retourne la vue avec les utilisateurs et toutes les statistiques
         return view('users.index', [
             'users' => $users,
             'totalUsers' => $totalUsers,
             'disabledUsers' => $disabledUsers,
             'usersWithAgence' => $usersWithAgence,
             'usersWithoutAgence' => $usersWithoutAgence,
-            'ministeres' =>Ministere::all(),
+            // Statistiques par ministère
+            'totalUsersByMinistere' => $totalUsersByMinistere,
+            'disabledUsersByMinistere' => $disabledUsersByMinistere,
+            'activatedUsersByMinistere' => $activatedUsersByMinistere,
+            'usersWithAgenceByMinistere' => $usersWithAgenceByMinistere,
+            'usersWithoutAgenceByMinistere' => $usersWithoutAgenceByMinistere,
+            // Autres données potentiellement utiles pour la vue
+            'ministeres' => Ministere::all(), // Assurez-vous que cette collection est nécessaire pour la vue
+            'currentMinistereId' => $userMinistereId,
         ]);
     }
+    
 
 
     /**

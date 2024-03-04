@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="container-fluid">
+    @if(auth()->user()->hasRole(['Super Admin']))  
     <div class="row">
         <div class="col-lg-3 col-6">
             <!-- small box -->
@@ -25,7 +26,7 @@
                 <div class="inner">
                     <h3>{{ $usersWithoutAgence }}<sup style="font-size: 20px"></sup></h3>
 
-                    <p>Total DAF</p>
+                    <p>Total Agent</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -40,7 +41,7 @@
                 <div class="inner">
                     <h3>{{ $usersWithAgence }}</h3>
 
-                    <p>Total Agence</p>
+                    <p>Total Client</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -65,6 +66,70 @@
         </div>
         <!-- ./col -->
     </div>
+    @else()
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ $totalUsersByMinistere }}</h3>
+
+                    <p>Total des utilisateurs</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ $activatedUsersByMinistere }}<sup style="font-size: 20px"></sup></h3>
+
+                    <p>Utilisateurs actifs</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>{{ $activatedUsersByMinistere }}</h3>
+
+                    <p>Utilisateurs actifs</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ $disabledUsersByMinistere }}</h3>
+
+                    <p>Utilisateurs desactivés</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    @endif
 
     <div class="row">
         <div class="col-12">
@@ -108,6 +173,8 @@
                         </thead>
                         <tbody>
                             @forelse ($users as $user)
+
+                            @if ($user->id_m ==auth()->user()->id_m  && auth()->user()->hasRole(['Admin']) || auth()->user()->hasRole(['Super Admin']))
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->created_at->translatedFormat('d M Y à H:i:s') }}</td>
@@ -355,11 +422,14 @@
 
                                 </td>
                             </tr>
+                            @endif
                             @empty
+                            
                             <tr>
                                 <td colspan="5" class="text-center">Aucun utilisateur trouvé!</td>
                             </tr>
-                            @endforelse
+                            
+                         @endforelse
                         </tbody>
 
 

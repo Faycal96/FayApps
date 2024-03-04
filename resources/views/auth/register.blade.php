@@ -18,7 +18,7 @@
                             <div class="col-md-6">
                                 <select id="typeUtilisateur" class="form-control" name="typeUtilisateur" onchange="toggletypeUtilisateurFields(this.value);">
                                     <option value="entreprise">Personne morale ou entreprise</option>
-                                    <option value="individu">Personne morale ou particulier</option>
+                                    <option value="individu">Personne physique ou particulier</option>
                                 </select>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-building"></i></span>
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
                                 </div>
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -46,11 +46,11 @@
 
                             <!-- Date de création -->
                             <div class="row mb-3">
-                                <label for="dateCreationAgence" class="col-md-4 col-form-label text-md-end">{{ __('Date de Création') }} <sup class="text-danger">*</sup></label>
+                                <label for="dateCreationAgence" class="col-md-4 col-form-label text-md-end">{{ __('Date de Création') }} </label>
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                        <input id="dateCreationAgence" type="date" class="form-control @error('dateCreationAgence') is-invalid @enderror" name="dateCreationAgence" value="{{ old('dateCreationAgence') }}" required autocomplete="dateCreationAgence">
+                                        <input id="dateCreationAgence" type="date" class="form-control @error('dateCreationAgence') is-invalid @enderror" name="dateCreationAgence" value="{{ old('dateCreationAgence') }}" >
                                     </div>
                                     @error('dateCreationAgence')
                                     <span class="invalid-feedback" role="alert">
@@ -62,11 +62,11 @@
 
                             <!-- Numéro IFU -->
                             <div class="row mb-3">
-                                <label for="numeroIfu" class="col-md-4 col-form-label text-md-end">{{ __('Numéro IFU') }} <sup class="text-danger">*</sup></label>
+                                <label for="numeroIfu" class="col-md-4 col-form-label text-md-end">{{ __('Numéro IFU') }} </label>
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                                        <input id="numeroIfu" type="number" class="form-control @error('numeroIfu') is-invalid @enderror" name="numeroIfu" value="{{ old('numeroIfu') }}" required autocomplete="numeroIfu">
+                                        <input id="numeroIfu" type="number" class="form-control @error('numeroIfu') is-invalid @enderror" name="numeroIfu" value="{{ old('numeroIfu') }}">
                                     </div>
                                     @error('numeroIfu')
                                     <span class="invalid-feedback" role="alert">
@@ -78,11 +78,11 @@
 
                             <!-- RCCM -->
                             <div class="row mb-3">
-                                <label for="rccm" class="col-md-4 col-form-label text-md-end">{{ __('Registre de Commerce') }} <sup class="text-danger">*</sup></label>
+                                <label for="rccm" class="col-md-4 col-form-label text-md-end">{{ __('Registre de Commerce') }} </label>
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-                                        <input id="rccm" type="file" class="form-control @error('rccm') is-invalid @enderror" name="rccm" value="{{ old('rccm') }}" required>
+                                        <input id="rccm" type="file" class="form-control @error('rccm') is-invalid @enderror" name="rccm" value="{{ old('rccm') }}">
                                     </div>
                                     @error('rccm')
                                     <span class="invalid-feedback" role="alert">

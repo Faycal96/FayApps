@@ -115,12 +115,23 @@
                 <div class="row justify-content-center mt-3">
                     <div class="col-md-12">
 
-                        @if ($message = Session::get('success'))
-                            <div class="alert alert-success text-center" role="alert">
-                                {{ $message }}
+                        <p>
+                            @if(session('success'))
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <span class="alert-heading">{{session('success')}}</span>
+            
                             </div>
-                        @endif
-
+            
+                            <script>
+                                setTimeout(function() {
+                                        document.querySelector('.alert.alert-success').style.display = 'none';
+                                    }, 6000); // Le message flash disparaîtra après 5 secondes (5000 millisecondes)
+                            </script>
+                            @endif
+                        </p>
                      
 
                         <div class="row justify-content-center text-center mt-3">
