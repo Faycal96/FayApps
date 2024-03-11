@@ -43,6 +43,8 @@ Route::post('/demandes/{id}', [DemandeBilletController::class, 'destroy'])->name
 Route::put('/demandes/update/{id}', [DemandeBilletController::class, 'update'])->name('demandes.update');
 
 
+
+
 Route::get('registerdaf', [RegisterDafController::class, 'afficherFormulaire'])->name('registerdaf');
 Route::post('/storeDaf', [RegisterDafController::class, 'enregistrer'])->name('storeDaf');
 Route::post('/offres/{offre}/valider', [OffreController::class, 'valider'])->name('offres.valider');

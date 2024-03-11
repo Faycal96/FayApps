@@ -55,7 +55,7 @@
         <div class="container d-flex justify-content-center justify-content-md-between">
             <div class="contact-info d-flex align-items-center">
                 <i class="bi bi-envelope d-flex align-items-center"><a
-                        href="mailto:contact@example.com">achatbillet@tic.gov.bf </a></i>
+                        href="mailto:contact@example.com">billetavion@tic.gov.bf </a></i>
                 <i class="bi bi-phone d-flex align-items-center ms-4"><span>+226 55 89 55 48</span></i>
             </div>
             <div class="social-links d-none d-md-flex align-items-center">
@@ -69,8 +69,18 @@
 
     <header id="header" class="d-flex align-items-center">
         <div class="container d-flex justify-content-between align-items-center">
-            <div class="logo">
+            {{-- <div class="logo">
                 <h1><a href="">AchatBillet</a></h1>
+            </div> --}}
+
+            <div class="container  d-flex float-start logo">
+
+                <img src="{{ asset('frontend/assets/img/armoirie.png') }}" width="50px" height="70px" />
+                <h1>
+                    <a href="/">Plateforme d'acquisition de billet d'avion</a>
+                </h1>
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
 
             <nav id="navbar" class="navbar">
@@ -106,6 +116,23 @@
                 </div>
 
                 <div class="col-md-5">
+                    <p>
+                        @if(session('success'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <span class="alert-heading">{{session('success')}}</span>
+
+                        </div>
+
+                        <script>
+                            setTimeout(function() {
+                                    document.querySelector('.alert.alert-success').style.display = 'none';
+                                }, 6000); // Le message flash disparaîtra après 5 secondes (5000 millisecondes)
+                        </script>
+                        @endif
+                    </p>
                     <div class="card border-0">
                         <div class="card-header card-primary text-center"> Veuillez entrer vos identifiants ici</div>
 
@@ -116,7 +143,7 @@
                                     <label for="email" class="form-label">{{ __('Adresse Email') }} <sup
                                             class="text-danger">*</sup></label>
                                     <input id="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
+                                        class="form-control border-primary @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required autocomplete="email" autofocus>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -129,7 +156,7 @@
                                     <label for="password" class="form-label">{{ __('Mot de Passe') }} <sup
                                             class="text-danger">*</sup></label>
                                     <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
+                                        class="form-control border-primary @error('password') is-invalid @enderror" name="password"
                                         required autocomplete="current-password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -139,7 +166,7 @@
                                 </div>
 
                                 <div class="mb-3 form-check text-center">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                    <input class="form-check-input float-none" type="checkbox" name="remember" id="remember"
                                         {{ old('remember') ? 'checked' : '' }}>
                                     <label class="form-check-label" for="remember">
                                         {{ __('Se Souvenir de  Moi') }}

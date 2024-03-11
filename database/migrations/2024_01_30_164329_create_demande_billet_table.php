@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('dateArrivee')->default(Carbon::now());
             $table->string('numeroOrdreMission')->nullable();
             $table->integer('duree')->nullable();
-            $table->integer('description')->nullable();
+            $table->string('description')->nullable();
             $table->boolean('etat')->default(true);
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
