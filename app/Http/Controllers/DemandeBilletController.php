@@ -26,18 +26,48 @@ class DemandeBilletController extends Controller
     public function index(DemandeBillet $demande)
     {
 
+        $user = Auth::user();
+        if ($user) {
+            // Récupérer toutes les demandes de l'utilisateur connecté
+            $demandes = $user->demandes;
+
+            // Initialiser le compteur des offres retenues
+            $nombreOffresRetenues = 0;
+            $nombreDemandesSansOffres = 0;
+
+            // Parcourir toutes les demandes de l'utilisateur
+            foreach ($demandes as $demande) {
+                // Pour chaque demande, récupérer les offres associées retenues
+                $offresRetenues = $demande->offres()->where('etats', 'validée')->get();
+
+                // Mettre à jour le compteur des offres retenues
+                $nombreOffresRetenues += $offresRetenues->count();
+
+                if ($demande->offres()->count() === 0) {
+                    $nombreDemandesSansOffres++;
+                }
+            }
+        }
+
+
+
+
+
+
          // Récupérer l'utilisateur connecté
     $user = Auth::user();
 
     if ($user->ministere) {
         // Compter le nombre de demandes de l'utilisateur connecté
         $nombreDemandes = $user->demandes->count();
+        // $nombreOffreRetenues = $offre->count();
 
     } else {
         // Si aucun utilisateur n'est connecté, définir le nombre de demandes sur 0
         $nombreDemandes = 0;
 
     }
+    // dd($nombreOffreRetenues);
 
     if($user->agence)
     {
@@ -63,6 +93,8 @@ class DemandeBilletController extends Controller
             'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
             'cities'=> $cities,
             'nombreDemandes' => $nombreDemandes, // Passer le nombre de demandes à la vue
+            'nombreOffreRetenues' =>$nombreOffresRetenues,
+            'nombreDemandesSansOffres' =>$nombreDemandesSansOffres,
             'nombreOffres' =>$nombreOffres,
             'nombreOfrresValidees' =>$nombreOfrresValidees,
             'nombreOfrresRejettees' =>$nombreOfrresRejettees,
@@ -116,6 +148,19 @@ class DemandeBilletController extends Controller
             // $agence = AgenceAcredite::where('user_id', $user->id)->first();
 
             // Ensuite, notifier l'utilisateur (qui est une agence dans ce cas)
+
+
+            // Préparer les notifications pour chaque utilisateur
+// $notifications = [];
+// foreach ($users as $user) {
+//     // Créer une instance de la notification pour chaque utilisateur
+//     $notifications[] = new \App\Notifications\DemandeCreatedNotification($demande, $user);
+// }
+
+// Envoyer toutes les notifications en une seule opération
+//Notification::send($users, $notifications);
+
+
             foreach ($users as $user) {
                 $user->notify(new \App\Notifications\DemandeCreatedNotification($demande, $user));
 

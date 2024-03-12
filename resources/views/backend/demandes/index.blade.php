@@ -105,9 +105,9 @@
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3>{{ $nombreOffreRetenues }}</h3>
 
-                    <p>Total offres retenues </p>
+                    <p>Total Offres retenues </p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -122,7 +122,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3>{{ $nombreDemandesSansOffres }}</h3>
 
                     <p>Total Demandes sans Offres</p>
                 </div>
@@ -198,7 +198,7 @@
                                                 <div class="input-group">
                                                     {{-- <span class="input-group-text"><i
                                                             class="fas fa-file-alt"></i></span> --}}
-                                                    <input type="number" name="numeroOrdreMission"
+                                                    <input type="text" name="numeroOrdreMission"
                                                         wire:model='numeroOrdreMission' class="form-control">
                                                 </div>
                                             </div>
@@ -494,22 +494,26 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Num Ordre Mission</th>
+                                <th>Reference</th>
                                 <th>Lieu Depart</th>
                                 <th>Lieu Arrivée</th>
                                 <th>Date Depart</th>
                                 <th>Date Retour</th>
                                 <th>Statut</th>
+                                <th>Timing</th>
                                 <th>Délai</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
+                        @php
+                            $i =1;
+                        @endphp
                         @foreach ($demandes as $demande)
                         <tbody>
                             @if ($demande->user_id == auth()->id() || auth()->user()->hasRole(['Agence Voyage']))
                             <tr>
-                                <td>{{ $demande->id }}</td>
-                                <td>{{ $demande->numeroOrdreMission }}</td>
+                                <td>{{ $i++ }}</td>
+                                <td>{{ $demande->code_demande }}</td>
                                 <td>{{ $demande->lieuDepart }}</td>
                                 <td>{{ $demande->lieuArrivee }}</td>
 
@@ -523,8 +527,13 @@
                                     @else
                                     <td><span class="badge bg-danger">Fermée</span></td>
                                 @endif
+                                <td>{{ $demande->created_at->diffForHumans() }}</td>
 
                                 <td>{{ $demande->duree.' Heures' }}</td>
+                                {{-- <td>{{ \Carbon\Carbon::createFromTimestamp($demande->duree)->diffForHumans($demande->date_debut) }} Heures</td> --}}
+
+
+
                                 <td>
                                     <!-- Bouton pour ouvrir le modal de détails -->
                                     <button title="Voir Détails" type="button" class="btn btn-primary btn-sm"
@@ -921,10 +930,24 @@
                                                                 <span class="input-group-text"><i
                                                                         class="fas fa-money-check-alt"></i></span>
                                                             </div>
-                                                            <input type="number" name="prixBillet" class="form-control is-valid" required>
+                                                            <input id="prix"  type="number" name="prixBillet" class="form-control is-valid"  required>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <script>
+                                                    document.getElementById('prix').addEventListener('input', function(e) {
+                                                    // Supprime tous les caractères non numériques de la saisie
+                                                    var prix = this.value.replace(/\D/g, '');
+
+                                                    // Ajoute des espaces tous les trois caractères, en commençant par la fin
+                                                    prix = prix.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+                                                    // Met à jour la valeur du champ de saisie avec le prix formaté
+                                                    this.value = prix;
+                                                });
+
+                                                </script>
+
                                                 <div class="col-6">
                                                     <div class="form-group m-auto">
                                                         <label>Valable jusqu'au <sup class="text-danger">*</sup></label>
@@ -1024,6 +1047,7 @@
 </div>
 <!-- /.row -->
 </div><!-- /.container-fluid -->
+
 <script>
  document.getElementById('compagnieSelect').addEventListener('change', function () {
     var autreCompagnieInput = document.getElementById('autreCompagnieInput');

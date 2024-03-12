@@ -1,4 +1,4 @@
-@extends('layouts.backend') 
+@extends('layouts.backend')
 
 @section('content')
 @canany(['create-demande-billet'])
@@ -135,7 +135,7 @@
 
 
                <div class="col-md-3 offset-1 col-sm-6 col-12">
-   
+
         <label class="form-label"><strong>Prix du Billet:</strong></label>
         <div class="info-box">
             <span class="info-box-icon bg-warning"><i class="far fa-money-bill-alt"></i></span>
@@ -146,20 +146,20 @@
             <!-- /.info-box-content -->
         </div>
         <!-- /.info-box -->
-  
+
 </div>
-                  
+
 
             </div>
         </div>
-        
+
         <div class="card-footer bg-dark-primary d-flex justify-content-center align-items-center ">
             @if ($offreMinPrix->etats == "En attente")
             <!-- Bouton de validation déclenche le modal -->
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#validateModal">
                 <i class="bi bi-check-lg"></i> Valider
             </button>
-            
+
 
             <!-- Modal de validation -->
             <div class="modal fade" id="validateModal" tabindex="-1" aria-labelledby="validateModalLabel"
@@ -175,7 +175,12 @@
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="motif" class="form-label">Motif de validation</label>
-                                    <textarea class="form-control" id="motif" name="motif" required></textarea>
+                                    {{-- <textarea class="form-control" id="motif" name="motif" required></textarea> --}}
+                                    <select name="motif" id="" class="form-control custom-select">
+                                        <option value="">Veuillez choisir le motif</option>
+                                        <option value="">Bon prix</option>
+                                        <option value="">Offre acceptable</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="modal-footer">

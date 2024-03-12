@@ -117,11 +117,12 @@
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                                 </div>
-                                @error('password')
+                                <span id="passwordError" class="invalid-feedback" role="alert"></span>
+                                {{-- @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                                @enderror
+                                @enderror --}}
                             </div>
                         </div>
 
@@ -149,4 +150,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('password');
+
+        passwordInput.addEventListener('input', function() {
+            const password = passwordInput.value;
+
+            if (password.length < 8) {
+                // Afficher un message d'erreur
+                document.getElementById('passwordError').innerText = 'Le mot de passe doit comporter au moins 8 caractères.';
+                passwordInput.classList.add('is-invalid'); // Ajouter la classe 'is-invalid' pour indiquer une erreur
+            } else {
+                // Effacer le message d'erreur
+                document.getElementById('passwordError').innerText = '';
+                passwordInput.classList.remove('is-invalid'); // Supprimer la classe 'is-invalid'
+            }
+        });
+    });
+</script>
+
 @endsection
