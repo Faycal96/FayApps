@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <h3 class="text-center mt-3 mb-3">Inscription d'une Agence accréditée</h3>
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header text-center">  <sup class="text-danger">les champs precédés d'étoile rouge sont obligatoires</sup></div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
@@ -124,7 +124,7 @@
 
                         <!-- Password -->
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }} <sup class="text-danger">*</sup></label>
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Mot de Passe') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
@@ -140,7 +140,7 @@
 
                         <!-- Confirm Password -->
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }} <sup class="text-danger">*</sup></label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirmez Mot de Passe') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>

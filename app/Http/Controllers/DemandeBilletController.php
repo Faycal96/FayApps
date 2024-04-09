@@ -20,9 +20,19 @@ use Illuminate\Support\Facades\Auth;
 
 class DemandeBilletController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
+
+     public function __construct()
+     {
+       
+         $this->middleware('auth');
+
+     }
+
+
     public function index(DemandeBillet $demande)
     {
 
@@ -48,9 +58,6 @@ class DemandeBilletController extends Controller
                 }
             }
         }
-
-
-
 
 
 
@@ -116,7 +123,6 @@ class DemandeBilletController extends Controller
     public function store(StoreDemandeBilletRequest $request)
     {
         //enregistrer une demande de billet
-
         $code = null;
         //recuperer le maximum de id
         $id = DemandeBillet::max('id');
@@ -151,14 +157,14 @@ class DemandeBilletController extends Controller
 
 
             // Préparer les notifications pour chaque utilisateur
-// $notifications = [];
-// foreach ($users as $user) {
-//     // Créer une instance de la notification pour chaque utilisateur
-//     $notifications[] = new \App\Notifications\DemandeCreatedNotification($demande, $user);
-// }
+            $notifications = [];
+            foreach ($users as $user) {
+                // Créer une instance de la notification pour chaque utilisateur
+                $notifications[] = new \App\Notifications\DemandeCreatedNotification($demande, $user);
+            }
 
-// Envoyer toutes les notifications en une seule opération
-//Notification::send($users, $notifications);
+            // Envoyer toutes les notifications en une seule opération
+            //Notification::send($users, $notifications);
 
 
             foreach ($users as $user) {
@@ -168,19 +174,6 @@ class DemandeBilletController extends Controller
 
             return redirect()->route('demandes.index')->with('success', 'Votre demande a été enregistrée.');
 
-
-        // return redirect()->route('demandes.index')
-        //     ->with('success', 'Votre demande a été enregistrée.');
-
-        /*
-        $numeroOrdreMission = $request->numeroOrdreMission;
-        $lieuDepart = $request->lieuDepart;
-        $lieuArrivee = $request->lieuArrivee;
-         $dateDepart= $request->dateDepart;
-        $dateArrivee = $request->dateArrivee;
-        $duree = $request->duree;
-        $description = $request->description;
-        */
 
     }
 

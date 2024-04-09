@@ -21,7 +21,7 @@ class OffreController extends Controller
     {
 
          // Récupérer l'utilisateur connecté
-    $user = Auth::user();
+        $user = Auth::user();
 
         if ($user->agence) {
             $nombreOffres = $user->agence->offres->count();

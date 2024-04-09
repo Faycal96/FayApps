@@ -4,8 +4,8 @@
 <div class="container">
       <!-- ======= Featured Section ======= -->
       <section id="featured" class="featured">
-        <div class="container">
-          <p>Veuillez vous inscrire ci dessous !</p>
+        <div class="container text-center">
+          <p>Veuillez choisir votre Profil ci dessous !</p>
           <div class="row">
             <div class="col-lg-6">
               <div class="icon-box">
@@ -20,7 +20,7 @@
                 {{-- <i class="bi bi-binoculars"></i> --}}
                 <i class="bi bi-person"></i>
                 <h3><a href="{{ route('registerdaf') }}">Je suis un agent du Ministère</a></h3>
-                <p>cette espace est reservé au DAF des differents Ministère</p>
+                <p>cet espace est reservé au DAF des differents Ministère</p>
               </div>
             </div>
           </div>

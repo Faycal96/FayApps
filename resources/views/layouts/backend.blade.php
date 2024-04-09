@@ -10,7 +10,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-        <link href="{{ asset('frontend/assets/img/armoirie.png') }}" rel="icon">
+    <link href="{{ asset('frontend/assets/img/armoirie.png') }}" rel="icon">
 
 
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -99,34 +99,37 @@
             </ul>
 
             <ul class="navbar-nav ml-auto">
-<!-- Exemple avec Bootstrap -->
-<li class="nav-item dropdown">
-    <a class="nav-link" data-toggle="dropdown" href="#">
-        <i class="far fa-bell"></i>
-        <span class="badge badge-danger navbar-badge">{{ auth()->user()->unreadNotifications->count() }}</span>
-    </a>
-    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        @foreach(auth()->user()->unreadNotifications as $notification)
-    <a href="{{ route('notifications.read', $notification->id) }}" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-                <img src="{{ asset('backend/assets/dist/img/armoirie.png') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                <div class="media-body">
-                    <h3 class="dropdown-item-title">
-                        Notification
-                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                    </h3>
-                    <p class="text-sm">{{ $notification->data['message'] }}</p>
-                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ $notification->created_at->diffForHumans() }}</p>
-                </div>
-            </div>
-            <!-- Message End -->
-        </a>
-        <div class="dropdown-divider"></div>
-        @endforeach
+                <!-- Exemple avec Bootstrap -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-danger navbar-badge">{{ auth()->user()->unreadNotifications->count()
+                            }}</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        @foreach(auth()->user()->unreadNotifications as $notification)
+                        <a href="{{ route('notifications.read', $notification->id) }}" class="dropdown-item">
+                            <!-- Message Start -->
+                            <div class="media">
+                                <img src="{{ asset('backend/assets/dist/img/armoirie.png') }}" alt="User Avatar"
+                                    class="img-size-50 mr-3 img-circle">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        Notification
+                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">{{ $notification->data['message'] }}</p>
+                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{
+                                        $notification->created_at->diffForHumans() }}</p>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        @endforeach
 
-    </div>
-</li>
+                    </div>
+                </li>
 
 
                 @guest
@@ -163,8 +166,8 @@
                         @endif
                         <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
-                                         <i class=""></i>
-                            {{ __('Logout') }}
+                            <i class=""></i>
+                            {{ __('Déconnecter') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -196,8 +199,8 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ asset('backend/assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                            alt="User Image">
+                        <img src="{{ asset('backend/assets/dist/img/user2-160x160.jpg') }}"
+                            class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -365,7 +368,7 @@
     {{-- <script src="{{ asset('backend/assets/plugins') }}/to/select2.min.js"></script> --}}
     <!-- Insérer avant la fermeture de la balise </body> -->
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
 
@@ -400,8 +403,8 @@
     </script>
 
 
-<script>
-$(document).ready(function() {
+    <script>
+        $(document).ready(function() {
     // Utilisation de Select2 pour l'autocomplétion
     $('#cities').select2({
         placeholder: 'Rechercher une ville...',
@@ -463,18 +466,8 @@ $(document).ready(function() {
     return $(cityOption);
 }
 });
-</script>
+    </script>
 
-<script>
-
-Swal.fire({
-  position: "top-end",
-  icon: "success",
-  title: "Your work has been saved",
-  showConfirmButton: false,
-  timer: 1500
-});
-</script>
 
 
 

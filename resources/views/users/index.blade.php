@@ -315,10 +315,10 @@
 
                                     @can('delete-user')
                                     <!-- Bouton de déclenchement -->
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                    {{-- <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#deleteUserModal{{ $user->id }}">
                                         <i class="bi bi-trash"></i> Supprimer
-                                    </button>
+                                    </button> --}}
 
                                     <!-- Modal de suppression -->
                                     <div class="modal fade" id="deleteUserModal{{ $user->id }}" tabindex="-1"

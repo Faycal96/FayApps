@@ -211,8 +211,14 @@
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="motifRejet" class="form-label">Motif du rejet</label>
-                                    <textarea class="form-control" id="motifRejet" name="motifRejet"
-                                        required></textarea>
+                                    {{-- <textarea class="form-control" id="motifRejet" name="motifRejet"
+                                        required></textarea> --}}
+                                        <select name="motifRejet" id="" class="form-control custom-select">
+                                            <option value="">Veuillez choisir le motif</option>
+                                            <option value="">Offre trop chers</option>
+                                            <option value="">Voyage non Conforme</option>
+                                            <option value="">Trop d'escale</option>
+                                        </select>
                                 </div>
                             </div>
                             <div class="modal-footer">

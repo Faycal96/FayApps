@@ -98,14 +98,14 @@
         <div class="container d-flex justify-content-between align-items-center">
 
           <div class="logo">
-            <h1><a href="{{ route('welcome') }}">AchatBillet</a></h1>
+            <h1><a href="{{ route('welcome') }}">Creation de compte</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
           </div>
 
           <nav id="navbar" class="navbar">
             <ul>
-              <li><a class="active" href=" {{ route('welcome') }}">Accueil</a></li>
+              <li><a class="active" href=" {{ route('welcome') }}"> </a></li>
               {{-- <li><a href="{{ route('login') }}">Compte</a></li> --}}
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>

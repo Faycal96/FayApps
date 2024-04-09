@@ -28,11 +28,10 @@
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>{{ $nombreOffres }}</h3>
-                    @if ($nombreOffres <= 1)
-                    <p>Proposition au totale</p>
-                    @else
-                    <p>Propositions au totales</p>
-                    @endif
+                    @if ($nombreOffres <= 1) <p>Proposition  totale</p>
+                        @else
+                        <p>Propositions  totales</p>
+                        @endif
 
                 </div>
                 <div class="icon">
@@ -47,11 +46,10 @@
             <div class="small-box bg-success">
                 <div class="inner">
                     <h3>{{ $nombreOfrresValidees }}</h3>
-                    @if ($nombreOfrresValidees <= 1)
-                    <p>Proposition Retenue</p>
-                    @else
-                    <p>Propositions Retenues</p>
-                    @endif
+                    @if ($nombreOfrresValidees <= 1) <p>Proposition Retenue</p>
+                        @else
+                        <p>Propositions Retenues</p>
+                        @endif
 
                 </div>
                 <div class="icon">
@@ -67,11 +65,10 @@
             <div class="small-box bg-danger">
                 <div class="inner">
                     <h3>{{ $nombreOfrresRejettees }}</h3>
-                    @if ($nombreOfrresRejettees <= 1)
-                    <p>Proposition non Retenue</p>
-                    @else
-                    <p>Propositions non Retenues</p>
-                    @endif
+                    @if ($nombreOfrresRejettees <= 1) <p>Propositions non Retenues</p>
+                        @else
+                        <p>Propositionss non Retenues</p>
+                        @endif
 
                 </div>
                 <div class="icon">
@@ -290,7 +287,7 @@
                                             </div>
 
                                             <div class="col-md-6 form-group">
-                                                <label>Délai de Reception en Heures <sup
+                                                <label>Délai de Reception des offres en Heures <sup
                                                         class="text-danger">*</sup></label>
                                                 <div class="input-group">
                                                     {{-- <span class="input-group-text"><i
@@ -306,7 +303,7 @@
 
                                         <div class="row">
                                             <div class="col-12 form-group">
-                                                <label>Description du besoin:</label>
+                                                <label>Autres Informations</label>
                                                 <div class="input-group">
                                                     {{-- <span class="input-group-text"><i
                                                             class="fas fa-align-left"></i></span> --}}
@@ -506,7 +503,7 @@
                             </tr>
                         </thead>
                         @php
-                            $i =1;
+                        $i =1;
                         @endphp
                         @foreach ($demandes as $demande)
                         <tbody>
@@ -523,14 +520,16 @@
 
                                 @if ($demande->etat ==1)
 
-                                    <td> <span class="badge bg-success">En cours</span></td>
-                                    @else
-                                    <td><span class="badge bg-danger">Fermée</span></td>
+                                <td> <span class="badge bg-success">En cours</span></td>
+                                @else
+                                <td><span class="badge bg-danger">Fermée</span></td>
                                 @endif
                                 <td>{{ $demande->created_at->diffForHumans() }}</td>
 
                                 <td>{{ $demande->duree.' Heures' }}</td>
-                                {{-- <td>{{ \Carbon\Carbon::createFromTimestamp($demande->duree)->diffForHumans($demande->date_debut) }} Heures</td> --}}
+                                {{-- <td>{{
+                                    \Carbon\Carbon::createFromTimestamp($demande->duree)->diffForHumans($demande->date_debut)
+                                    }} Heures</td> --}}
 
 
 
@@ -546,7 +545,8 @@
                                         <div class="modal-dialog modal-dialog-centered modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header bg-gray-dark text-white">
-                                                    <h5 class="modal-title" id="detailDemandeModalLabel{{ $demande->id }}">Détails de
+                                                    <h5 class="modal-title"
+                                                        id="detailDemandeModalLabel{{ $demande->id }}">Détails de
                                                         la
                                                         Demande</h5>
                                                     <button type="button" class="btn-close btn-close-white"
@@ -557,11 +557,9 @@
                                                         <!-- Numéro Ordre de Mission -->
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label"><i
-                                                                    class="bi bi-file-earmark-text me-2"></i><strong>Numéro
-                                                                    Ordre de Mission :</strong></label>
+                                                                    class="bi bi-file-earmark-text me-2"></i><strong>Reference:</strong></label>
                                                             <div class="input-group">
-                                                                <input type="text"
-                                                                    value="{{ $demande->numeroOrdreMission }}"
+                                                                <input type="text" value="{{ $demande->code_demande }}"
                                                                     class="form-control" readonly>
                                                             </div>
                                                         </div>
@@ -676,8 +674,8 @@
                                                     class="bi bi-file-earmark-text me-2"></i><strong>Numéro
                                                     Ordre de Mission :</strong></label>
                                             <div class="input-group">
-                                                <input type="text" name="numeroOrdreMission" value="{{ $demande->numeroOrdreMission }}"
-                                                    class="form-control">
+                                                <input type="text" name="numeroOrdreMission"
+                                                    value="{{ $demande->numeroOrdreMission }}" class="form-control">
                                             </div>
                                         </div>
 
@@ -689,7 +687,8 @@
 
                                             <div class="input-group">
 
-                                                <input type="text" name="lieuDepart" value="{{ $demande->lieuDepart }}" class="form-control">
+                                                <input type="text" name="lieuDepart" value="{{ $demande->lieuDepart }}"
+                                                    class="form-control">
                                             </div>
                                         </div>
 
@@ -698,19 +697,21 @@
                                             <label class="form-label"><i class="bi bi-geo me-2"></i><strong>Lieu Arrivée
                                                     :</strong></label>
                                             <div class="input-group">
-                                                <input type="text" name="lieuArrivee" value="{{ $demande->lieuArrivee }}" class="form-control">
+                                                <input type="text" name="lieuArrivee"
+                                                    value="{{ $demande->lieuArrivee }}" class="form-control">
                                             </div>
                                         </div>
 
                                         <!-- Date Départ -->
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label"><i class="bi bi-calendar-event me-2"></i><strong>Date
+                                            <label class="form-label"><i
+                                                    class="bi bi-calendar-event me-2"></i><strong>Date
                                                     Départ :</strong></label>
                                             <div class="input-group">
                                                 {{-- <input type="date" name="dateDepart"
                                                     value="{{ $demande->dateDepart->format('d-m-Y') }}"
                                                     class="form-control"> --}}
-                                                    <input type="date" name="dateDepart"
+                                                <input type="date" name="dateDepart"
                                                     value="{{ date('Y-m-d', strtotime($demande->dateDepart)) }}"
                                                     class="form-control">
                                             </div>
@@ -718,12 +719,13 @@
 
                                         <!-- Date Arrivée -->
                                         <div class="col-md-6 mb-3">
-                                            <label class="form-label"><i class="bi bi-calendar-check me-2"></i><strong>Date
+                                            <label class="form-label"><i
+                                                    class="bi bi-calendar-check me-2"></i><strong>Date
                                                     Retour :</strong></label>
                                             <div class="input-group">
                                                 <input type="date" name="dateArrivee"
-                                                value="{{ date('Y-m-d', strtotime($demande->dateArrivee)) }}"
-                                                class="form-control">
+                                                    value="{{ date('Y-m-d', strtotime($demande->dateArrivee)) }}"
+                                                    class="form-control">
                                             </div>
                                         </div>
 
@@ -735,9 +737,9 @@
                                             <div class="input-group">
                                                 <input type="number" name="duree" value="{{ $demande->duree }}"
                                                     class="form-control">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">Heures</span>
-                                                      </div>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">Heures</span>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -747,17 +749,17 @@
                                                     class="bi bi-textarea-t me-2"></i><strong>Description
                                                     du besoin :</strong></label>
                                             <div class="input-group">
-                                                <textarea name="description" class="form-control">{{ $demande->description }}</textarea>
+                                                <textarea name="description"
+                                                    class="form-control">{{ $demande->description }}</textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer bg-dark-primary">
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-success"
-                                        >Mettre à jour</button>
+                                    <button type="submit" class="btn btn-success">Mettre à jour</button>
                                 </div>
-                           </form>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -923,14 +925,15 @@
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group  m-auto">
-                                                        <label>Prix <sup class="text-danger">*</sup> </label>
+                                                        <label>Prix en F CFA <sup class="text-danger">*</sup> </label>
 
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text"><i
                                                                         class="fas fa-money-check-alt"></i></span>
                                                             </div>
-                                                            <input id="prix"  type="number" name="prixBillet" class="form-control is-valid"  required>
+                                                            <input type="number" name="prixBillet"
+                                                                class="form-control is-valid" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -959,7 +962,8 @@
                                                             </div>
                                                             <input type="date" name="dateFinValidite"
                                                                 class="form-control" data-inputmask-alias="datetime"
-                                                                data-inputmask-inputformat="dd/mm/yyyy" data-mask required>
+                                                                data-inputmask-inputformat="dd/mm/yyyy" data-mask
+                                                                required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -970,11 +974,14 @@
                                                         <label>Compagnie <sup class="text-danger">*</sup></label>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="fas fa-plane-departure"></i></span>
+                                                                <span class="input-group-text"><i
+                                                                        class="fas fa-plane-departure"></i></span>
                                                             </div>
-                                                            <select name="compagnie" class="form-control" id="compagnieSelect" required>
+                                                            <select name="compagnie" class="form-control"
+                                                                id="compagnieSelect" required>
                                                                 <option value="">Sélectionnez une compagnie</option>
-                                                                <option value="Ethiopian Airlines">Ethiopian Airlines</option>
+                                                                <option value="Ethiopian Airlines">Ethiopian Airlines
+                                                                </option>
                                                                 <option value="Air Burkina">Air Burkina</option>
                                                                 <option value="Air Ivoir">Air Ivoir</option>
                                                                 <option value="Air Mali">Air Mali</option>
@@ -983,7 +990,9 @@
                                                                 <option value="Brusel Airlines">Brusel Airlines</option>
                                                                 <option value="Autre">Autre</option>
                                                             </select>
-                                                            <input type="text" id="autreCompagnieInput" class="form-control d-none" placeholder="Nom de la compagnie">
+                                                            <input type="text" id="autreCompagnieInput"
+                                                                class="form-control d-none"
+                                                                placeholder="Nom de la compagnie">
 
                                                         </div>
                                                     </div>
@@ -1049,7 +1058,7 @@
 </div><!-- /.container-fluid -->
 
 <script>
- document.getElementById('compagnieSelect').addEventListener('change', function () {
+    document.getElementById('compagnieSelect').addEventListener('change', function () {
     var autreCompagnieInput = document.getElementById('autreCompagnieInput');
     if (this.value === 'Autre') {
         autreCompagnieInput.classList.remove('d-none');
@@ -1062,6 +1071,6 @@
     }
 });
 
-    </script>
+</script>
 
 @endsection
