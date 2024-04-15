@@ -158,6 +158,10 @@ class OffreController extends Controller
         $offre->motif = $request->motif;
         $offre->save();
 
+        Offre::where('demande_id', $offre->demande_id)
+        ->where('id', '!=', $offre->id) // Exclure l'offre actuellement validée
+        ->update(['etats' => 'rejetée']);
+
         // Récupérer les informations nécessaires
         $offreDetails = [
             'demandeId' => $offre->demande->code_demande, // Assurez-vous que l'offre a une relation 'demande'

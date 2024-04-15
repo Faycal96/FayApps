@@ -182,19 +182,25 @@ class DemandeBilletController extends Controller
      * Display the specified resource.
      */
     public function show(DemandeBillet $demande)
-{
-    $offreMinPrix = Offre::where('demande_id', $demande->id)
-                         ->where('etats', '!=', 'rejetée')
-                         ->with('agence')
-                         ->orderBy('prixBillet', 'asc')
-                         ->first();
-
-    // Passer $offreMinPrix à la vue, même si elle est null
-    return view('backend.demandes.show', [
-        'demande' => $demande,
-        'offreMinPrix' => $offreMinPrix,
-    ]);
-}
+    {
+        $offres = Offre::where('demande_id', $demande->id)
+                       
+                       ->with('agence')
+                       ->orderBy('prixBillet', 'asc')
+                       ->get();
+     $offreMinPrix = Offre::where('demande_id', $demande->id)
+                       ->where('etats', '!=', 'rejetée')
+                       ->with('agence')
+                       ->orderBy('prixBillet', 'asc')
+                       ->first();
+    
+        return view('backend.demandes.show', [
+            'demande' => $demande,
+            'offreMinPrix' => $offreMinPrix,
+            'offres' => $offres, // Passer toutes les offres à la vue
+        ]);
+    }
+    
 
 
 
