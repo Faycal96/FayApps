@@ -191,7 +191,7 @@
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-6 form-group">
-                                                <label>Nombre de passager:</label>
+                                                <label>Nombre de passager  <sup class="text-danger">*</sup>:</label>
                                                 <div class="input-group">
                                                     {{-- <span class="input-group-text"><i
                                                             class="fas fa-file-alt"></i></span> --}}
@@ -201,7 +201,7 @@
                                             </div>
                                             <!-- Lieu de Départ avec icône -->
                                             <div class="col-md-6 form-group">
-                                                <label>Source de financement </label>
+                                                <label>Source de financement <sup class="text-danger">*</sup> </label>
                                                 <div class="input-group">
                                                     <input type="text" name="sourceFinancement"
                                                         class="form-control    value=" {{ old('sourceFinancement') }}"
@@ -301,7 +301,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 form-group">
-                                                <label for="structure">Structure *</label>
+                                                <label for="structure">Structure<sup class="text-danger">*</sup></label>
                                                 <select name="structure" class="form-control" required>
                                                     <option value="">Sélectionnez une structure</option>
                                                     @foreach ($structures as $structure)
@@ -311,12 +311,40 @@
                                             </div>
                                             
                                             <div class="col-md-6 form-group">
-                                                <label for="escale">Escale *</label>
-                                                <select name="escale" id="escale" class="form-control escale-trigger" required>
-                                                    <option value="0">Non</option>
-                                                    <option value="1">Oui</option>
-                                                </select>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for="escale">Escale<sup class="text-danger">*</sup></label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="assurance">Assurance<sup class="text-danger">*</sup></label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-check">
+                                                            <input type="hidden" name="escale" value="0"> <!-- Valeur par défaut si la case n'est pas cochée -->
+                                                            <input type="checkbox" name="escale" id="escale" class="form-check-input escale-trigger" value="1">
+                                                            <label class="form-check-label" for="escale">Oui</label>
+                                                            <span style="margin-right: 25px;"></span> <!-- Espacement entre les labels -->
+                                                            <input type="checkbox" name="escale" id="escale-oui" class="form-check-input escale-trigger" value="1">
+                                                            <label class="form-check-label" for="escale-oui">Non</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" name="assurance" id="assurance" class="form-check-input" value="1">
+                                                            <label class="form-check-label" for="assurance">Oui</label>
+                                                            <span style="margin-right: 25px;"></span> <!-- Espacement entre les labels -->
+                                                            <input type="checkbox" name="assurance" id="assurance-non" class="form-check-input" value="0">
+                                                            <label class="form-check-label" for="assurance-non">Non</label>
+                                                    
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            
+                                            
+                                            
                                         </div>
                                         <div id="escaleFields" style="display: none;">
                                             <!-- Champs pour la première escale -->
@@ -375,160 +403,7 @@
                     @endcanany
 
 
-                    {{-- Modal pour la création d'une nouvelle demande --}}
-                    <div class="modal fade" id="newDemandeModal" tabindex="-1" aria-labelledby="newDemandeModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header bg-gray-dark text-white">
-                                    <h5 class="modal-title" id="newDemandeModalLabel">Faire une nouvelle demande
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <form method="POST" action="{{ route('demandes.store') }}">
-                                    @csrf
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-6 form-group">
-                                                <label>Lieu de Départ <sup class="text-danger">*</sup></label>
-                                                <div class="input-group">
-                                                    {{-- <div class="input-group-prepend custom-prepend inline">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-map-marker-alt"></i>
-                                                            <!-- Icône FontAwesome -->
-                                                        </span>
-                                                    </div> --}}
-
-                                                    <select wire:model='lieuDepart' name="lieuDepart" required
-                                                        class="form-control select2bs4 custom-select"
-                                                        value="{{ old('lieuDepart') }}" autocomplete="off"
-                                                        style="width: 100%;">
-                                                        <option value="">Veuillez sélectionner une Ville</option>
-                                                        @foreach ($cities as $city)
-                                                        <option>{{ $city->city }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 form-group">
-                                                <label>Numero Ordre de Mission:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text"><i
-                                                            class="fas fa-file-alt"></i></span>
-                                                    <input type="text" name="numeroOrdreMission" class="form-control">
-                                                </div>
-                                            </div>
-                                            <!-- Lieu de Départ avec icône -->
-                                            <div class="col-md-6 form-group">
-                                                <label>Lieu Départ <sup class="text-danger">*</sup></label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-map-marker-alt"></i>
-                                                            <!-- Icône FontAwesome -->
-                                                        </span>
-                                                    </div>
-                                                    <select name="lieuDepart" required
-                                                        class="form-control custom-select">
-                                                        @foreach ($cities as $city)
-                                                        <option value="{{ $city->city }}">{{ $city->city }} - {{
-                                                            $city->country }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="row">
-
-                                            <!-- Lieu d'Arrivée avec icône -->
-                                            <div class="col-md-6 form-group">
-                                                <label>Lieu Arrivée <sup class="text-danger">*</sup></label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-map-marker-alt"></i>
-                                                            <!-- Icône FontAwesome -->
-                                                        </span>
-                                                    </div>
-                                                    <select name="lieuArrivee" required
-                                                        class="form-control custom-select">
-                                                        @foreach ($cities as $city)
-                                                        <option value="{{ $city->city }}">{{ $city->city }} - {{
-                                                            $city->country }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 form-group">
-                                                <label>Date de depart:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text"><i
-                                                            class="fas fa-calendar-alt"></i></span>
-                                                    <input type="date" name="dateDepart" required class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 form-group">
-                                                <label>Date de retour:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text"><i
-                                                            class="fas fa-calendar-check"></i></span>
-                                                    <input type="date" required name="dateArrivee" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 form-group">
-                                                <label>Delai de Reception:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                                                    <input type="text" name="duree" class="form-control" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label>Classe du Billet <sup class="text-danger">*</sup></label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fas fa-plane"></i>
-                                                        <!-- Icône FontAwesome pour la classe du billet -->
-                                                    </span>
-                                                </div>
-                                                <select name="classe_billet" class="form-control custom-select"
-                                                    required>
-                                                    <option value="economique">Économique</option>
-                                                    <option value="affaire">Affaire</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-12 form-group">
-                                                <label>Description du besoin:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text"><i
-                                                            class="fas fa-align-left"></i></span>
-                                                    <textarea name="description" class="form-control" required
-                                                        placeholder="Merci de detailler vos besoins en specifiant votre compagnie de choix, si vous voulez des escales, et d'autres informations pertinentes "></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Annuler</button>
-                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    
 
 
 
@@ -599,18 +474,8 @@
                                                 </div>
                                                 <div class="modal-body bg-light">
                                                     <div class="row">
-                                                        <!-- Numéro Ordre de Mission -->
-                                                        <div class="col-md-6 mb-3">
-                                                            <label class="form-label"><i
-                                                                    class="bi bi-file-earmark-text me-2"></i><strong>Reference:</strong></label>
-                                                            <div class="input-group">
-                                                                <input type="text" value="{{ $demande->code_demande }}"
-                                                                    class="form-control" readonly>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Lieu Départ -->
-                                                        <div class="col-md-6 mb-3">
+                                                         <!-- Lieu Départ -->
+                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label"><i
                                                                     class="bi bi-geo-alt me-2"></i><strong>Lieu
                                                                     Départ
@@ -655,6 +520,24 @@
                                                                     class="form-control" readonly>
                                                             </div>
                                                         </div>
+
+                                                       <!-- Nombre de passager -->
+                                                     <div class="col-md-6 mb-3">
+                                                        <label class="form-label"><i
+                                                                class="bi bi-file-earmark-text me-2"></i><strong>Nombre de passager:</strong></label>
+                                                        <div class="input-group">
+                                                            <input type="text" value="{{ $demande->nombrePassager }}"
+                                                                class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label"><i
+                                                                class="bi bi-building me-2"></i><strong>Structure:</strong></label>
+                                                        <div class="input-group">
+                                                            <input type="text" value="{{ $demande->structure }}"
+                                                                class="form-control" readonly>
+                                                        </div>
+                                                    </div>
 
                                                         <!-- Durée -->
                                                         <div class="col-md-6 mb-3">
@@ -1159,9 +1042,9 @@
     escaleField.querySelector('.lieuEscale').id = 'lieuEscale' + uniqueId; // Utilisez .lieuEscale pour sélectionner le select
     escaleField.querySelector('[name="dureeEscale[]"]').id = 'dureeEscale' + uniqueId;
     escaleFields.insertBefore(escaleField, addEscaleBtn);
-}
+ }
 
-});
+ });
 
 </script>
 
