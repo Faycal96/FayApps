@@ -14,6 +14,9 @@ class Ministere extends Model
         
     ];
    
-    
+    public function structures()
+    {
+        return $this->hasMany(Structure::class);
+    }
 
 }

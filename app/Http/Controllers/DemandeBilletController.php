@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateDemandeBilletRequest;
 use App\Models\AgenceAcredite;
 use App\Models\City;
 use App\Models\DemandeBillet;
+use App\Models\ItineraireDemande;
 use App\Models\Offre;
 use App\Models\User;
 use App\Notifications\DemandeCreatedNotification;
@@ -64,6 +65,7 @@ class DemandeBilletController extends Controller
          // Récupérer l'utilisateur connecté
     $user = Auth::user();
 
+
     if ($user->ministere) {
         // Compter le nombre de demandes de l'utilisateur connecté
         $nombreDemandes = $user->demandes->count();
@@ -93,12 +95,14 @@ class DemandeBilletController extends Controller
          ->orderBy('prixBillet', 'asc') // Trie par prixBillet en ordre croissant
          ->first();
          $cities = City::all();
+         $structures=$user->ministere->structures;
 
         //
         return view('backend.demandes.index', [
             'demandes' => DemandeBillet::latest('id')->paginate(10000000000),
             'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
             'cities'=> $cities,
+            'structures'=> $structures,
             'nombreDemandes' => $nombreDemandes, // Passer le nombre de demandes à la vue
             'nombreOffreRetenues' =>$nombreOffresRetenues,
             'nombreDemandesSansOffres' =>$nombreDemandesSansOffres,
@@ -120,7 +124,7 @@ class DemandeBilletController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDemandeBilletRequest $request)
+    public function store(StoreDemandeBilletRequest $request) 
     {
         //enregistrer une demande de billet
         $code = null;
@@ -141,8 +145,20 @@ class DemandeBilletController extends Controller
         $request->merge(['created_by' => Auth::user()->name]);
         $request->merge(['code_demande' => $code]);
         //$request->merge(['etat' => 'ACTIF']);
-        $demande = DemandeBillet::create($request->all());
-
+        $demande = DemandeBillet::create($request->except(['lieuEscale', 'dureeEscale']));
+        if ($request->has('escale') && $request->escale == '1' && $request->has('lieuEscale') && $request->has('dureeEscale')) {
+            $escales = [];
+    
+            foreach ($request->lieuEscale as $key => $lieuEscale) {
+                $escales[] = [
+                    'lieuEscale' => $lieuEscale,
+                    'dureeEscale' => $request->dureeEscale[$key],
+                    'demande_billet_id' => $demande->id,
+                ];
+            }
+    
+            ItineraireDemande::insert($escales);
+        }
 
         $users = User::whereHas('roles', function ($query) {
             $query->where('name', '=', 'Agence Voyage');

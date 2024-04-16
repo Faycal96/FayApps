@@ -27,7 +27,11 @@ class DemandeBillet extends Model
         return $this->belongsTo(User::class);
     }
 
-
+    public function itineraires()
+    {
+        return $this->hasMany(ItineraireDemande::class);
+    }
+    
 
     
 }

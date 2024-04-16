@@ -191,20 +191,20 @@
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-6 form-group">
-                                                <label>Numero Ordre de Mission:</label>
+                                                <label>Nombre de passager:</label>
                                                 <div class="input-group">
                                                     {{-- <span class="input-group-text"><i
                                                             class="fas fa-file-alt"></i></span> --}}
-                                                    <input type="text" name="numeroOrdreMission"
-                                                        wire:model='numeroOrdreMission' class="form-control">
+                                                    <input type="number" name="nombrePassager"
+                                                        wire:model='nombrePassager' class="form-control">
                                                 </div>
                                             </div>
                                             <!-- Lieu de Départ avec icône -->
                                             <div class="col-md-6 form-group">
-                                                <label>Nom Complet du Passager </label>
+                                                <label>Source de financement </label>
                                                 <div class="input-group">
-                                                    <input type="text" name="nomCompletPassager"
-                                                        class="form-control    value=" {{ old('nomCompletPassager') }}"
+                                                    <input type="text" name="sourceFinancement"
+                                                        class="form-control    value=" {{ old('sourceFinancement') }}"
                                                         autocomplete="off">
                                                 </div>
                                             </div>
@@ -298,6 +298,51 @@
 
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="structure">Structure *</label>
+                                                <select name="structure" class="form-control" required>
+                                                    <option value="">Sélectionnez une structure</option>
+                                                    @foreach ($structures as $structure)
+                                                        <option value="{{ $structure->libelleLong }}">{{ $structure->libelleLong }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="col-md-6 form-group">
+                                                <label for="escale">Escale *</label>
+                                                <select name="escale" id="escale" class="form-control escale-trigger" required>
+                                                    <option value="0">Non</option>
+                                                    <option value="1">Oui</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div id="escaleFields" style="display: none;">
+                                            <!-- Champs pour la première escale -->
+                                            <div class="escale-field" id="escaleField1">
+                                                <div class="row">
+                                                    <div class="col-md-6 form-group">
+                                                        <label for="lieuEscale1">Lieu de l'Escale</label>
+                                                        <select name="lieuEscale[]" id="lieuEscale1" required class="form-control lieuEscale" autocomplete="off">
+                                                    
+                                                            
+                                                            <option value="">Veuillez sélectionner une Ville</option>
+                                                            @foreach ($cities as $city)
+                                                                <option value="{{ $city->city }}">{{ $city->city.' - '.$city->country }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        
+                                                    </div>
+                                                    
+                                                    <div class="col-md-6 form-group">
+                                                        <label for="dureeEscale1">Durée de l'Escale en heure</label>
+                                                        <input type="number" name="dureeEscale[]" id="dureeEscale1" class="form-control dureeEscale">
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <button type="button" id="addEscale" class="btn btn-primary" style="display: none;">Ajouter une escale</button>
                                         </div>
 
 
@@ -1071,6 +1116,54 @@
     }
 });
 
+
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const escaleSelect = document.getElementById('escale');
+        const escaleFields = document.getElementById('escaleFields');
+
+        escaleSelect.addEventListener('change', function () {
+            if (this.value === '1') {
+                escaleFields.style.display = 'block';
+            } else {
+                escaleFields.style.display = 'none';
+            }
+        });
+    });
+</script>
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+    const escaleTrigger = document.querySelector('.escale-trigger');
+    const escaleFields = document.getElementById('escaleFields');
+    let addEscaleBtn = document.getElementById('addEscale');
+    let escaleCounter = 1; // Compteur global pour les escales
+
+    escaleTrigger.addEventListener('change', function () {
+        if (this.value === '1') {
+            escaleFields.style.display = 'block';
+            addEscaleBtn.style.display = 'block';
+        } else {
+            escaleFields.style.display = 'none';
+            addEscaleBtn.style.display = 'none';
+        }
+    });
+
+    addEscaleBtn.addEventListener('click', addNewEscale);
+
+    // Fonction pour ajouter une nouvelle escale
+    function addNewEscale() {
+    const escaleField = document.querySelector('.escale-field').cloneNode(true);
+    const uniqueId = new Date().getTime(); // Génère un ID unique basé sur le timestamp
+    escaleField.id = 'escaleField' + uniqueId;
+    escaleField.querySelector('.lieuEscale').id = 'lieuEscale' + uniqueId; // Utilisez .lieuEscale pour sélectionner le select
+    escaleField.querySelector('[name="dureeEscale[]"]').id = 'dureeEscale' + uniqueId;
+    escaleFields.insertBefore(escaleField, addEscaleBtn);
+}
+
+});
+
+</script>
+
 
 @endsection
