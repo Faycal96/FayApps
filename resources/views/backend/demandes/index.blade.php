@@ -133,10 +133,6 @@
     </div>
     @endif
 
-
-
-
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -324,15 +320,12 @@
                                                 <div class="row">
                                                     <div class="col-md-6 form-group">
                                                         <label for="lieuEscale1">Lieu de l'Escale</label>
-                                                        <select name="lieuEscale[]" id="lieuEscale1" required class="form-control lieuEscale" autocomplete="off">
-                                                    
-                                                            
+                                                        <select name="lieuEscale[]" id="lieuEscale1" required class="form-control lieuEscale" autocomplete="off">                                                            
                                                             <option value="">Veuillez sélectionner une Ville</option>
                                                             @foreach ($cities as $city)
                                                                 <option value="{{ $city->city }}">{{ $city->city.' - '.$city->country }}</option>
                                                             @endforeach
                                                         </select>
-                                                        
                                                     </div>
                                                     
                                                     <div class="col-md-6 form-group">
@@ -370,11 +363,7 @@
 
                         </div>
                     </div>
-
-
                     @endcanany
-
-
                     {{-- Modal pour la création d'une nouvelle demande --}}
                     <div class="modal fade" id="newDemandeModal" tabindex="-1" aria-labelledby="newDemandeModalLabel"
                         aria-hidden="true">
