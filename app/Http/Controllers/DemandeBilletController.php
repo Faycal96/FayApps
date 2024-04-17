@@ -95,7 +95,12 @@ class DemandeBilletController extends Controller
          ->orderBy('prixBillet', 'asc') // Trie par prixBillet en ordre croissant
          ->first();
          $cities = City::all();
-         $structures=$user->ministere->structures;
+
+         if($user->ministere) {
+            $structures = $user->ministere->structures;
+         }else{
+            $structures = []; 
+        }
 
         //
         return view('backend.demandes.index', [

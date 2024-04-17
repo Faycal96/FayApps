@@ -319,10 +319,10 @@
                                                     <div class="col-md-6">
                                                         <div class="form-check">
                                                             <input type="hidden" name="escale" value="0"> <!-- Valeur par défaut si la case n'est pas cochée -->
-                                                            <input type="checkbox" name="escale" id="escale" class="form-check-input escale-trigger" value="1">
+                                                            <input type="radio" name="escale" id="escale" class="form-check-input escale-trigger" value="1">
                                                             <label class="form-check-label" for="escale">Oui</label>
                                                             <span style="margin-right: 25px;"></span> <!-- Espacement entre les labels -->
-                                                            <input type="checkbox" name="escale" id="escale-oui" class="form-check-input escale-trigger" value="1">
+                                                            <input type="radio" name="escale" id="escale-oui" class="form-check-input escale-trigger" value="1">
                                                             <label class="form-check-label" for="escale-oui">Non</label>
                                                         </div>
                                                     </div>
@@ -338,11 +338,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                            
-                                            
                                         </div>
-                                        <div id="escaleFields" style="display: none;">
+
+                                        {{-- <div id="escaleFields" style="display: none;">
                                             <!-- Champs pour la première escale -->
                                             <div class="escale-field" id="escaleField1">
                                                 <div class="row">
@@ -364,7 +362,52 @@
                                                 </div>
                                             </div>
                                             <button type="button" id="addEscale" class="btn btn-primary" style="display: none;">Ajouter une escale</button>
-                                        </div>
+                                        </div> --}}
+
+                                        <div id="escaleFields" style="display: none;">
+                                            <table class="table datatable table-bordered table-striped datatable-table">
+                                                <thead class="dst-form-thead">
+                                                    <tr>
+                                                        <th colspan="3" style="text-align: center">Escale(s)</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Lieu escale <span style="color:red">*</span></th>
+                                                        <th>Durée <span style="color:red">*</span></th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Champs pour la première escale -->
+                                                    <tr class="escale-field" id="escaleField1">
+                                                        <td>
+                                                            <select name="lieuEscale[]" id="lieuEscale1" required class="form-control lieuEscale" autocomplete="off">
+                                                                <option value="">Veuillez sélectionner une Ville</option>
+                                                                @foreach ($cities as $city)
+                                                                    <option value="{{ $city->city }}">{{ $city->city.' - '.$city->country }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="dureeEscale[]" id="dureeEscale1" class="form-control dureeEscale">
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-xs" data-id="0" onclick="deleteRowCV(this)" title="Supprimer la ligne"> <i class="fa fa-trash text-danger"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            {{-- <button type="button" id="addEscale" class="btn btn-primary" style="display: none;">Ajouter une escale</button> --}}
+                                                            <a class="btn btn-default" id="addEscale" style="display: none">
+                                                                <i class="fa fa-plus-circle text-success"></i>
+                                                                <span>Ajouter un escale </span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>                                        
 
 
                                         <div class="row">
@@ -1159,8 +1202,9 @@
         });
     });
 </script>
+
 <script>
-   document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     const escaleTrigger = document.querySelector('.escale-trigger');
     const escaleFields = document.getElementById('escaleFields');
     let addEscaleBtn = document.getElementById('addEscale');
@@ -1180,17 +1224,20 @@
 
     // Fonction pour ajouter une nouvelle escale
     function addNewEscale() {
-    const escaleField = document.querySelector('.escale-field').cloneNode(true);
-    const uniqueId = new Date().getTime(); // Génère un ID unique basé sur le timestamp
-    escaleField.id = 'escaleField' + uniqueId;
-    escaleField.querySelector('.lieuEscale').id = 'lieuEscale' + uniqueId; // Utilisez .lieuEscale pour sélectionner le select
-    escaleField.querySelector('[name="dureeEscale[]"]').id = 'dureeEscale' + uniqueId;
-    escaleFields.insertBefore(escaleField, addEscaleBtn);
- }
+        const escaleField = document.querySelector('.escale-field').cloneNode(true);
+        const uniqueId = new Date().getTime(); // Génère un ID unique basé sur le timestamp
+        escaleField.id = 'escaleField' + uniqueId;
+        escaleField.querySelector('.lieuEscale').id = 'lieuEscale' + uniqueId; // Utilisez .lieuEscale pour sélectionner le select
+        escaleField.querySelector('[name="dureeEscale[]"]').id = 'dureeEscale' + uniqueId;
+        escaleFields.querySelector('tbody').appendChild(escaleField);
+    }
+ });
 
- });
-
+function deleteRowCV(me) {
+    $(me).closest('tr').remove();
+}
 </script>
+
 
 
 @endsection
