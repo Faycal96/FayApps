@@ -322,7 +322,7 @@
                                                             <input type="radio" name="escale" id="escale" class="form-check-input escale-trigger" value="1">
                                                             <label class="form-check-label" for="escale">Oui</label>
                                                             <span style="margin-right: 25px;"></span> <!-- Espacement entre les labels -->
-                                                            <input type="radio" name="escale" id="escale-oui" class="form-check-input escale-trigger" value="1">
+                                                            <input type="radio" name="escale" id="escale-oui" class="form-check-input escale-trigger" value="0">
                                                             <label class="form-check-label" for="escale-oui">Non</label>
                                                         </div>
                                                     </div>
@@ -704,23 +704,60 @@
                                                         </div>
                                                     </div>
 
-                                                        <!-- Durée -->
+                                                        
+                                                        
                                                         <div class="col-md-6 mb-3">
-                                                            <label class="form-label"><i
-                                                                    class="bi bi-hourglass-split me-2"></i><strong>Delai
-                                                                    de Reception :</strong></label>
+                                                            <label class="form-label"><i class="bi bi-shield-check me-2"></i><strong>Assurance :</strong></label>
                                                             <div class="input-group">
-                                                                <input type="text"
-                                                                    value="{{ $demande->duree.' Heures' }}"
-                                                                    class="form-control" readonly>
+                                                                <input type="text" value="{{ $demande->assurance ? 'Oui' : 'Non' }}" class="form-control" readonly>
                                                             </div>
                                                         </div>
+                                                        <!-- Escale -->
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label"><i class="bi bi-globe me-2"></i><strong>Escale :</strong></label>
+                                                            <div class="input-group">
+                                                                <input type="text" value="{{ $demande->escale ? 'Oui' : 'Non' }}" class="form-control" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <table class="table datatable table-bordered table-striped datatable-table">
+                                                                <thead class="dst-form-thead">
+                                                                    <tr>
+                                                                        <th colspan="3" style="text-align: center">Escale(s)</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th><i
+                                                                            class="bi bi-geo-alt me-2"></i>Lieu escale <span style="color:red">*</span></th>
+                                                                        <th><i
+                                                                            class="bi bi-hourglass-split me-2"></i>Durée <span style="color:red">*</span></th>
+                                                                       
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($demande->itineraires as $key => $itineraire)
+                                                                    <tr class="escale-field" id="escaleField{{ $key + 1 }}">
+                                                                        <td>
+                                                                            <input type="text" value="{{ $itineraire->lieuEscale }}" class="form-control" readonly>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" value="{{ $itineraire->dureeEscale }}" class="form-control" readonly>
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                             
+                                                            </table>
+                                                        </div>
+                                                        
+                                                        
+                                                        
 
                                                         <!-- Description du besoin -->
                                                         <div class="col-12 mb-3">
                                                             <label class="form-label"><i
-                                                                    class="bi bi-textarea-t me-2"></i><strong>Description
-                                                                    du besoin :</strong></label>
+                                                                    class="bi bi-textarea-t me-2"></i><strong>Autres
+                                                                    informations :</strong></label>
                                                             <div class="input-group">
                                                                 <textarea class="form-control"
                                                                     readonly>{{ $demande->description }}</textarea>
@@ -1305,7 +1342,7 @@
         autreCompagnieInput.name = ''; // Retirer le nom pour éviter la soumission de ce champ
         this.name = 'compagnie'; // Restaurer le nom du select pour la soumission
     }
-});
+ });
 
 
 </script>

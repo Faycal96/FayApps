@@ -95,6 +95,7 @@ class DemandeBilletController extends Controller
          ->orderBy('prixBillet', 'asc') // Trie par prixBillet en ordre croissant
          ->first();
          $cities = City::all();
+        $escales=$demande->escales;
 
          if($user->ministere) {
             $structures = $user->ministere->structures;
@@ -107,6 +108,7 @@ class DemandeBilletController extends Controller
             'demandes' => DemandeBillet::latest('id')->paginate(10000000000),
             'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
             'cities'=> $cities,
+            'escales'=> $escales,
             'structures'=> $structures,
             'nombreDemandes' => $nombreDemandes, // Passer le nombre de demandes à la vue
             'nombreOffreRetenues' =>$nombreOffresRetenues,
