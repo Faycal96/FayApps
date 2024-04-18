@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOffreRequest;
 use App\Http\Requests\UpdateOffreRequest;
 use App\Models\DemandeBillet;
+use App\Models\DocumentOffre;
+use App\Models\ItineraireOffre;
 use App\Models\Offre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -104,20 +106,49 @@ class OffreController extends Controller
 
         //dd($request);
         //dd(Auth::user()->agence->id);
-        Offre::create($request->all());
-
+       
+        $offre = Offre::create($request->except(['lieuEscale', 'dureeEscale','libelle','fichier']));
+        if ($request->has('escale') && $request->escale == '1' && $request->has('lieuEscale') && $request->has('dureeEscale')) {
+            $escales = []; 
+    
+            foreach ($request->lieuEscale as $key => $lieuEscale) {
+                $escales[] = [
+                    'lieuEscale' => $lieuEscale,
+                    'dureeEscale' => $request->dureeEscale[$key],
+                    'offre_id' => $offre->id,
+                ];
+            }
+    
+            ItineraireOffre::insert($escales);
+        }
+        if ($request->has('libelle') && $request->hasFile('fichier')) {
+            $documents = [];
+        
+            foreach ($request->libelle as $key => $libelle) {
+                $file = $request->file('fichier')[$key];
+        
+                // Vérifier si un fichier a été téléchargé
+                if ($file && $file->isValid()) { // Assurez-vous que le fichier est valide
+                    // Stocker le fichier et récupérer le chemin d'accès
+                    $filePath = $file->store('public/pdf_files');
+        
+                    // Ajouter le document à la liste des documents
+                    $documents[] = [
+                        'libelle' => $libelle,
+                        'fichier' => $filePath,
+                        'offre_id' => $offre->id,
+                    ];
+                }
+            }
+        
+            // Insérer les documents dans la base de données
+            DocumentOffre::insert($documents);
+        }
+        
         return redirect()->route('offres.index')
             ->with('success', 'Votre offre a été enregistrée.');
 
-        /*
-        $numeroOrdreMission = $request->numeroOrdreMission;
-        $lieuDepart = $request->lieuDepart;
-        $lieuArrivee = $request->lieuArrivee;
-        $dateDepart = $request->dateDepart;
-        $dateArrivee = $request->dateArrivee;
-        $duree = $request->duree;
-        $description = $request->description;
-        */
+       
     }
 
     /**

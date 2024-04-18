@@ -340,29 +340,7 @@
                                             </div>
                                         </div>
 
-                                        {{-- <div id="escaleFields" style="display: none;">
-                                            <!-- Champs pour la première escale -->
-                                            <div class="escale-field" id="escaleField1">
-                                                <div class="row">
-                                                    <div class="col-md-6 form-group">
-                                                        <label for="lieuEscale1">Lieu de l'Escale</label>
-                                                        <select name="lieuEscale[]" id="lieuEscale1" required class="form-control lieuEscale" autocomplete="off">                                                            
-                                                            <option value="">Veuillez sélectionner une Ville</option>
-                                                            @foreach ($cities as $city)
-                                                                <option value="{{ $city->city }}">{{ $city->city.' - '.$city->country }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    
-                                                    <div class="col-md-6 form-group">
-                                                        <label for="dureeEscale1">Durée de l'Escale en heure</label>
-                                                        <input type="number" name="dureeEscale[]" id="dureeEscale1" class="form-control dureeEscale">
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                            <button type="button" id="addEscale" class="btn btn-primary" style="display: none;">Ajouter une escale</button>
-                                        </div> --}}
+                                       
 
                                         <div id="escaleFields" style="display: none;">
                                             <table class="table datatable table-bordered table-striped datatable-table">
@@ -947,7 +925,7 @@
                 <!-- Modal d'activation -->
                 <div class="modal fade" id="activateOffreModal{{ $demande->id }}" tabindex="-1"
                     aria-labelledby="activateOffreModalLabel{{ $demande->id }}" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h2 class="modal-title" id="activateOffreModalLabel{{ $demande->id }}">
@@ -956,7 +934,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form method="POST" action="{{ route('offres.store') }}">
+                                <form method="POST" action="{{ route('offres.store') }}"enctype="multipart/form-data">
 
                                     @csrf
 
@@ -982,13 +960,13 @@
 
                                                 <div class="col-6">
                                                     <div class="form-group m-auto">
-                                                        <label>Classe du billet:</label>
+                                                        <label>Nombre de billet:</label>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text"><i
                                                                         class="fas fa-plane"></i></span>
                                                             </div>
-                                                            <input type="text" value="{{ $demande->classe_billet }}"
+                                                            <input type="text" value="{{ $demande->nombrePassager }}"
                                                                 class="form-control" readonly>
                                                         </div>
                                                     </div>
@@ -1028,14 +1006,7 @@
 
 
                                             </div>
-                                            <!-- Description -->
-                                            <div class="col-12 mt-4">
-                                                <div class="form-group">
-                                                    <label>Description de la demande:</label>
-                                                    <textarea class="form-control"
-                                                        readonly>{{ $demande->description }}</textarea>
-                                                </div>
-                                            </div>
+                                          
 
                                             <div class="row">
                                                 <div class="col-6">
@@ -1083,6 +1054,156 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group  m-auto">
+                                                        <label>Prix Assurance en F CFA <sup class="text-danger">*</sup> </label>
+
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><i
+                                                                        class="fas fa-money-check-alt"></i></span>
+                                                            </div>
+                                                            <input type="number" name="prixAssurance"
+                                                                class="form-control is-valid" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <script>
+                                                    document.getElementById('prix').addEventListener('input', function(e) {
+                                                    // Supprime tous les caractères non numériques de la saisie
+                                                    var prix = this.value.replace(/\D/g, '');
+
+                                                    // Ajoute des espaces tous les trois caractères, en commençant par la fin
+                                                    prix = prix.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+                                                    // Met à jour la valeur du champ de saisie avec le prix formaté
+                                                    this.value = prix;
+                                                });
+
+                                                </script>
+
+                                                <div class="col-md-6 form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label for="escale">Escale<sup class="text-danger">*</sup></label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="assurance">Documents<sup class="text-danger">*</sup></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-check">
+                                                                <input type="hidden" name="escale" value="0"> <!-- Valeur par défaut si la case n'est pas cochée -->
+                                                                <input type="radio" name="escale" id="escale" class="form-check-input escaleOffre-trigger" value="1">
+                                                                <label class="form-check-label" for="escale">Oui</label>
+                                                                <span style="margin-right: 25px;"></span> <!-- Espacement entre les labels -->
+                                                                <input type="radio" name="escale" id="escale-oui" class="form-check-input escaleOffre-trigger" value="0">
+                                                                <label class="form-check-label" for="escale-oui">Non</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-check">
+                                                                <input type="hidden" name="document" value="0"> <!-- Valeur par défaut si la case n'est pas cochée -->
+                                                                <input type="radio" name="document" id="document" class="form-check-input document-trigger" value="1">
+                                                                <label class="form-check-label" for="document">Oui</label>
+                                                                <span style="margin-right: 25px;"></span> <!-- Espacement entre les labels -->
+                                                                <input type="radio" name="document" id="document-oui" class="form-check-input document-trigger" value="0">
+                                                                <label class="form-check-label" for="document-oui">Non</label>
+                                                            </div>
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>      
+                                            </div>
+                                            <div id="escaleOffreFields" style="display: none;">
+                                                <table class="table datatable table-bordered table-striped datatable-table">
+                                                    <thead class="dst-form-thead">
+                                                        <tr>
+                                                            <th colspan="3" style="text-align: center">Escale(s)</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Lieu escale <span style="color:red">*</span></th>
+                                                            <th>Durée <span style="color:red">*</span></th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- Champs pour la première escale -->
+                                                        <tr class="escale-field" id="escaleField1">
+                                                            <td>
+                                                                <select name="lieuEscale[]" id="lieuEscale1" required class="form-control lieuEscale" autocomplete="off">
+                                                                    <option value="">Veuillez sélectionner une Ville</option>
+                                                                    @foreach ($cities as $city)
+                                                                        <option value="{{ $city->city }}">{{ $city->city.' - '.$city->country }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" name="dureeEscale[]" id="dureeEscale1" class="form-control dureeEscale">
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-xs" data-id="0" onclick="deleteRowCV(this)" title="Supprimer la ligne"> <i class="fa fa-trash text-danger"></i></button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                {{-- <button type="button" id="addEscaleOffre" class="btn btn-primary" style="display: none;">Ajouter une escale</button> --}}
+                                                                <a class="btn btn-default" id="addEscaleOffre" style="display: none">
+                                                                    <i class="fa fa-plus-circle text-success"></i>
+                                                                    <span>Ajouter un escale </span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>   
+                                            <div id="documentFields" style="display: none;">
+                                                <table class="table datatable table-bordered table-striped datatable-table">
+                                                    <thead class="dst-form-thead">
+                                                        <tr>
+                                                            <th colspan="3" style="text-align: center">Documents</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Libellé du document <span style="color:red">*</span></th>
+                                                            <th>Fichier <span style="color:red">*</span></th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- Champs pour le premier document -->
+                                                        <tr class="document-field" id="documentField1">
+                                                            <td>
+                                                                <input type="text" name="libelle[]" id="libelle1" required class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="file" name="fichier[]" id="fichier1" required class="form-control-file">
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-xs" data-id="0" onclick="deleteDocumentRow(this)" title="Supprimer la ligne"> <i class="fa fa-trash text-danger"></i></button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                <a class="btn btn-default" id="addDocument">
+                                                                    <i class="fa fa-plus-circle text-success"></i>
+                                                                    <span>Ajouter un document </span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            
+                                            
+                                            
                                             <div class="row mt-4">
                                                 <div class="col-12">
                                                     <div class="form-group m-auto">
@@ -1238,6 +1359,85 @@ function deleteRowCV(me) {
 }
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const escaleTrigger = document.querySelector('.escaleOffre-trigger');
+      const escaleFields = document.getElementById('escaleOffreFields');
+      let addEscaleBtn = document.getElementById('addEscaleOffre');
+      let escaleCounter = 1; // Compteur global pour les escales
+  
+      escaleTrigger.addEventListener('change', function () {
+          if (this.value === '1') {
+              escaleFields.style.display = 'block';
+              addEscaleBtn.style.display = 'block';
+          } else {
+              escaleFields.style.display = 'none';
+              addEscaleBtn.style.display = 'none';
+          }
+      });
+  
+      addEscaleBtn.addEventListener('click', addNewEscale);
+  
+      // Fonction pour ajouter une nouvelle escale
+      function addNewEscale() {
+          const escaleField = document.querySelector('.escale-field').cloneNode(true);
+          const uniqueId = new Date().getTime(); // Génère un ID unique basé sur le timestamp
+          escaleField.id = 'escaleField' + uniqueId;
+          escaleField.querySelector('.lieuEscale').id = 'lieuEscale' + uniqueId; // Utilisez .lieuEscale pour sélectionner le select
+          escaleField.querySelector('[name="dureeEscale[]"]').id = 'dureeEscale' + uniqueId;
+          escaleFields.querySelector('tbody').appendChild(escaleField);
+      }
+   });
+  
+  function deleteRowCV(me) {
+      $(me).closest('tr').remove();
+  }
+</script>
+<script>
 
+document.addEventListener('DOMContentLoaded', function () {
+    const documentTrigger = document.querySelector('.document-trigger');
+    const documentFields = document.getElementById('documentFields');
+    let addDocumentBtn = document.getElementById('addDocument');
+
+    if (documentTrigger && documentFields && addDocumentBtn) {
+        documentTrigger.addEventListener('change', function () {
+            if (this.value === '1') {
+                documentFields.style.display = 'block';
+                addDocumentBtn.style.display = 'block';
+            } else {
+                documentFields.style.display = 'none';
+                addDocumentBtn.style.display = 'none';
+            }
+        });
+
+        addDocumentBtn.addEventListener('click', addNewDocument);
+    } else {
+        console.error('Les éléments nécessaires ne sont pas correctement définis.');
+    }
+
+    function addNewDocument() {
+        const documentField = document.querySelector('.document-field');
+        if (documentField) {
+            const clonedDocumentField = documentField.cloneNode(true);
+            const uniqueId = new Date().getTime();
+            clonedDocumentField.id = 'documentField' + uniqueId;
+            const libelleDocument = clonedDocumentField.querySelector('[name="libelle[]"]');
+            const fichierDocument = clonedDocumentField.querySelector('[name="fichier[]"]');
+            if (libelleDocument) libelleDocument.id = 'libelle' + uniqueId;
+            if (fichierDocument) fichierDocument.id = 'fichier' + uniqueId;
+            documentFields.querySelector('tbody').appendChild(clonedDocumentField);
+        } else {
+            console.error('Le champ de document initial est introuvable.');
+        }
+    }
+});
+
+function deleteDocumentRow(me) {
+    $(me).closest('tr').remove();
+}
+
+</script>
+  
 
 @endsection

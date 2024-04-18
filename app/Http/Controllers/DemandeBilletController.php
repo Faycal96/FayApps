@@ -152,7 +152,7 @@ class DemandeBilletController extends Controller
         //$request->merge(['etat' => 'ACTIF']);
         $demande = DemandeBillet::create($request->except(['lieuEscale', 'dureeEscale']));
         if ($request->has('escale') && $request->escale == '1' && $request->has('lieuEscale') && $request->has('dureeEscale')) {
-            $escales = [];
+            $escales = []; 
     
             foreach ($request->lieuEscale as $key => $lieuEscale) {
                 $escales[] = [
