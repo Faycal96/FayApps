@@ -145,7 +145,6 @@ class OffreController extends Controller
             DocumentOffre::insert($documents);
         }
         
-
         return redirect()->route('offres.index')
             ->with('success', 'Votre offre a été enregistrée.');
 

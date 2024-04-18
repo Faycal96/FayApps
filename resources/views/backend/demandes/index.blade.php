@@ -934,7 +934,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form method="POST" action="{{ route('offres.store') }}">
+                                <form method="POST" action="{{ route('offres.store') }}"enctype="multipart/form-data">
 
                                     @csrf
 
