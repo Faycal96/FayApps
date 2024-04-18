@@ -318,7 +318,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-check">
-                                                            <input type="hidden" name="escale" value="0"> <!-- Valeur par défaut si la case n'est pas cochée -->
+                                                            <input type="hidden" name="escale" value="1"> <!-- Valeur par défaut si la case n'est pas cochée -->
                                                             <input type="radio" name="escale" id="escale" class="form-check-input escale-trigger" value="1">
                                                             <label class="form-check-label" for="escale">Oui</label>
                                                             <span style="margin-right: 25px;"></span> <!-- Espacement entre les labels -->
