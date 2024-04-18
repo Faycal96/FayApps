@@ -104,7 +104,7 @@ class DemandeBilletController extends Controller
 
         //
         return view('backend.demandes.index', [
-            'demandes' => DemandeBillet::latest('id')->paginate(10000000000),
+            'demandes' => DemandeBillet::latest('id')->paginate(5),
             'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
             'cities'=> $cities,
             'structures'=> $structures,
