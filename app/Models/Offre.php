@@ -21,6 +21,13 @@ class Offre extends Model
     {
         return $this->belongsTo(AgenceAcredite::class, 'agence_id');
     }
-    
+    public function itineraires()
+    {
+        return $this->hasMany(ItineraireOffre::class);
+    }
+    public function documents()
+    {
+        return $this->hasMany(ItineraireOffre::class);
+    }
 
 }
