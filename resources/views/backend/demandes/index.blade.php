@@ -358,7 +358,7 @@
                                                     <!-- Champs pour la première escale -->
                                                     <tr class="escale-field" id="escaleField1">
                                                         <td>
-                                                            <select name="lieuEscale[]" id="lieuEscale1" required class="form-control lieuEscale" autocomplete="off">
+                                                            <select name="lieuEscale[]" id="lieuEscale1"  class="form-control lieuEscale" autocomplete="off">
                                                                 <option value="">Veuillez sélectionner une Ville</option>
                                                                 @foreach ($cities as $city)
                                                                     <option value="{{ $city->city }}">{{ $city->city.' - '.$city->country }}</option>
@@ -1135,7 +1135,7 @@
                                                         <!-- Champs pour la première escale -->
                                                         <tr class="escale-field" id="escaleField1">
                                                             <td>
-                                                                <select name="lieuEscale[]" id="lieuEscale1" required class="form-control lieuEscale" autocomplete="off">
+                                                                <select name="lieuEscale[]" id="lieuEscale1"  class="form-control lieuEscale" autocomplete="off">
                                                                     <option value="">Veuillez sélectionner une Ville</option>
                                                                     @foreach ($cities as $city)
                                                                         <option value="{{ $city->city }}">{{ $city->city.' - '.$city->country }}</option>
@@ -1179,10 +1179,10 @@
                                                         <!-- Champs pour le premier document -->
                                                         <tr class="document-field" id="documentField1">
                                                             <td>
-                                                                <input type="text" name="libelle[]" id="libelle1" required class="form-control">
+                                                                <input type="text" name="libelle[]" id="libelle1"  class="form-control">
                                                             </td>
                                                             <td>
-                                                                <input type="file" name="fichier[]" id="fichier1" required class="form-control-file">
+                                                                <input type="file" name="fichier[]" id="fichier1"  class="form-control-file">
                                                             </td>
                                                             <td>
                                                                 <button class="btn btn-xs" data-id="0" onclick="deleteDocumentRow(this)" title="Supprimer la ligne"> <i class="fa fa-trash text-danger"></i></button>
@@ -1352,11 +1352,11 @@
         escaleField.querySelector('[name="dureeEscale[]"]').id = 'dureeEscale' + uniqueId;
         escaleFields.querySelector('tbody').appendChild(escaleField);
     }
- });
+     });
 
-function deleteRowCV(me) {
-    $(me).closest('tr').remove();
-}
+    function deleteRowCV(me) {
+        $(me).closest('tr').remove();
+    }
 </script>
 
 <script>
@@ -1393,9 +1393,10 @@ function deleteRowCV(me) {
       $(me).closest('tr').remove();
   }
 </script>
+
 <script>
 
-document.addEventListener('DOMContentLoaded', function () {
+ document.addEventListener('DOMContentLoaded', function () {
     const documentTrigger = document.querySelector('.document-trigger');
     const documentFields = document.getElementById('documentFields');
     let addDocumentBtn = document.getElementById('addDocument');
@@ -1431,11 +1432,11 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Le champ de document initial est introuvable.');
         }
     }
-});
+ });
 
-function deleteDocumentRow(me) {
+ function deleteDocumentRow(me) {
     $(me).closest('tr').remove();
-}
+ }
 
 </script>
   
