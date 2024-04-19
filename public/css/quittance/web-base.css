@@ -1,0 +1,11 @@
+/* These styles are only for rendering in a browser */
+
+.web-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 50px;
+  background-image: url("../../img/quittanceBackground.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 70%;
+}

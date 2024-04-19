@@ -4,6 +4,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\DemandeBilletController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OffreController;
+use App\Http\Controllers\QuittanceController;
 use App\Http\Controllers\RegisterDafController;
 use App\Http\Controllers\RegisterDafController as ControllersRegisterDafController;
 use App\Http\Controllers\RoleController;
@@ -50,6 +51,7 @@ Route::post('/storeDaf', [RegisterDafController::class, 'enregistrer'])->name('s
 Route::post('/offres/{offre}/valider', [OffreController::class, 'valider'])->name('offres.valider');
 Route::post('/offres/{offre}/rejeter', [OffreController::class, 'rejeter'])->name('offres.rejeter');
 Route::get('/notifications/read/{id}', [App\Http\Controllers\DemandeBilletController::class, 'markAsRead'])->name('notifications.read');
+Route::get('/quittance/{uuid}', [QuittanceController::class, 'index'])->name('quittance');
 
 
 
