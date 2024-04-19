@@ -27,7 +27,7 @@ class Offre extends Model
     }
     public function documents()
     {
-        return $this->hasMany(ItineraireOffre::class);
+        return $this->hasMany(DocumentOffre::class);
     }
 
 }

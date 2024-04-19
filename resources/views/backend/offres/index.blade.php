@@ -95,7 +95,7 @@
                                 <tr>
                                     <td>{{ $offre->code_offre}}</td>
 
-                                    <td>{{ $offre->prixBillet }}</td>
+                                    <td>{{ $offre->PrixTotal }}</td>
 
                                     {{-- <td>{{ \Carbon\Carbon::parse($offre->dateDebutValidite)->format('d M Y à H:i:s') }}</td> --}}
                                     <td>{{ \Carbon\Carbon::parse($offre->dateFinValidite)->format('d M Y à H:i:s') }}</td>
