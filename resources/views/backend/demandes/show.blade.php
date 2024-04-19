@@ -59,22 +59,23 @@
                                                                     
                                                                     <div class="card-body bg-light">
                                                                         <div class="row">
-                                                                            <!-- Code de la demande -->
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label class="form-label"> <strong>Code de la demande :</strong></label>
+                                                                             <!-- Agence Accréditée -->
+                                                                             <div class="col-md-6 mb-3">
+                                                                                <label class="form-label"> <strong>Agence Accréditée :</strong></label>
                                                                                 <div class="input-group">
-                                                                                    <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
-                                                                                    <input type="text" value="{{ $demande->code_demande }}" class="form-control" readonly>
+                                                                                    <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                                                                    <input type="text" value="{{ $offre->agence->nomAgence }}" class="form-control" readonly>
                                                                                 </div>
                                                                             </div>
-                                                                            <!-- Code de l'offre -->
+                                                                            <!-- Adresse de l'agence -->
                                                                             <div class="col-md-6 mb-3">
-                                                                                <label class="form-label"> <strong>Code de l'offre :</strong></label>
+                                                                                <label class="form-label"> <strong>Adresse de l'Agence :</strong></label>
                                                                                 <div class="input-group">
-                                                                                    <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
-                                                                                    <input type="text" value="{{ $offre->code_offre }}" class="form-control" readonly>
+                                                                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                                                                    <input type="text" value="{{ $offre->agence->user->email }}" class="form-control" readonly>
                                                                                 </div>
                                                                             </div>
+                                                                            
                                                                             <!-- Ville de Départ -->
                                                                             <div class="col-md-6 mb-3">
                                                                                 <label class="form-label"> <strong>Ville de Départ :</strong></label>
@@ -107,22 +108,39 @@
                                                                                     <input type="text" value="{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d/m/Y') }}" class="form-control" readonly>
                                                                                 </div>
                                                                             </div>
-                                                                            <!-- Agence Accréditée -->
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label class="form-label"> <strong>Agence Accréditée :</strong></label>
-                                                                                <div class="input-group">
-                                                                                    <span class="input-group-text"><i class="fas fa-building"></i></span>
-                                                                                    <input type="text" value="{{ $offre->agence->nomAgence }}" class="form-control" readonly>
-                                                                                </div>
+                                                                            @if($offre->escale)
+                                                                            <div class="col-12 mb-3">
+                                                                                <table class="table datatable table-bordered table-striped datatable-table">
+                                                                                    <thead class="dst-form-thead">
+                                                                                        <tr>
+                                                                                            <th colspan="3" style="text-align: center">Escale(s)</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th><i
+                                                                                                class="bi bi-geo-alt me-2"></i>Lieu escale <span style="color:red">*</span></th>
+                                                                                            <th><i
+                                                                                                class="bi bi-hourglass-split me-2"></i>Durée <span style="color:red">*</span></th>
+                                                                                           
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @foreach ($offre->itineraires as $key => $itineraire)
+                                                                                        <tr class="escale-field" id="escaleField{{ $key + 1 }}">
+                                                                                            <td>
+                                                                                                <input type="text" value="{{ $itineraire->lieuEscale }}" class="form-control" readonly>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input type="text" value="{{ $itineraire->dureeEscale }}" class="form-control" readonly>
+                                                                                            </td>
+                                                                                            
+                                                                                        </tr>
+                                                                                        @endforeach
+                                                                                    </tbody>
+                                                                                 
+                                                                                </table>
                                                                             </div>
-                                                                            <!-- Adresse de l'agence -->
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label class="form-label"> <strong>Adresse de l'Agence :</strong></label>
-                                                                                <div class="input-group">
-                                                                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
-                                                                                    <input type="text" value="{{ $offre->agence->user->email }}" class="form-control" readonly>
-                                                                                </div>
-                                                                            </div>
+                                                                            @endif
+                                                                           
                                                                             <!-- Validité de l'Offre -->
                                                                             <div class="col-md-6 mb-3">
                                                                                 <label class="form-label"> <strong>Validité de l'Offre :</strong></label>
@@ -131,16 +149,57 @@
                                                                                     <input type="text" value="{{ \Carbon\Carbon::parse($offre->dateFinValidite)->format('d/m/Y H:i') }}" class="form-control" readonly>
                                                                                 </div>
                                                                             </div>
+                                                                            <div class="col-md-6 mb-3">
+                                                                                <label class="form-label"> <strong>Compagnie :</strong></label>
+                                                                                <text class="form-control" readonly>{{ $offre->compagnie }}</text>
+                                                                            </div>
+                                                                            
+                                                                            @if($offre->document)
+                                                                            <div class="col-12 mb-3">
+                                                                                <table class="table datatable table-bordered table-striped datatable-table">
+                                                                                    <thead class="dst-form-thead">
+                                                                                        <tr>
+                                                                                            <th colspan="3" style="text-align: center">Document(s)</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th><i
+                                                                                                class="bi bi-file-earmark-text me-2"></i>Libelle <span style="color:red">*</span></th>
+                                                                                            <th><i
+                                                                                                class="bi bi-file-earmark-arrow-down me-2"></i>Fichier <span style="color:red">*</span></th>
+                                                                                           
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @foreach ($offre->documents as $key => $document)
+                                                                                        <tr class="document-field" id="documentField{{ $key + 1 }}">
+                                                                                            <td>
+                                                                                                <input type="text" value="{{ $document->libelle}}" class="form-control" readonly>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                
+                                                                                                <a href="{{ asset('storage/' . str_replace('public/', '', $document->fichier)) }}"
+                                                                                                    class="btn btn-info btn-sm" target="_blank">
+                                                                                                    <i class="bi bi-download"></i> Télécharger le document
+                                                                                                </a>
+                                                                                                
+                                                                                            </td>
+                                                                                           
+                                                                                        </tr>
+                                                                                        @endforeach
+                                                                                    </tbody>
+                                                                                 
+                                                                                </table>
+                                                                            </div>
+                                                                            @endif
+                                                                            
+
+                                                                            
                                                                             <!-- Observation Fait sur l'offre -->
                                                                             <div class="col-md-6 mb-3">
-                                                                                <label class="form-label"> <strong>Observation Fait sur l'offre :</strong></label>
+                                                                                <label class="form-label"> <strong>Observation Faite sur l'offre :</strong></label>
                                                                                 <textarea class="form-control" readonly>{{ $offre->description }}</textarea>
                                                                             </div>
-                                                                            <!-- Description du besoin -->
-                                                                            <div class="col-md-5 mb-3">
-                                                                                <label class="form-label"> <strong>Description du besoin :</strong></label>
-                                                                                <textarea class="form-control" readonly>{{ $demande->description }}</textarea>
-                                                                            </div>
+                                                                            
                                                                             <!-- Prix du Billet -->
                                                                             <div class="col-md-3 offset-1 col-sm-6 col-12">
                                                                                 <label class="form-label"><strong>Prix du Billet :</strong></label>
@@ -185,18 +244,16 @@
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
                                                                         <label for="motif" class="form-label">Motif de validation</label>
-                                                                        {{-- <textarea class="form-control" id="motif" name="motif" required></textarea> --}}
-                                                                        <select name="motif" id="" class="form-control custom-select">
-                                                                            <option value="">Veuillez choisir le motif</option>
-                                                                            <option value="">Bon prix</option>
-                                                                            <option value="">Offre acceptable</option>
-                                                                        </select>
+                                                                        <textarea class="form-control" id="motif" name="motif" required></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="submit" class="btn btn-success">Valider</button>
+                                                                    <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i> Valider</button>
+                                                                    <!-- Icône pour annuler avec un bouton de fermeture du modal -->
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times-circle"></i> Annuler</button>
                                                                 </div>
                                                             </form>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -217,24 +274,19 @@
                                                             </div>
                                                             <form action="{{ route('offres.rejeter', ['offre' => $offre->id]) }}" method="POST">
                                                                 @csrf
-                                                                <!-- Si vous souhaitez changer la méthode HTTP utilisée par le formulaire (par ex., pour PATCH, PUT, DELETE), ajoutez @method('VOTRE_METHODE') -->
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
                                                                         <label for="motifRejet" class="form-label">Motif du rejet</label>
-                                                                        {{-- <textarea class="form-control" id="motifRejet" name="motifRejet"
-                                                                            required></textarea> --}}
-                                                                            <select name="motifRejet" id="" class="form-control custom-select">
-                                                                                <option value="">Veuillez choisir le motif</option>
-                                                                                <option value="">Offre trop chers</option>
-                                                                                <option value="">Voyage non Conforme</option>
-                                                                                <option value="">Trop d'escale</option>
-                                                                            </select>
+                                                                        <textarea class="form-control" id="motifRejet" name="motifRejet" required></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="submit" class="btn btn-danger">Confirmer le rejet</button>
+                                                                    <button type="submit" class="btn btn-danger"><i class="fas fa-times-circle"></i> Confirmer le rejet</button>
+                                                                    <!-- Icône pour annuler avec un bouton de fermeture du modal -->
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-check-circle"></i> Annuler</button>
                                                                 </div>
                                                             </form>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>

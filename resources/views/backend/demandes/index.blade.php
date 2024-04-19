@@ -1092,6 +1092,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                @if($demande->assurance)
                                                 <div class="col-6">
                                                     <div class="form-group  m-auto">
                                                         <label>Prix Assurance en F CFA <sup class="text-danger">*</sup> </label>
@@ -1102,10 +1103,11 @@
                                                                         class="fas fa-money-check-alt"></i></span>
                                                             </div>
                                                             <input type="number" name="prixAssurance"
-                                                                class="form-control is-valid" required>
+                                                                class="form-control is-valid">
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @endif
                                                 <script>
                                                     document.getElementById('prix').addEventListener('input', function(e) {
                                                     // Supprime tous les caractères non numériques de la saisie
@@ -1170,7 +1172,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <!-- Champs pour la première escale -->
-                                                        <tr class="escale-field" id="escaleField1">
+                                                        <tr class="escaleOffre-field" id="escaleOffreField1">
                                                             <td>
                                                                 <select name="lieuEscale[]" id="lieuEscale1"  class="form-control lieuEscale" autocomplete="off">
                                                                     <option value="">Veuillez sélectionner une Ville</option>
@@ -1398,31 +1400,31 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const escaleTrigger = document.querySelector('.escaleOffre-trigger');
-      const escaleFields = document.getElementById('escaleOffreFields');
-      let addEscaleBtn = document.getElementById('addEscaleOffre');
-      let escaleCounter = 1; // Compteur global pour les escales
+      const escaleOffreTrigger = document.querySelector('.escaleOffre-trigger');
+      const escaleOffreFields = document.getElementById('escaleOffreFields');
+      let addEscaleOffreBtn = document.getElementById('addEscaleOffre');
+      let escaleOffreCounter = 1; // Compteur global pour les escales
   
-      escaleTrigger.addEventListener('change', function () {
+      escaleOffreTrigger.addEventListener('change', function () {
           if (this.value === '1') {
-              escaleFields.style.display = 'block';
-              addEscaleBtn.style.display = 'block';
+              escaleOffreFields.style.display = 'block';
+              addEscaleOffreBtn.style.display = 'block';
           } else {
-              escaleFields.style.display = 'none';
-              addEscaleBtn.style.display = 'none';
+              escaleOffreFields.style.display = 'none';
+              addEscaleOffreBtn.style.display = 'none';
           }
       });
   
-      addEscaleBtn.addEventListener('click', addNewEscale);
+      addEscaleOffreBtn.addEventListener('click', addNewEscaleOffre);
   
       // Fonction pour ajouter une nouvelle escale
-      function addNewEscale() {
-          const escaleField = document.querySelector('.escale-field').cloneNode(true);
+      function addNewEscaleOffre() {
+          const escaleOffreField = document.querySelector('.escaleOffre-field').cloneNode(true);
           const uniqueId = new Date().getTime(); // Génère un ID unique basé sur le timestamp
-          escaleField.id = 'escaleField' + uniqueId;
-          escaleField.querySelector('.lieuEscale').id = 'lieuEscale' + uniqueId; // Utilisez .lieuEscale pour sélectionner le select
-          escaleField.querySelector('[name="dureeEscale[]"]').id = 'dureeEscale' + uniqueId;
-          escaleFields.querySelector('tbody').appendChild(escaleField);
+          escaleOffreField.id = 'escaleOffreField' + uniqueId;
+          escaleOffreField.querySelector('.lieuEscale').id = 'lieuEscale' + uniqueId; // Utilisez .lieuEscale pour sélectionner le select
+          escaleOffreField.querySelector('[name="dureeEscale[]"]').id = 'dureeEscale' + uniqueId;
+          escaleOffreFields.querySelector('tbody').appendChild(escaleOffreField);
       }
    });
   
@@ -1432,6 +1434,7 @@
 </script>
 
 <script>
+    
 
  document.addEventListener('DOMContentLoaded', function () {
     const documentTrigger = document.querySelector('.document-trigger');
