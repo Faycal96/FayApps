@@ -29,7 +29,7 @@
                                         <tr>
                                             <td>{{ $offre->code_offre }}</td>
                                             <td>{{ $offre->agence->nomAgence }}</td>
-                                            <td>{{ $offre->prixBillet }} FCFA</td>
+                                            <td>{{ $offre->PrixTotal }} FCFA</td>
                                            
                                                 @if ($offre->etats == "validée")
                                         <td> <span class="badge bg-success">Retenue</span></td>
@@ -191,9 +191,16 @@
                                                                                 </table>
                                                                             </div>
                                                                             @endif
-                                                                            
-
-                                                                            
+                                                                            @if($offre->PrixAssurance)
+                                                                            <div class="col-md-6 mb-3">
+                                                                                <label class="form-label"> <strong>Prix de l'assurance :</strong></label>
+                                                                                <text class="form-control" readonly>{{ $offre->PrixAssurance.' FCFA' }}</text>
+                                                                            </div>
+                                                                            <div class="col-md-6 mb-3">
+                                                                                <label class="form-label"> <strong>Prix du billet sans Assurance :</strong></label>
+                                                                                <text class="form-control" readonly>{{ $offre->prixBillet.' FCFA' }}</text>
+                                                                            </div>
+                                                                            @endif                                                                            
                                                                             <!-- Observation Fait sur l'offre -->
                                                                             <div class="col-md-6 mb-3">
                                                                                 <label class="form-label"> <strong>Observation Faite sur l'offre :</strong></label>
@@ -207,7 +214,7 @@
                                                                                     <span class="info-box-icon bg-warning"><i class="far fa-money-bill-alt"></i></span>
                                                                                     <div class="info-box-content">
                                                                                         <span class="info-box-text">Prix</span>
-                                                                                        <span class="info-box-number" >{{ $offre->prixBillet.' FCFA' }}</span>
+                                                                                        <span class="info-box-number" >{{ $offre->PrixTotal.' FCFA' }}</span>
                                                                                     </div>
                                                                                     <!-- /.info-box-content -->
                                                                                 </div>

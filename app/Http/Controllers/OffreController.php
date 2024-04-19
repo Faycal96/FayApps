@@ -82,74 +82,82 @@ class OffreController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreOffreRequest $request)
-    {
-        //
-        //enregistrer une demande de billet
+{
+    // Enregistrer une demande de billet
 
-        $code = null;
-        //recuperer le maximum de id
-        $id = Offre::max('id');
+    // Générer le code de l'offre
+    $code = null;
+    $id = Offre::max('id');
+    if (isset($id)) {
+        $code = 'BF-MTDPCE-OM-' . str_pad($id + 1, 3, '0', STR_PAD_LEFT);
+    } else {
+        $code = 'BF-MTDPCE-OM-001';
+    }
 
-        //verifier si id existe et si il est differrent de null
-        // creer le code
-        if (isset($id)) {
-            $code = 'BF-MTDPCE-OM-' . Offre::max('id') + 001;
-        } else {
-            $code = 'BF-MTDPCE-OM-001';
+    // Ajouter les données supplémentaires
+    $request->merge([
+        'agence_id' => Auth::user()->agence->id,
+        'created_by' => Auth::user()->name,
+        'code_offre' => $code,
+    ]);
+
+    // Créer l'offre
+    $offre = Offre::create($request->except(['lieuEscale', 'dureeEscale', 'libelle', 'fichier']));
+
+    // Gérer les escales
+    if ($request->has('escale') && $request->escale == '1' && $request->has('lieuEscale') && $request->has('dureeEscale')) {
+        $escales = []; 
+
+        foreach ($request->lieuEscale as $key => $lieuEscale) {
+            $escales[] = [
+                'lieuEscale' => $lieuEscale,
+                'dureeEscale' => $request->dureeEscale[$key],
+                'offre_id' => $offre->id,
+            ];
         }
 
-        //$request->merge(['user_id' => Auth::id()]);
-        $request->merge(['agence_id' => Auth::user()->agence->id]);
-        $request->merge(['created_by' => Auth::user()->name]);
-        $request->merge(['code_offre' => $code]);
-        //$request->merge(['etat' => ]);
+        ItineraireOffre::insert($escales);
+    }
 
-        //dd($request);
-        //dd(Auth::user()->agence->id);
-       
-        $offre = Offre::create($request->except(['lieuEscale', 'dureeEscale','libelle','fichier']));
-        if ($request->has('escale') && $request->escale == '1' && $request->has('lieuEscale') && $request->has('dureeEscale')) {
-            $escales = []; 
+    // Gérer les documents
+    if ($request->has('libelle') && $request->hasFile('fichier')) {
+        $documents = [];
     
-            foreach ($request->lieuEscale as $key => $lieuEscale) {
-                $escales[] = [
-                    'lieuEscale' => $lieuEscale,
-                    'dureeEscale' => $request->dureeEscale[$key],
+        foreach ($request->libelle as $key => $libelle) {
+            $file = $request->file('fichier')[$key];
+    
+            // Vérifier si un fichier a été téléchargé
+            if ($file && $file->isValid()) {
+                // Stocker le fichier et récupérer le chemin d'accès
+                $filePath = $file->store('public/pdf_files');
+    
+                // Ajouter le document à la liste des documents
+                $documents[] = [
+                    'libelle' => $libelle,
+                    'fichier' => $filePath,
                     'offre_id' => $offre->id,
                 ];
             }
+        }
     
-            ItineraireOffre::insert($escales);
-        }
-        if ($request->has('libelle') && $request->hasFile('fichier')) {
-            $documents = [];
-        
-            foreach ($request->libelle as $key => $libelle) {
-                $file = $request->file('fichier')[$key];
-        
-                // Vérifier si un fichier a été téléchargé
-                if ($file && $file->isValid()) { // Assurez-vous que le fichier est valide
-                    // Stocker le fichier et récupérer le chemin d'accès
-                    $filePath = $file->store('public/pdf_files');
-        
-                    // Ajouter le document à la liste des documents
-                    $documents[] = [
-                        'libelle' => $libelle,
-                        'fichier' => $filePath,
-                        'offre_id' => $offre->id,
-                    ];
-                }
-            }
-        
-            // Insérer les documents dans la base de données
-            DocumentOffre::insert($documents);
-        }
-        
-        return redirect()->route('offres.index')
-            ->with('success', 'Votre offre a été enregistrée.');
-
-       
+        // Insérer les documents dans la base de données
+        DocumentOffre::insert($documents);
     }
+
+    // Calcul du prix total en fonction de la présence de l'assurance
+    $prixBillet = $request->input('prixBillet');
+    $prixAssurance = $request->input('prixAssurance', 0);
+    $prixTotals = $prixAssurance > 0 ? $prixBillet + $prixAssurance : $prixBillet;
+    $nombrPassager= $offre->demande->nombrePassager;
+    $prixTotal=$nombrPassager * $prixTotals;
+
+    // Mise à jour du prix total de l'offre
+    $offre->prixTotal = $prixTotal;
+    $offre->save();
+
+    // Redirection avec un message de succès
+    return redirect()->route('offres.index')->with('success', 'Votre offre a été enregistrée.');
+}
 
     /**
      * Display the specified resource.
@@ -196,7 +204,7 @@ class OffreController extends Controller
         // Récupérer les informations nécessaires
         $offreDetails = [
             'demandeId' => $offre->demande->code_demande, // Assurez-vous que l'offre a une relation 'demande'
-            'prix' => $offre->prixBillet,
+            'prix' => $offre->PrixTotal,
             'offreId' => $offre->id,
         ];
 

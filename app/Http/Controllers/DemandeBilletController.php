@@ -209,12 +209,12 @@ class DemandeBilletController extends Controller
         $offres = Offre::where('demande_id', $demande->id)
                        
                        ->with('agence')
-                       ->orderBy('prixBillet', 'asc')
+                       ->orderBy('PrixTotal', 'asc')
                        ->get();
      $offreMinPrix = Offre::where('demande_id', $demande->id)
                        ->where('etats', '!=', 'rejetée')
                        ->with('agence')
-                       ->orderBy('prixBillet', 'asc')
+                       ->orderBy('PrixTotal', 'asc')
                        ->first();
     
         return view('backend.demandes.show', [

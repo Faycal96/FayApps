@@ -719,6 +719,7 @@
                                                                 <input type="text" value="{{ $demande->escale ? 'Oui' : 'Non' }}" class="form-control" readonly>
                                                             </div>
                                                         </div>
+                                                        @if($demande->escale)
                                                         <div class="col-12 mb-3">
                                                             <table class="table datatable table-bordered table-striped datatable-table">
                                                                 <thead class="dst-form-thead">
@@ -749,7 +750,7 @@
                                                              
                                                             </table>
                                                         </div>
-                                                        
+                                                        @endif
                                                         
                                                         
 
