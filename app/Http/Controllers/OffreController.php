@@ -8,7 +8,10 @@ use App\Models\DemandeBillet;
 use App\Models\DocumentOffre;
 use App\Models\ItineraireOffre;
 use App\Models\Offre;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use NumberToWords\NumberToWords;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Auth;
 
 class OffreController extends Controller
@@ -191,35 +194,64 @@ class OffreController extends Controller
         //
     }
     public function valider(Request $request, $offreId)
-    {
-        $offre = Offre::findOrFail($offreId);
-        $offre->etats = 'validée';
-        $offre->motif = $request->motif;
-        $offre->save();
+{
+    $offre = Offre::findOrFail($offreId);
+    $offre->etats = 'validée';
+    $offre->motif = $request->motif;
+    $offre->save();
 
-        Offre::where('demande_id', $offre->demande_id)
+    Offre::where('demande_id', $offre->demande_id)
         ->where('id', '!=', $offre->id) // Exclure l'offre actuellement validée
         ->update(['etats' => 'rejetée']);
 
-        // Récupérer les informations nécessaires
-        $offreDetails = [
-            'demandeId' => $offre->demande->code_demande, // Assurez-vous que l'offre a une relation 'demande'
-            'prix' => $offre->PrixTotal,
-            'offreId' => $offre->id,
-        ];
+    // Générer le PDF
+    $pdf = $this->generatePDF($offre);
 
-        // Trouver l'agence à notifier
-        $agence = $offre->agence->user;
+    // Récupérer les informations nécessaires pour l'e-mail
+    $offreDetails = [
+        'demandeId' => $offre->demande->code_demande,
+        'prix' => $offre->PrixTotal,
+        'offreId' => $offre->id,
+    ];
 
-        // Assurez-vous d'avoir une relation 'agence' ou similaire
+    // Trouver l'agence à notifier
+    $agence = $offre->agence->user;
 
-        // Envoyer la notification
-        $agence->notify(new \App\Notifications\OffreValideeNotification($offreDetails));
+    // Envoyer la notification avec le PDF en pièce jointe
+    $agence->notify(new \App\Notifications\OffreValideeNotification($offreDetails, $pdf));
 
+    return redirect()->route('demandes.index')->with('success', 'L\'offre a été validée avec succès.');
+}
+private function generatePDF($offre)
+{
+    $numberToWords = new NumberToWords();
+    $numberTransformer = $numberToWords->getNumberTransformer('fr');
+    $prixBillet = $offre->prixBillet;
+    $prixAssurance = $offre->PrixAssurance;
+    $prixTotal = $offre->PrixTotal;
+    $nbrePassager = $offre->demande->nombrePassager;
+    $montantEnLettre = $numberTransformer->toWords($prixTotal);
+    $totalBillet = $prixBillet * $nbrePassager;
+    $totalAssurance = $prixAssurance * $nbrePassager;
+    $donneQrCode = env('APP_URL')."/quittance/".$offre;
+        $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate($donneQrCode));
+        //dd($qrcode);
 
+    $data = [
+        "offre" => $offre,
+        "montantEnLettre" => $montantEnLettre,
+        "prixBillet" => $prixBillet,
+        "prixAssurance" => $prixAssurance,
+        "prixTotal" => $prixTotal,
+        "nbrePassager" => $nbrePassager,
+        "totalBillet" => $totalBillet,
+        "totalAssurance" => $totalAssurance,
+        "qrCode" => $qrcode,
+    ];
 
-        return redirect()->route('demandes.index')->with('success', 'L\'offre a été validée avec succès.');
-    }
+    $pdf = PDF::loadView("etats.quittance", $data);
+    return $pdf->output();
+}
 
     public function rejeter(Request $request, $offreId)
     {

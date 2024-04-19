@@ -16,9 +16,11 @@ class OffreValideeNotification extends Notification
      */
     private $offreDetails;
 
-    public function __construct($offreDetails)
+    public function __construct($offreDetails,$pdf)
     {
         $this->offreDetails = $offreDetails;
+        
+    $this->pdf = $pdf;
     }
 
     public function via($notifiable)
@@ -34,7 +36,10 @@ class OffreValideeNotification extends Notification
                     ->line('L\'offre pour la demande numéro ' . $this->offreDetails['demandeId'] . ' a été validée.')
                     ->line('Prix retenu : ' . $this->offreDetails['prix'])
                     ->action('Voir l\'offre', url('http://localhost:8000/'))
-                    ->line('Merci d\'utiliser notre plateforme !');
+                    ->line('Merci d\'utiliser notre plateforme !')
+                    ->attachData($this->pdf, 'offre.pdf', [
+                        'mime' => 'application/pdf',
+                    ]);
     }
 
     public function toArray($notifiable)

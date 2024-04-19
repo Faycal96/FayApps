@@ -26,15 +26,7 @@ class QuittanceController extends Controller
     	//$qrcode = QrCode::size(100)->generate("Je suis un QR Code");
         $donneQrCode = env('APP_URL')."/quittance/".$id;
         $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate($donneQrCode));
-        //dd($qrcode);
-        /* $fraisTimbre = Procedure::where("code", "=", "P002" )->first()->frais_timbre;
-        $fraisDossier = Procedure::where("code", "=", "P002" )->first()->frais_dossier;
 
-        $montantTH = CategorieDemande::where("code", "=", "TH" )->first()->montant;
-        $montantTR1 = CategorieDemande::where("code", "=", "TR1" )->first()->montant;
-        $montantTR2 = CategorieDemande::where("code", "=", "TR2" )->first()->montant;
-        $montantTR3 = CategorieDemande::where("code", "=", "TR3" )->first()->montant;
-        $montantEC = CategorieDemande::where("code", "=", "EC" )->first()->montant; */
 
         $data =  [
             "offre" => $offre,
