@@ -6,6 +6,7 @@ use App\Models\Ministere;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMinistereRequest;
 use App\Http\Requests\UpdateMinistereRequest;
+use Illuminate\Http\Request;
 
 class MinistereController extends Controller
 {
@@ -14,54 +15,61 @@ class MinistereController extends Controller
      */
     public function index()
     {
-        //
+        $ministeres = Ministere::all();
+            return view('ministeres.index', compact('ministeres'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+   // Méthode pour afficher le formulaire de création d'un ministère
+   public function create()
+   {
+       return view('ministeres.create');
+   }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreMinistereRequest $request)
-    {
-        //
-    }
+   // Méthode pour enregistrer un nouveau ministère
+   public function store(Request $request)
+   {
+       $request->validate([
+           'libelleCourt' => 'required',
+           'libelleLong' => 'required',
+       ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Ministere $ministere)
-    {
-        //
-    }
+       Ministere::create($request->all());
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ministere $ministere)
-    {
-        //
-    }
+       return redirect()->route('ministeres.index')->with('success', 'Ministère ajouté avec succès.');
+   }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateMinistereRequest $request, Ministere $ministere)
-    {
-        //
-    }
+   // Méthode pour afficher le formulaire de modification d'un ministère
+   public function edit(Ministere $ministere)
+   {
+       return view('ministeres.edit', compact('ministere'));
+   }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ministere $ministere)
-    {
-        //
-    }
+   // Méthode pour mettre à jour un ministère existant
+   public function update(Request $request, Ministere $ministere)
+   {
+       $request->validate([
+           'libelleCourt' => 'required',
+           'libelleLong' => 'required',
+       ]);
+
+       $ministere->update($request->all());
+
+       return redirect()->route('ministeres.index')->with('success', 'Ministère modifié avec succès.');
+   }
+
+   // Méthode pour fusionner deux ministères
+   public function merge(Request $request)
+   {
+       $request->validate([
+           'ministere1_id' => 'required|exists:ministeres,id',
+           'ministere2_id' => 'required|exists:ministeres,id',
+       ]);
+
+       $ministere1 = Ministere::findOrFail($request->ministere1_id);
+       $ministere2 = Ministere::findOrFail($request->ministere2_id);
+
+       // Mettez ici la logique pour fusionner les deux ministères
+
+       return redirect()->route('ministeres.index')->with('success', 'Ministères fusionnés avec succès.');
+   }
 }

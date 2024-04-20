@@ -3,11 +3,13 @@
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\DemandeBilletController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MinistereController;
 use App\Http\Controllers\OffreController;
 use App\Http\Controllers\QuittanceController;
 use App\Http\Controllers\RegisterDafController;
 use App\Http\Controllers\RegisterDafController as ControllersRegisterDafController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StructureController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +54,8 @@ Route::post('/offres/{offre}/valider', [OffreController::class, 'valider'])->nam
 Route::post('/offres/{offre}/rejeter', [OffreController::class, 'rejeter'])->name('offres.rejeter');
 Route::get('/notifications/read/{id}', [App\Http\Controllers\DemandeBilletController::class, 'markAsRead'])->name('notifications.read');
 Route::get('/quittance/{uuid}', [QuittanceController::class, 'index'])->name('quittance');
+Route::post('/ministeres/merge', [MinistereController::class, 'merge'])->name('ministeres.merge');
+Route::post('/structures/merge', [StructureController::class, 'merge'])->name('structures.merge');
 
 
 
@@ -62,5 +66,8 @@ Route::resources([
     'users' => UserController::class,
     'demandes' => DemandeBilletController::class,
     'offres' => OffreController::class,
+    'ministeres' => MinistereController::class,
+    'structures' => StructureController::class,
+
 
 ]);

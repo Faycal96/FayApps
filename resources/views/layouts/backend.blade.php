@@ -251,6 +251,24 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('ministeres.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Gestion des ministeres
+                                    {{-- <span class="badge badge-info right"> </span> --}}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('structures.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Gestion des structures
+                                    {{-- <span class="badge badge-info right"> </span> --}}
+                                </p>
+                            </a>
+                        </li>
                         @endcanany
 
 

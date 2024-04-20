@@ -10,7 +10,7 @@
                 <div class="inner">
                     <h3>{{ $totalUsers }}</h3>
 
-                    <p>Total des utilisateurs</p>
+                    <p>Total des utilisateurs</p> 
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
