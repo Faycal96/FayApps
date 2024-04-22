@@ -196,13 +196,15 @@
                                                 </div>
                                             </div>
                                             <!-- Lieu de Départ avec icône -->
+                                    
                                             <div class="col-md-6 form-group">
-                                                <label>Source de financement <sup class="text-danger">*</sup> </label>
-                                                <div class="input-group">
-                                                    <input type="text" name="sourceFinancement"
-                                                        class="form-control    value=" {{ old('sourceFinancement') }}"
-                                                        autocomplete="off">
-                                                </div>
+                                                <label for="sourceFinancement">Source de financement<sup class="text-danger">*</sup></label>
+                                                <select name="sourceFinancement" class="form-control" required>
+                                                    <option value="">Sélectionnez une source de financemnt</option>
+                                                    @foreach ($sources as $source) 
+                                                        <option value="{{ $source->libelleLong }}">{{ $source->libelleLong }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
 
                                         </div>
@@ -300,7 +302,7 @@
                                                 <label for="structure">Structure<sup class="text-danger">*</sup></label>
                                                 <select name="structure" class="form-control" required>
                                                     <option value="">Sélectionnez une structure</option>
-                                                    @foreach ($structures as $structure)
+                                                    @foreach ($structures as $structure) 
                                                         <option value="{{ $structure->libelleLong }}">{{ $structure->libelleLong }}</option>
                                                     @endforeach
                                                 </select>

@@ -18,5 +18,9 @@ class Ministere extends Model
     {
         return $this->hasMany(Structure::class);
     }
+    public function sources()
+    {
+        return $this->hasMany(SourceFinancement::class);
+    }
 
 }

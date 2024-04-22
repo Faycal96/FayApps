@@ -269,6 +269,15 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('source_financement.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Gestion des Sources de financement
+                                    {{-- <span class="badge badge-info right"> </span> --}}
+                                </p>
+                            </a>
+                        </li>
                         @endcanany
 
 

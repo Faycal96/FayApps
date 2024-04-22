@@ -9,6 +9,7 @@ use App\Http\Controllers\QuittanceController;
 use App\Http\Controllers\RegisterDafController;
 use App\Http\Controllers\RegisterDafController as ControllersRegisterDafController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SourceFinancementController;
 use App\Http\Controllers\StructureController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -68,6 +69,7 @@ Route::resources([
     'offres' => OffreController::class,
     'ministeres' => MinistereController::class,
     'structures' => StructureController::class,
+    'source_financement' => SourceFinancementController::class,
 
 
 ]);

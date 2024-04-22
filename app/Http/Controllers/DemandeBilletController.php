@@ -99,8 +99,11 @@ class DemandeBilletController extends Controller
 
          if($user->ministere) {
             $structures = $user->ministere->structures;
+            $sources = $user->ministere->sources;
+
          }else{
             $structures = []; 
+            $sources = []; 
         }
 
         //
@@ -110,6 +113,7 @@ class DemandeBilletController extends Controller
             'cities'=> $cities,
             'escales'=> $escales,
             'structures'=> $structures,
+            'sources'=> $sources,
             'nombreDemandes' => $nombreDemandes, // Passer le nombre de demandes à la vue
             'nombreOffreRetenues' =>$nombreOffresRetenues,
             'nombreDemandesSansOffres' =>$nombreDemandesSansOffres,

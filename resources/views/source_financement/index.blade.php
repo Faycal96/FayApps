@@ -27,7 +27,7 @@
             </p>
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Gestion des Structures</h3>
+                    <h3 class="card-title">Gestion des Sources de Finacement</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -43,16 +43,13 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="createstructureModalLabel">Ajouter une Structure Structure</h5>
+                                    <h5 class="modal-title" id="createstructureModalLabel">Ajouter une Source de financement </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('structures.store') }}" method="POST">
+                                    <form action="{{ route('source_financement.store') }}" method="POST">
                                         @csrf
-                                        <div class="mb-3">
-                                            <label for="libelleCourt" class="form-label">Libellé Court</label>
-                                            <input type="text" class="form-control" id="libelleCourt" name="libelleCourt" required>
-                                        </div>
+                                       
                                         <div class="mb-3">
                                             <label for="libelleLong" class="form-label">Libellé Long</label>
                                             <input type="text" class="form-control" id="libelleLong" name="libelleLong" required>
@@ -82,29 +79,29 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Libellé Court</th>
+                               
                                 <th>Libellé Long</th>
                                 <th>Ministere</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($structures as $structure)
+                            @forelse ($source_financements as $source_financement)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $structure->libelleCourt }}</td>
-                                <td>{{ $structure->libelleLong }}</td>
-                                <td>{{ $structure->ministere->libelleLong }}</td>
+                                
+                                <td>{{ $source_financement->libelleLong }}</td>
+                                <td>{{ $source_financement->ministere->libelleLong }}</td>
                                 <td>
                                     <!-- Bouton de déclenchement pour le modal de modification -->
                                     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#editstructureModal{{ $structure->id }}">
+                                        data-bs-target="#editstructureModal{{ $source_financement->id }}">
                                         <i class="bi bi-pencil"></i> Modifier
                                     </button>
 
                                     <!-- Modal de modification -->
-                                    <div class="modal fade" id="editstructureModal{{ $structure->id }}" tabindex="-1"
-                                        aria-labelledby="editstructureModalLabel{{ $structure->id }}" aria-hidden="true">
+                                    <div class="modal fade" id="editstructureModal{{ $source_financement->id }}" tabindex="-1"
+                                        aria-labelledby="editstructureModalLabel{{ $source_financement->id }}" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -112,16 +109,13 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="{{ route('structures.update', $structure->id) }}" method="POST">
+                                                    <form action="{{ route('source_financement.update', $source_financement->id) }}" method="POST">
                                                         @csrf
                                                         @method('PUT')
-                                                        <div class="mb-3">
-                                                            <label for="libelleCourt" class="form-label">Libellé Court</label>
-                                                            <input type="text" class="form-control" id="libelleCourt" name="libelleCourt" value="{{ $structure->libelleCourt }}" required>
-                                                        </div>
+                                                       
                                                         <div class="mb-3">
                                                             <label for="libelleLong" class="form-label">Libellé Long</label>
-                                                            <input type="text" class="form-control" id="libelleLong" name="libelleLong" value="{{ $structure->libelleLong }}" required>
+                                                            <input type="text" class="form-control" id="libelleLong" name="libelleLong" value="{{ $source_financement->libelleLong }}" required>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="ministere_id" class="form-label">Ministère</label>
@@ -129,7 +123,7 @@
                                                                 <select class="form-select" id="ministere_id" name="ministere_id" required>
                                                                     <option value="">Sélectionner un ministère</option>
                                                                     @foreach($ministeres as $ministere)
-                                                                        <option value="{{ $ministere->id }}" {{ $ministere->id == $structure->ministere_id ? 'selected' : '' }}>
+                                                                        <option value="{{ $ministere->id }}" {{ $ministere->id == $source_financement->ministere_id ? 'selected' : '' }}>
                                                                             {{ $ministere->libelleLong }}
                                                                         </option>
                                                                     @endforeach
@@ -145,54 +139,12 @@
                                         </div>
                                     </div>
 
-                                    <!-- Bouton de déclenchement pour le modal de fusion -->
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#mergestructuresModal{{ $structure->id }}">
-                                        <i class="bi bi-arrow-merge"></i> Fusionner
-                                    </button>
-
-                                    <!-- Modal de fusion -->
-                                    <div class="modal fade" id="mergestructuresModal{{ $structure->id }}" tabindex="-1"
-                                        aria-labelledby="mergestructuresModalLabel{{ $structure->id }}" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="mergestructuresModalLabel">Fusionner des Structures</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="{{ route('structures.merge') }}" method="POST">
-                                                        @csrf
-                                                        <div class="mb-3">
-                                                            <label for="structure1_id" class="form-label">Structure 1</label>
-                                                            <select class="form-select" id="structure1_id" name="structure1_id" required>
-                                                                <option value="">Sélectionner une Structure</option>
-                                                                @foreach($structures as $structureOption)
-                                                                    <option value="{{ $structureOption->id }}">{{ $structureOption->libelleLong }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="structure2_id" class="form-label">Structure 2</label>
-                                                            <select class="form-select" id="structure2_id" name="structure2_id" required>
-                                                                <option value="">Sélectionner une autre Structure</option>
-                                                                @foreach($structures as $structureOption)
-                                                                    <option value="{{ $structureOption->id }}">{{ $structureOption->libelleLong }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                                        <button type="submit" class="btn btn-primary">Fusionner</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                 
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4" class="text-center">Aucune structure trouvé!</td>
+                                <td colspan="4" class="text-center">Aucune source de financement trouvé!</td>
                             </tr>
                             @endforelse
                         </tbody>
