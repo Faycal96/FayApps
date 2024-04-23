@@ -594,7 +594,7 @@
                         @endphp
                         @foreach ($demandes as $demande)
                         <tbody>
-                            @if ($demande->user_id == auth()->id() || auth()->user()->hasRole(['Agence Voyage']))
+                            @if ($demande->user_id == auth()->id() || auth()->user()->hasRole(['Agence Voyage']) || $demande->user->id_m ==  auth()->user()->id_m)
                             <tr>
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $demande->code_demande }}</td>
@@ -903,14 +903,14 @@
 
                 @if($demande->etat ==0)
 
-                @canany(['create-demande-billet'])
+                
 
                 <button type="button" class="btn btn-info btn-sm">
                     <a class="text-white" href="{{ route('demandes.show', $demande) }}">
-                        <i class="bi bi-pencil-square"></i> Voir l'offre
+                        <i class="bi bi-pencil-square"></i> Voir les offres
                     </a>
                 </button>
-                @endcanany
+               
                 @endif
                 @if($demande->offres->isEmpty() && $demande->etat ==1)
                 @canany(['create-demande-billet'])

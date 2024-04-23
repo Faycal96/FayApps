@@ -62,7 +62,7 @@
                                     @if ($role!='Super Admin')
                                         <option value="{{ $role }}" {{ in_array($role, old('roles') ?? []) ? 'selected' : '' }}>
                                         {{ $role }}
-                                        </option>
+                                        </option> 
                                     @else
                                         @if (Auth::user()->hasRole('Super Admin'))   
                                             <option value="{{ $role }}" {{ in_array($role, old('roles') ?? []) ? 'selected' : '' }}>

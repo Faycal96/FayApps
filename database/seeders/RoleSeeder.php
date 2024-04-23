@@ -17,6 +17,7 @@ class RoleSeeder extends Seeder
         $admin = Role::create(['name' => 'Admin']);
         $dafMinistere = Role::create(['name' => 'DAF MINISTERE']);
         $agenceVoyage = Role::create(['name' => 'Agence Voyage']);
+        $dafVrai = Role::create(['name' => 'DAF VRAI']);
 
         $admin->givePermissionTo([
             'create-role',
@@ -37,6 +38,9 @@ class RoleSeeder extends Seeder
         ]);
         $agenceVoyage->givePermissionTo([
             'propose-demande-billet'
+        ]);
+        $dafVrai->givePermissionTo([
+            'test-permission'
         ]);
     }
 }

@@ -52,6 +52,9 @@ class LoginController extends Controller
         elseif ($user->hasRole('Agence Voyage')) {
             return '/demandes'; // Chemin pour les utilisateurs standards
         }
+        elseif ($user->hasRole('DAF VRAI')) {
+            return '/demandes'; // Chemin pour les utilisateurs standards
+        }
 
 
 }

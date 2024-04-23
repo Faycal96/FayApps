@@ -118,7 +118,7 @@ class RegisterController extends Controller
 
         $user->notify(new \App\Notifications\userNotification());
 
-        return view('welcome')->with('success', 'Votre compte a été Créee avec success et en attente de Validation !!');
+        return view('welcome')->with('success', 'Votre compte a été créee avec success et en attente de Validation !!');
 
     }
 

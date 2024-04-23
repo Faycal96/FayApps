@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
-    @canany(['create-demande-billet'])
+    
         <div class="container-fluid">
             @if($offres->isEmpty())
                 <div class="alert alert-warning" role="alert">
@@ -230,6 +230,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @canany(['create-demande-billet'])
                                                 @if ($offre->etats == "En attente" && $offre->prixBillet ==$offreMinPrix->prixBillet)
                                                 <!-- Bouton de validation déclenche le modal -->
                                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#validateModal">
@@ -298,6 +299,7 @@
                                                     </div>
                                                 </div>
                                                 @endif
+                                                @endcanany
                                                 @if ($offre->etats == "validée" && $offre->PrixTotal == $offreMinPrix->PrixTotal)
                                                 <!-- Bouton de validation déclenche le modal -->
                                                 <button title="Quittance" type="button" class="btn btn-success " data-bs-toggle="modal"><a href="{{ route('quittance', ['uuid' => $offre->id]) }}"> <i class="bi bi-receipt-cutoff"></i></a></button>
@@ -317,5 +319,5 @@
                 </div>
             @endif
         </div>
-    @endcanany
+   
 @endsection

@@ -24,7 +24,8 @@ class PermissionSeeder extends Seeder
             'edit-demande-billet',
             'propose-demande-billet',
             'rejetter-demande-billet',
-            'valider-demande-billet'
+            'valider-demande-billet',
+            'test-permission',
          ];
  
           // Looping and Inserting Array's Permissions into Permission Table

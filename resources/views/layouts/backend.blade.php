@@ -162,7 +162,7 @@
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         @if (isset(Auth::user()->ministere))
-                        <a class="dropdown-item text-primary">{{' DAF '.Auth::user()->ministere->libelleCourt }}</a>
+                        <a class="dropdown-item text-primary">{{' Agent '.Auth::user()->ministere->libelleCourt }}</a>
                         @endif
                         <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">

@@ -76,6 +76,25 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label for="roles" class="col-md-4 col-form-label text-md-end text-start">{{ __('Profil') }}<sup class="text-danger">*</label>
+                            <div class="col-md-6">  
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-users"></i></span>         
+                                <select class="form-select @error('roles') is-invalid @enderror" aria-label="Roles" id="roles" name="roles">
+                                    <option value="">Veuillez choisir votre profil</option>
+                                    <option value="DAF MINISTERE" {{ old('roles') == 'DAF MINISTERE' ? 'selected' : '' }}>DMP</option>
+                                    <option value="DAF VRAI" {{ old('roles') == 'DAF VRAI' ? 'selected' : '' }}>DAF</option>
+                                </select>
+                                
+                                @if ($errors->has('roles'))
+                                    <span class="text-danger">{{ $errors->first('roles') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        </div>
+                        
+                        
 
                         <!-- Téléphone -->
                         <div class="row mb-3">
