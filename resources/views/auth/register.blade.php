@@ -8,6 +8,15 @@
             <div class="card">
                 <div class="card-header text-center">  <sup class="text-danger">les champs precédés d'étoile rouge sont obligatoires</sup></div>
                 <div class="card-body">
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
                         <!-- Nom de l'Agence -->
@@ -26,21 +35,21 @@
                             </div>
                         </div>
 
-                        <!-- Adresse Email -->
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Adresse Email') }} <sup class="text-danger">*</sup></label>
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                                </div>
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                       <!-- Email -->
+                       <div class="row mb-3">
+                        <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Adresse Email') }} <sup class="text-danger">*</sup></label>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                             </div>
+                            @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
+                    </div>
 
                         <!-- Adresse de l'Agence -->
                         <div class="row mb-3">
@@ -122,19 +131,20 @@
                             </div>
                         </div>
 
-                        <!-- Password -->
-                        <div class="row mb-3">
+                         <!-- Password -->
+                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Mot de Passe') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                                 </div>
-                                @error('password')
+                                <span id="passwordError" class="invalid-feedback" role="alert"></span>
+                                {{-- @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                                @enderror
+                                @enderror --}}
                             </div>
                         </div>
 
@@ -162,4 +172,59 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('password-confirm');
+        const passwordError = document.getElementById('passwordError');
+        const submitButton = document.querySelector('button[type="submit"]');
+
+        // Fonction de validation du mot de passe
+        function validatePassword() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            // Réinitialiser les classes d'erreur
+            passwordInput.classList.remove('is-invalid');
+            confirmPasswordInput.classList.remove('is-invalid');
+
+            // Vérifier la longueur du mot de passe
+            if (password.length < 8) {
+                // Afficher un message d'erreur si le mot de passe est trop court
+                passwordError.innerText = 'Le mot de passe doit comporter au moins 8 caractères.';
+                passwordInput.classList.add('is-invalid');
+                confirmPasswordInput.classList.add('is-invalid');
+                disableSubmitButton();
+            } else if (password !== confirmPassword) {
+                // Afficher un message d'erreur si les mots de passe ne correspondent pas
+                passwordError.innerText = 'Les mots de passe ne correspondent pas.';
+                passwordInput.classList.add('is-invalid');
+                confirmPasswordInput.classList.add('is-invalid');
+                disableSubmitButton();
+            } else {
+                // Effacer le message d'erreur si les conditions sont remplies
+                passwordError.innerText = '';
+                enableSubmitButton();
+            }
+        }
+
+        // Fonction pour désactiver le bouton "Enregistrer"
+        function disableSubmitButton() {
+            submitButton.disabled = true;
+        }
+
+        // Fonction pour activer le bouton "Enregistrer"
+        function enableSubmitButton() {
+            submitButton.disabled = false;
+        }
+
+        // Écouter les événements input sur les champs de mot de passe
+        passwordInput.addEventListener('input', validatePassword);
+        confirmPasswordInput.addEventListener('input', validatePassword);
+
+        // Exécuter la validation initiale
+        validatePassword();
+    });
+</script>
+
 @endsection
