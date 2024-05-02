@@ -192,16 +192,16 @@
                                                     {{-- <span class="input-group-text"><i
                                                             class="fas fa-file-alt"></i></span> --}}
                                                     <input type="number" name="nombrePassager"
-                                                        wire:model='nombrePassager' class="form-control">
+                                                        wire:model='nombrePassager' class="form-control" required>
                                                 </div>
                                             </div>
                                             <!-- Lieu de Départ avec icône -->
-                                    
+
                                             <div class="col-md-6 form-group">
                                                 <label for="sourceFinancement">Source de financement<sup class="text-danger">*</sup></label>
                                                 <select name="sourceFinancement" class="form-control" required>
                                                     <option value="">Sélectionnez une source de financemnt</option>
-                                                    @foreach ($sources as $source) 
+                                                    @foreach ($sources as $source)
                                                         <option value="{{ $source->libelleLong }}">{{ $source->libelleLong }}</option>
                                                     @endforeach
                                                 </select>
@@ -302,12 +302,12 @@
                                                 <label for="structure">Structure<sup class="text-danger">*</sup></label>
                                                 <select name="structure" class="form-control" required>
                                                     <option value="">Sélectionnez une structure</option>
-                                                    @foreach ($structures as $structure) 
+                                                    @foreach ($structures as $structure)
                                                         <option value="{{ $structure->libelleLong }}">{{ $structure->libelleLong }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            
+
                                             <div class="col-md-6 form-group">
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -335,14 +335,14 @@
                                                             <span style="margin-right: 25px;"></span> <!-- Espacement entre les labels -->
                                                             <input type="checkbox" name="assurance" id="assurance-non" class="form-check-input" value="0">
                                                             <label class="form-check-label" for="assurance-non">Non</label>
-                                                    
+
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                       
+
 
                                         <div id="escaleFields" style="display: none;">
                                             <table class="table datatable table-bordered table-striped datatable-table">
@@ -360,7 +360,7 @@
                                                     <!-- Champs pour la première escale -->
                                                     <tr class="escale-field" id="escaleField1">
                                                         <td>
-                                                            <select name="lieuEscale[]" id="lieuEscale1"  class="form-control lieuEscale" autocomplete="off">
+                                                            <select name="lieuEscale[]" id="lieuEscale1"  class="form-control lieuEscale select2bs4 custom-select" autocomplete="off">
                                                                 <option value="">Veuillez sélectionner une Ville</option>
                                                                 @foreach ($cities as $city)
                                                                     <option value="{{ $city->city }}">{{ $city->city.' - '.$city->country }}</option>
@@ -387,7 +387,7 @@
                                                     </tr>
                                                 </tfoot>
                                             </table>
-                                        </div>                                        
+                                        </div>
 
 
                                         <div class="row">
@@ -396,7 +396,7 @@
                                                 <div class="input-group">
                                                     {{-- <span class="input-group-text"><i
                                                             class="fas fa-align-left"></i></span> --}}
-                                                    <textarea name="description" required
+                                                    <textarea name="description"
                                                         class="form-control @error('description') is-invalid @enderror"
                                                         value="{{ old('description') }}" autocomplete="off"></textarea>
                                                 </div>
@@ -706,8 +706,8 @@
                                                         </div>
                                                     </div>
 
-                                                        
-                                                        
+
+
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label"><i class="bi bi-shield-check me-2"></i><strong>Assurance :</strong></label>
                                                             <div class="input-group">
@@ -733,7 +733,7 @@
                                                                             class="bi bi-geo-alt me-2"></i>Lieu escale <span style="color:red">*</span></th>
                                                                         <th><i
                                                                             class="bi bi-hourglass-split me-2"></i>Durée <span style="color:red">*</span></th>
-                                                                       
+
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -745,16 +745,16 @@
                                                                         <td>
                                                                             <input type="text" value="{{ $itineraire->dureeEscale }}" class="form-control" readonly>
                                                                         </td>
-                                                                        
+
                                                                     </tr>
                                                                     @endforeach
                                                                 </tbody>
-                                                             
+
                                                             </table>
                                                         </div>
                                                         @endif
-                                                        
-                                                        
+
+
 
                                                         <!-- Description du besoin -->
                                                         <div class="col-12 mb-3">
@@ -903,14 +903,14 @@
 
                 @if($demande->etat ==0)
 
-                
+
 
                 <button type="button" class="btn btn-info btn-sm">
                     <a class="text-white" href="{{ route('demandes.show', $demande) }}">
                         <i class="bi bi-pencil-square"></i> Voir les offres
                     </a>
                 </button>
-               
+
                 @endif
                 @if($demande->offres->isEmpty() && $demande->etat ==1)
                 @canany(['create-demande-billet'])
@@ -1046,7 +1046,7 @@
 
 
                                             </div>
-                                          
+
 
                                             <div class="row">
                                                 <div class="col-6">
@@ -1154,12 +1154,12 @@
                                                                 <input type="radio" name="document" id="document-oui" class="form-check-input document-trigger" value="0">
                                                                 <label class="form-check-label" for="document-oui">Non</label>
                                                             </div>
-                                                            
-                                                            
-                                                            
+
+
+
                                                         </div>
                                                     </div>
-                                                </div>      
+                                                </div>
                                             </div>
                                             <div id="escaleOffreFields" style="display: none;">
                                                 <table class="table datatable table-bordered table-striped datatable-table">
@@ -1204,7 +1204,7 @@
                                                         </tr>
                                                     </tfoot>
                                                 </table>
-                                            </div>   
+                                            </div>
                                             <div id="documentFields" style="display: none;">
                                                 <table class="table datatable table-bordered table-striped datatable-table">
                                                     <thead class="dst-form-thead">
@@ -1243,9 +1243,9 @@
                                                     </tfoot>
                                                 </table>
                                             </div>
-                                            
-                                            
-                                            
+
+
+
                                             <div class="row mt-4">
                                                 <div class="col-12">
                                                     <div class="form-group m-auto">
@@ -1407,7 +1407,7 @@
       const escaleOffreFields = document.getElementById('escaleOffreFields');
       let addEscaleOffreBtn = document.getElementById('addEscaleOffre');
       let escaleOffreCounter = 1; // Compteur global pour les escales
-  
+
       escaleOffreTrigger.addEventListener('change', function () {
           if (this.value === '1') {
               escaleOffreFields.style.display = 'block';
@@ -1417,9 +1417,9 @@
               addEscaleOffreBtn.style.display = 'none';
           }
       });
-  
+
       addEscaleOffreBtn.addEventListener('click', addNewEscaleOffre);
-  
+
       // Fonction pour ajouter une nouvelle escale
       function addNewEscaleOffre() {
           const escaleOffreField = document.querySelector('.escaleOffre-field').cloneNode(true);
@@ -1430,14 +1430,14 @@
           escaleOffreFields.querySelector('tbody').appendChild(escaleOffreField);
       }
    });
-  
+
   function deleteRowCV(me) {
       $(me).closest('tr').remove();
   }
 </script>
 
 <script>
-    
+
 
  document.addEventListener('DOMContentLoaded', function () {
     const documentTrigger = document.querySelector('.document-trigger');
@@ -1482,6 +1482,6 @@
  }
 
 </script>
-  
+
 
 @endsection

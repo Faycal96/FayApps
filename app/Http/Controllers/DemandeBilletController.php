@@ -28,7 +28,7 @@ class DemandeBilletController extends Controller
 
      public function __construct()
      {
-       
+
          $this->middleware('auth');
 
      }
@@ -102,8 +102,8 @@ class DemandeBilletController extends Controller
             $sources = $user->ministere->sources;
 
          }else{
-            $structures = []; 
-            $sources = []; 
+            $structures = [];
+            $sources = [];
         }
 
         //
@@ -133,9 +133,11 @@ class DemandeBilletController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Enregistrement d'une demande
+     *
+     * Creation d'une demande suivie de notification des emails a tous les agences
      */
-    public function store(StoreDemandeBilletRequest $request) 
+    public function store(StoreDemandeBilletRequest $request)
     {
         //enregistrer une demande de billet
         $code = null;
@@ -158,8 +160,8 @@ class DemandeBilletController extends Controller
         //$request->merge(['etat' => 'ACTIF']);
         $demande = DemandeBillet::create($request->except(['lieuEscale', 'dureeEscale']));
         if ($request->has('escale') && $request->escale == '1' && $request->has('lieuEscale') && $request->has('dureeEscale')) {
-            $escales = []; 
-    
+            $escales = [];
+
             foreach ($request->lieuEscale as $key => $lieuEscale) {
                 $escales[] = [
                     'lieuEscale' => $lieuEscale,
@@ -167,13 +169,21 @@ class DemandeBilletController extends Controller
                     'demande_billet_id' => $demande->id,
                 ];
             }
-    
+
             ItineraireDemande::insert($escales);
         }
 
         $users = User::whereHas('roles', function ($query) {
             $query->where('name', '=', 'Agence Voyage');
         })->get();
+
+
+
+
+        // Envoyer les notifications via la file d'attente
+        foreach ($users as $user) {
+            $user->notify((new DemandeCreatedNotification($demande, $user))->onQueue('default'));
+        }
 
         // Envoyer une notification à chaque agence
 
@@ -184,20 +194,20 @@ class DemandeBilletController extends Controller
 
 
             // Préparer les notifications pour chaque utilisateur
-            $notifications = [];
-            foreach ($users as $user) {
-                // Créer une instance de la notification pour chaque utilisateur
-                $notifications[] = new \App\Notifications\DemandeCreatedNotification($demande, $user);
-            }
+            //******** */ $notifications = [];
+            // foreach ($users as $user) {
+            //     // Créer une instance de la notification pour chaque utilisateur
+            //     $notifications[] = new \App\Notifications\DemandeCreatedNotification($demande, $user);
+            //********** */ }
 
             // Envoyer toutes les notifications en une seule opération
             //Notification::send($users, $notifications);
 
 
-            foreach ($users as $user) {
-                $user->notify(new \App\Notifications\DemandeCreatedNotification($demande, $user));
+            //*******8 */ foreach ($users as $user) {
+            //     $user->notify(new \App\Notifications\DemandeCreatedNotification($demande, $user));
 
-            }
+            // ***********8}
 
             return redirect()->route('demandes.index')->with('success', 'Votre demande a été enregistrée.');
 
@@ -211,7 +221,7 @@ class DemandeBilletController extends Controller
     public function show(DemandeBillet $demande)
     {
         $offres = Offre::where('demande_id', $demande->id)
-                       
+
                        ->with('agence')
                        ->orderBy('PrixTotal', 'asc')
                        ->get();
@@ -220,14 +230,14 @@ class DemandeBilletController extends Controller
                        ->with('agence')
                        ->orderBy('PrixTotal', 'asc')
                        ->first();
-    
+
         return view('backend.demandes.show', [
             'demande' => $demande,
             'offreMinPrix' => $offreMinPrix,
             'offres' => $offres, // Passer toutes les offres à la vue
         ]);
     }
-    
+
 
 
 

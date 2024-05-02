@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
-    
+
         <div class="container-fluid">
             @if($offres->isEmpty())
                 <div class="alert alert-warning" role="alert">
@@ -30,7 +30,7 @@
                                             <td>{{ $offre->code_offre }}</td>
                                             <td>{{ $offre->agence->nomAgence }}</td>
                                             <td>{{ $offre->PrixTotal }} FCFA</td>
-                                           
+
                                                 @if ($offre->etats == "validée")
                                         <td> <span class="badge bg-success">Retenue</span></td>
                                     @elseif ($offre->etats == "rejetée")
@@ -38,7 +38,7 @@
                                         @else
                                         <td><span class="badge bg-warning">En attente</span></td>
                                     @endif
-                                            
+
                                             <td>
                                             <button title="Voir Détails" type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                                data-bs-target="#detailDemandeModal{{ $offre->id }}">
@@ -56,7 +56,7 @@
                                                             </div>
                                                             <div class="modal-body bg-light">
                                                                 <div class="card">
-                                                                    
+
                                                                     <div class="card-body bg-light">
                                                                         <div class="row">
                                                                              <!-- Agence Accréditée -->
@@ -75,7 +75,7 @@
                                                                                     <input type="text" value="{{ $offre->agence->user->email }}" class="form-control" readonly>
                                                                                 </div>
                                                                             </div>
-                                                                            
+
                                                                             <!-- Ville de Départ -->
                                                                             <div class="col-md-6 mb-3">
                                                                                 <label class="form-label"> <strong>Ville de Départ :</strong></label>
@@ -120,7 +120,7 @@
                                                                                                 class="bi bi-geo-alt me-2"></i>Lieu escale <span style="color:red">*</span></th>
                                                                                             <th><i
                                                                                                 class="bi bi-hourglass-split me-2"></i>Durée <span style="color:red">*</span></th>
-                                                                                           
+
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -132,15 +132,15 @@
                                                                                             <td>
                                                                                                 <input type="text" value="{{ $itineraire->dureeEscale }}" class="form-control" readonly>
                                                                                             </td>
-                                                                                            
+
                                                                                         </tr>
                                                                                         @endforeach
                                                                                     </tbody>
-                                                                                 
+
                                                                                 </table>
                                                                             </div>
                                                                             @endif
-                                                                           
+
                                                                             <!-- Validité de l'Offre -->
                                                                             <div class="col-md-6 mb-3">
                                                                                 <label class="form-label"> <strong>Validité de l'Offre :</strong></label>
@@ -153,7 +153,7 @@
                                                                                 <label class="form-label"> <strong>Compagnie :</strong></label>
                                                                                 <text class="form-control" readonly>{{ $offre->compagnie }}</text>
                                                                             </div>
-                                                                            
+
                                                                             @if($offre->document)
                                                                             <div class="col-12 mb-3">
                                                                                 <table class="table datatable table-bordered table-striped datatable-table">
@@ -166,7 +166,7 @@
                                                                                                 class="bi bi-file-earmark-text me-2"></i>Libelle <span style="color:red">*</span></th>
                                                                                             <th><i
                                                                                                 class="bi bi-file-earmark-arrow-down me-2"></i>Fichier <span style="color:red">*</span></th>
-                                                                                           
+
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -176,18 +176,18 @@
                                                                                                 <input type="text" value="{{ $document->libelle}}" class="form-control" readonly>
                                                                                             </td>
                                                                                             <td>
-                                                                                                
+
                                                                                                 <a href="{{ asset('storage/' . str_replace('public/', '', $document->fichier)) }}"
                                                                                                     class="btn btn-info btn-sm" target="_blank">
                                                                                                     <i class="bi bi-download"></i> Télécharger le document
                                                                                                 </a>
-                                                                                                
+
                                                                                             </td>
-                                                                                           
+
                                                                                         </tr>
                                                                                         @endforeach
                                                                                     </tbody>
-                                                                                 
+
                                                                                 </table>
                                                                             </div>
                                                                             @endif
@@ -200,13 +200,13 @@
                                                                                 <label class="form-label"> <strong>Prix du billet sans Assurance :</strong></label>
                                                                                 <text class="form-control" readonly>{{ $offre->prixBillet.' FCFA' }}</text>
                                                                             </div>
-                                                                            @endif                                                                            
+                                                                            @endif
                                                                             <!-- Observation Fait sur l'offre -->
                                                                             <div class="col-md-6 mb-3">
                                                                                 <label class="form-label"> <strong>Observation Faite sur l'offre :</strong></label>
                                                                                 <textarea class="form-control" readonly>{{ $offre->description }}</textarea>
                                                                             </div>
-                                                                            
+
                                                                             <!-- Prix du Billet -->
                                                                             <div class="col-md-3 offset-1 col-sm-6 col-12">
                                                                                 <label class="form-label"><strong>Prix du Billet :</strong></label>
@@ -236,8 +236,8 @@
                                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#validateModal">
                                                     <i class="bi bi-check-lg"></i> Valider
                                                 </button>
-                                    
-                                    
+
+
                                                 <!-- Modal de validation -->
                                                 <div class="modal fade" id="validateModal" tabindex="-1" aria-labelledby="validateModalLabel"
                                                     aria-hidden="true">
@@ -261,16 +261,16 @@
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times-circle"></i> Annuler</button>
                                                                 </div>
                                                             </form>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
-                                    
+
                                                 <!-- Bouton de rejet déclenche le modal -->
                                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">
                                                     <i class="bi bi-x-lg"></i> Rejeter
                                                 </button>
-                                    
+
                                                 <!-- Modal de rejet -->
                                                 <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel"
                                                     aria-hidden="true">
@@ -294,7 +294,7 @@
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-check-circle"></i> Annuler</button>
                                                                 </div>
                                                             </form>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -302,13 +302,13 @@
                                                 @endcanany
                                                 @if ($offre->etats == "validée" && $offre->PrixTotal == $offreMinPrix->PrixTotal)
                                                 <!-- Bouton de validation déclenche le modal -->
-                                                <button title="Quittance" type="button" class="btn btn-success " data-bs-toggle="modal"><a href="{{ route('quittance', ['uuid' => $offre->id]) }}"> <i class="bi bi-receipt-cutoff"></i></a></button>
+                                                <button title="Quittance"   type="button" class="btn btn-success " data-bs-toggle="modal"><a  target="_blank" href="{{ route('quittance', ['uuid' => $offre->id]) }}"> <i class="bi bi-receipt-cutoff"></i></a></button>
                                                 @endif
-                                               
+
                                             </div>
-                                               
-                                                       
-                                                
+
+
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -319,5 +319,5 @@
                 </div>
             @endif
         </div>
-   
+
 @endsection

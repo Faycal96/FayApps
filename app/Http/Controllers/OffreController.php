@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOffreRequest;
 use App\Http\Requests\UpdateOffreRequest;
+use App\Jobs\ValiderOffreJob;
 use App\Models\DemandeBillet;
 use App\Models\DocumentOffre;
 use App\Models\ItineraireOffre;
@@ -18,7 +19,16 @@ class OffreController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * Pour l'expiration des sessions utilisateurs
      */
+
+     public function __construct()
+     {
+
+         $this->middleware('auth');
+
+     }
 
     //faire une offre de prix pour une demande de billet
 
@@ -83,6 +93,9 @@ class OffreController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     *
+     * Enregistrement d'un offre d'une agence
      */
     public function store(StoreOffreRequest $request)
 {
@@ -109,7 +122,7 @@ class OffreController extends Controller
 
     // Gérer les escales
     if ($request->has('escale') && $request->escale == '1' && $request->has('lieuEscale') && $request->has('dureeEscale')) {
-        $escales = []; 
+        $escales = [];
 
         foreach ($request->lieuEscale as $key => $lieuEscale) {
             $escales[] = [
@@ -125,15 +138,15 @@ class OffreController extends Controller
     // Gérer les documents
     if ($request->has('libelle') && $request->hasFile('fichier')) {
         $documents = [];
-    
+
         foreach ($request->libelle as $key => $libelle) {
             $file = $request->file('fichier')[$key];
-    
+
             // Vérifier si un fichier a été téléchargé
             if ($file && $file->isValid()) {
                 // Stocker le fichier et récupérer le chemin d'accès
                 $filePath = $file->store('public/pdf_files');
-    
+
                 // Ajouter le document à la liste des documents
                 $documents[] = [
                     'libelle' => $libelle,
@@ -142,7 +155,7 @@ class OffreController extends Controller
                 ];
             }
         }
-    
+
         // Insérer les documents dans la base de données
         DocumentOffre::insert($documents);
     }
@@ -193,35 +206,57 @@ class OffreController extends Controller
     {
         //
     }
-    public function valider(Request $request, $offreId)
+
+/**
+ *
+ * TEST DE VALIDATION
+ *
+ * AVEC LA FILE D'ATTENTE
+ */
+
+
+
+public function valider(Request $request, $offreId)
 {
-    $offre = Offre::findOrFail($offreId);
-    $offre->etats = 'validée';
-    $offre->motif = $request->motif;
-    $offre->save();
-
-    Offre::where('demande_id', $offre->demande_id)
-        ->where('id', '!=', $offre->id) // Exclure l'offre actuellement validée
-        ->update(['etats' => 'rejetée']);
-
-    // Générer le PDF
-    $pdf = $this->generatePDF($offre);
-
-    // Récupérer les informations nécessaires pour l'e-mail
-    $offreDetails = [
-        'demandeId' => $offre->demande->code_demande,
-        'prix' => $offre->PrixTotal,
-        'offreId' => $offre->id,
-    ];
-
-    // Trouver l'agence à notifier
-    $agence = $offre->agence->user;
-
-    // Envoyer la notification avec le PDF en pièce jointe
-    $agence->notify(new \App\Notifications\OffreValideeNotification($offreDetails, $pdf));
+    dispatch(new ValiderOffreJob($offreId, $request->motif));
 
     return redirect()->route('demandes.index')->with('success', 'L\'offre a été validée avec succès.');
 }
+
+
+
+
+
+//     public function valider(Request $request, $offreId)
+// {
+//     $offre = Offre::findOrFail($offreId);
+//     $offre->etats = 'validée';
+//     $offre->motif = $request->motif;
+//     $offre->save();
+
+//     Offre::where('demande_id', $offre->demande_id)
+//         ->where('id', '!=', $offre->id) // Exclure l'offre actuellement validée
+//         ->update(['etats' => 'rejetée']);
+
+//     // Générer le PDF
+//     $pdf = $this->generatePDF($offre);
+
+//     // Récupérer les informations nécessaires pour l'e-mail
+//     $offreDetails = [
+//         'demandeId' => $offre->demande->code_demande,
+//         'prix' => $offre->PrixTotal,
+//         'offreId' => $offre->id,
+//     ];
+
+//     // Trouver l'agence à notifier
+//     $agence = $offre->agence->user;
+
+//     // Envoyer la notification avec le PDF en pièce jointe
+//     $agence->notify(new \App\Notifications\OffreValideeNotification($offreDetails, $pdf));
+
+//     return redirect()->route('demandes.index')->with('success', 'L\'offre a été validée avec succès.');
+// }
+
 private function generatePDF($offre)
 {
     $numberToWords = new NumberToWords();
