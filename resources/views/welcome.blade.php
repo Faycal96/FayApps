@@ -221,6 +221,23 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+  
+  <script>
+    $(document).ready(function(){
+        // Appliquer le masque pour le numéro de téléphone
+        $('#telephone').mask('+226 00-00-00-00', {placeholder: "+226 __-__-__-__"});
+
+        // Appliquer le masque pour l'adresse e-mail
+        $('#email').mask('A', {
+            translation: {
+                'A': {pattern: /[\w@\-.+]/, recursive: true}
+            }
+        });
+    });
+</script>
 
 </body>
 

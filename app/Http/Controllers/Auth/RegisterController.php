@@ -57,7 +57,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => 'required|email',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'adressAgence' =>['required', 'string', 'max:255'],
             'numeroIfu' =>['required', 'string', 'max:255'],
@@ -73,19 +73,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $existingUser = User::where('email', $data['email'])->first();
+
+        if ($existingUser) {
+            // Afficher un message d'erreur à l'utilisateur
+            return back()->withErrors(['email' => 'Cette adresse e-mail est déjà utilisée. Veuillez en choisir une autre.'])->withInput();
+        }
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'telephone' =>$data['telephone'],
             'password' => Hash::make($data['password']),
         ]);
+    
 
-        if (!$user) {
-            return redirect()->back()->withInput()->withErrors(['error' => 'Erreur lors de la création de l\'utilisateur.']);
-        }
-
+        
         $user['typeUtilisateur'] = "Agence";
         $user['name'] = $data['name'];
+        
 
         //  dd($user['name']);
 

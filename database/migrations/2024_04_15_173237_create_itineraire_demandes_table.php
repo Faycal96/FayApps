@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('itineraire_demandes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('demande_billet_id')->constrained()->onDelete('cascade');
-            $table->string('lieuEscale');
-            $table->string('dureeEscale');
+            $table->string('lieuEscale')->nullable();
+            $table->string('dureeEscale')->nullable();
             $table->timestamps();
         });
     }

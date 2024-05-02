@@ -191,8 +191,13 @@
                                                 <div class="input-group">
                                                     {{-- <span class="input-group-text"><i
                                                             class="fas fa-file-alt"></i></span> --}}
+<<<<<<< HEAD
                                                     <input type="number" name="nombrePassager"
                                                         wire:model='nombrePassager' class="form-control" required>
+=======
+                                                    <input type="number" name="nombrePassager"required
+                                                        wire:model='nombrePassager' class="form-control">
+>>>>>>> e5019873a88aa51fd322a1e41291c3171ec91a2b
                                                 </div>
                                             </div>
                                             <!-- Lieu de Départ avec icône -->
@@ -249,25 +254,25 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 form-group">
-                                                <label>Date de depart <sup class="text-danger">*</sup></label>
+                                                <label>Date de départ <sup class="text-danger">*</sup></label>
                                                 <div class="input-group">
-                                                    {{-- <span class="input-group-text"><i
-                                                            class="fas fa-calendar-alt"></i></span> --}}
-                                                    <input type="date" name="dateDepart" class="form-control"
-                                                        value="{{ old('dateDepart') }}" autocomplete="off">
+                                                    <input type="date" name="dateDepart" id="dateDepart" class="form-control"
+                                                           value="{{ old('dateDepart') }}" autocomplete="off" required
+                                                           min="{{ \Carbon\Carbon::now()->toDateString() }}">
                                                 </div>
                                             </div>
-
+                                        
                                             <div class="col-md-6 form-group">
                                                 <label>Date de retour <sup class="text-danger">*</sup></label>
                                                 <div class="input-group">
-                                                    {{-- <span class="input-group-text"><i
-                                                            class="fas fa-calendar-check"></i></span> --}}
-                                                    <input type="date" name="dateArrivee" class="form-control "
-                                                        value="{{ old('dateArrivee') }}" autocomplete="off">
+                                                    <input type="date" name="dateArrivee" class="form-control"
+                                                           value="{{ old('dateArrivee') }}" autocomplete="off" required
+                                                           min="{{ \Carbon\Carbon::now()->toDateString() }}"
+                                                           oninput="dateDepart.min = this.value">
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                         <div class="row">
 
                                             <div class="col-md-6 form-group">
@@ -320,7 +325,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-check">
-                                                            <input type="hidden" name="escale" value="1"> <!-- Valeur par défaut si la case n'est pas cochée -->
+                                                            <input type="hidden" name="escale" value="0"> <!-- Valeur par défaut si la case n'est pas cochée -->
                                                             <input type="radio" name="escale" id="escale" class="form-check-input escale-trigger" value="1">
                                                             <label class="form-check-label" for="escale">Oui</label>
                                                             <span style="margin-right: 25px;"></span> <!-- Espacement entre les labels -->
@@ -360,7 +365,11 @@
                                                     <!-- Champs pour la première escale -->
                                                     <tr class="escale-field" id="escaleField1">
                                                         <td>
+<<<<<<< HEAD
                                                             <select name="lieuEscale[]" id="lieuEscale1"  class="form-control lieuEscale select2bs4 custom-select" autocomplete="off">
+=======
+                                                            <select name="lieuEscale[]" id="lieuEscale1"  class="form-control lieuEscale" autocomplete="off" >
+>>>>>>> e5019873a88aa51fd322a1e41291c3171ec91a2b
                                                                 <option value="">Veuillez sélectionner une Ville</option>
                                                                 @foreach ($cities as $city)
                                                                     <option value="{{ $city->city }}">{{ $city->city.' - '.$city->country }}</option>
@@ -381,7 +390,7 @@
                                                             {{-- <button type="button" id="addEscale" class="btn btn-primary" style="display: none;">Ajouter une escale</button> --}}
                                                             <a class="btn btn-default" id="addEscale" style="display: none">
                                                                 <i class="fa fa-plus-circle text-success"></i>
-                                                                <span>Ajouter un escale </span>
+                                                                <span>Ajouter une escale </span>
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -417,161 +426,7 @@
                     @endcanany
 
 
-                    {{-- Modal pour la création d'une nouvelle demande --}}
-                    <div class="modal fade" id="newDemandeModal" tabindex="-1" aria-labelledby="newDemandeModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header bg-gray-dark text-white">
-                                    <h5 class="modal-title" id="newDemandeModalLabel">Faire une nouvelle demande
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <form method="POST" action="{{ route('demandes.store') }}">
-                                    @csrf
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-6 form-group">
-                                                <label>Lieu de Départ <sup class="text-danger">*</sup></label>
-                                                <div class="input-group">
-                                                    {{-- <div class="input-group-prepend custom-prepend inline">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-map-marker-alt"></i>
-                                                            <!-- Icône FontAwesome -->
-                                                        </span>
-                                                    </div> --}}
-
-                                                    <select wire:model='lieuDepart' name="lieuDepart" required
-                                                        class="form-control select2bs4 custom-select"
-                                                        value="{{ old('lieuDepart') }}" autocomplete="off"
-                                                        style="width: 100%;">
-                                                        <option value="">Veuillez sélectionner une Ville</option>
-                                                        @foreach ($cities as $city)
-                                                        <option>{{ $city->city }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 form-group">
-                                                <label>Numero Ordre de Mission:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text"><i
-                                                            class="fas fa-file-alt"></i></span>
-                                                    <input type="text" name="numeroOrdreMission" class="form-control">
-                                                </div>
-                                            </div>
-                                            <!-- Lieu de Départ avec icône -->
-                                            <div class="col-md-6 form-group">
-                                                <label>Lieu Départ <sup class="text-danger">*</sup></label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-map-marker-alt"></i>
-                                                            <!-- Icône FontAwesome -->
-                                                        </span>
-                                                    </div>
-                                                    <select name="lieuDepart" required
-                                                        class="form-control custom-select">
-                                                        @foreach ($cities as $city)
-                                                        <option value="{{ $city->city }}">{{ $city->city }} - {{
-                                                            $city->country }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="row">
-
-                                            <!-- Lieu d'Arrivée avec icône -->
-                                            <div class="col-md-6 form-group">
-                                                <label>Lieu Arrivée <sup class="text-danger">*</sup></label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-map-marker-alt"></i>
-                                                            <!-- Icône FontAwesome -->
-                                                        </span>
-                                                    </div>
-                                                    <select name="lieuArrivee" required
-                                                        class="form-control custom-select">
-                                                        @foreach ($cities as $city)
-                                                        <option value="{{ $city->city }}">{{ $city->city }} - {{
-                                                            $city->country }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 form-group">
-                                                <label>Date de depart:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text"><i
-                                                            class="fas fa-calendar-alt"></i></span>
-                                                    <input type="date" name="dateDepart" required class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 form-group">
-                                                <label>Date de retour:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text"><i
-                                                            class="fas fa-calendar-check"></i></span>
-                                                    <input type="date" required name="dateArrivee" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 form-group">
-                                                <label>Delai de Reception:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                                                    <input type="text" name="duree" class="form-control" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label>Classe du Billet <sup class="text-danger">*</sup></label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fas fa-plane"></i>
-                                                        <!-- Icône FontAwesome pour la classe du billet -->
-                                                    </span>
-                                                </div>
-                                                <select name="classe_billet" class="form-control custom-select"
-                                                    required>
-                                                    <option value="economique">Économique</option>
-                                                    <option value="affaire">Affaire</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-12 form-group">
-                                                <label>Description du besoin:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text"><i
-                                                            class="fas fa-align-left"></i></span>
-                                                    <textarea name="description" class="form-control" required
-                                                        placeholder="Merci de detailler vos besoins en specifiant votre compagnie de choix, si vous voulez des escales, et d'autres informations pertinentes "></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Annuler</button>
-                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
+                  
 
 
                     <table id="example1" class="table table-bordered table-striped">
@@ -602,8 +457,8 @@
                                 <td>{{ $demande->lieuArrivee }}</td>
 
 
-                                <td>{{ \Carbon\Carbon::parse($demande->dateDepart)->format('d M Y ') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($demande->dateArrivee)->format('d M Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($demande->dateDepart)->locale('fr')->isoFormat('D MMMM YYYY') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($demande->dateArrivee)->locale('fr')->isoFormat('D MMMM YYYY') }}</td>
 
                                 @if ($demande->etat ==1)
 

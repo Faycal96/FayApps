@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('itineraire_offres', function (Blueprint $table) {
             $table->id();
             $table->foreignId('offre_id')->constrained()->onDelete('cascade');
-            $table->string('lieuEscale');
-            $table->string('dureeEscale');
+            $table->string('lieuEscale')->nullable();
+            $table->string('dureeEscale')->nullable();
             $table->timestamps();
         });
     }

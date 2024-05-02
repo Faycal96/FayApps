@@ -40,7 +40,15 @@ class RegisterDafController extends Controller
             // 'typeUtilisateur' =>'required|string|max:255',
             'email' => 'required|email',
             'password' => 'required|string|min:8|confirmed',
+            
+            
         ]);
+        $existingUser = User::where('email', $request->email)->first();
+
+        if ($existingUser) {
+            // Afficher un message d'erreur à l'utilisateur
+            return back()->withErrors(['email' => 'Cette adresse e-mail est déjà utilisée. Veuillez en choisir une autre.'])->withInput();
+        }
 
         // Créez un nouvel utilisateur
         $user = User::create([

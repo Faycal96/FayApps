@@ -10,6 +10,15 @@
                 <div class="card-header text-center">  <sup class="text-danger">les champs precédés d'étoile rouge sont obligatoires</sup> </div>
 
                 <div class="card-body">
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('storeDaf') }}">
                         @csrf
 
@@ -40,6 +49,7 @@
                                 @error('prenom')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
+                                    
                                 </span>
                                 @enderror
                             </div>
@@ -114,7 +124,7 @@
 
                         <!-- Email -->
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Addresse Email') }} <sup class="text-danger">*</sup></label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Adresse Email') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
@@ -127,6 +137,7 @@
                                 @enderror
                             </div>
                         </div>
+
 
                         <!-- Password -->
                         <div class="row mb-3">
@@ -170,24 +181,65 @@
     </div>
 </div>
 
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('password-confirm');
+        const passwordError = document.getElementById('passwordError');
+        const submitButton = document.querySelector('button[type="submit"]');
 
-        passwordInput.addEventListener('input', function() {
+        // Fonction de validation du mot de passe
+        function validatePassword() {
             const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
 
+            // Réinitialiser les classes d'erreur
+            passwordInput.classList.remove('is-invalid');
+            confirmPasswordInput.classList.remove('is-invalid');
+
+            // Vérifier la longueur du mot de passe
             if (password.length < 8) {
-                // Afficher un message d'erreur
-                document.getElementById('passwordError').innerText = 'Le mot de passe doit comporter au moins 8 caractères.';
-                passwordInput.classList.add('is-invalid'); // Ajouter la classe 'is-invalid' pour indiquer une erreur
+                // Afficher un message d'erreur si le mot de passe est trop court
+                passwordError.innerText = 'Le mot de passe doit comporter au moins 8 caractères.';
+                passwordInput.classList.add('is-invalid');
+                confirmPasswordInput.classList.add('is-invalid');
+                disableSubmitButton();
+            } else if (password !== confirmPassword) {
+                // Afficher un message d'erreur si les mots de passe ne correspondent pas
+                passwordError.innerText = 'Les mots de passe ne correspondent pas.';
+                passwordInput.classList.add('is-invalid');
+                confirmPasswordInput.classList.add('is-invalid');
+                disableSubmitButton();
             } else {
-                // Effacer le message d'erreur
-                document.getElementById('passwordError').innerText = '';
-                passwordInput.classList.remove('is-invalid'); // Supprimer la classe 'is-invalid'
+                // Effacer le message d'erreur si les conditions sont remplies
+                passwordError.innerText = '';
+                enableSubmitButton();
             }
-        });
+        }
+
+        // Fonction pour désactiver le bouton "Enregistrer"
+        function disableSubmitButton() {
+            submitButton.disabled = true;
+        }
+
+        // Fonction pour activer le bouton "Enregistrer"
+        function enableSubmitButton() {
+            submitButton.disabled = false;
+        }
+
+        // Écouter les événements input sur les champs de mot de passe
+        passwordInput.addEventListener('input', validatePassword);
+        confirmPasswordInput.addEventListener('input', validatePassword);
+
+        // Exécuter la validation initiale
+        validatePassword();
     });
 </script>
+
+
+
+
+
 
 @endsection
