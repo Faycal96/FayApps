@@ -216,46 +216,46 @@ class OffreController extends Controller
 
 
 
-public function valider(Request $request, $offreId)
-{
-    dispatch(new ValiderOffreJob($offreId, $request->motif));
-
-    return redirect()->route('demandes.index')->with('success', 'L\'offre a été validée avec succès.');
-}
-
-
-
-
-
-//     public function valider(Request $request, $offreId)
+// public function valider(Request $request, $offreId)
 // {
-//     $offre = Offre::findOrFail($offreId);
-//     $offre->etats = 'validée';
-//     $offre->motif = $request->motif;
-//     $offre->save();
-
-//     Offre::where('demande_id', $offre->demande_id)
-//         ->where('id', '!=', $offre->id) // Exclure l'offre actuellement validée
-//         ->update(['etats' => 'rejetée']);
-
-//     // Générer le PDF
-//     $pdf = $this->generatePDF($offre);
-
-//     // Récupérer les informations nécessaires pour l'e-mail
-//     $offreDetails = [
-//         'demandeId' => $offre->demande->code_demande,
-//         'prix' => $offre->PrixTotal,
-//         'offreId' => $offre->id,
-//     ];
-
-//     // Trouver l'agence à notifier
-//     $agence = $offre->agence->user;
-
-//     // Envoyer la notification avec le PDF en pièce jointe
-//     $agence->notify(new \App\Notifications\OffreValideeNotification($offreDetails, $pdf));
+//     dispatch(new ValiderOffreJob($offreId, $request->motif));
 
 //     return redirect()->route('demandes.index')->with('success', 'L\'offre a été validée avec succès.');
 // }
+
+
+
+
+
+    public function valider(Request $request, $offreId)
+{
+    $offre = Offre::findOrFail($offreId);
+    $offre->etats = 'validée';
+    $offre->motif = $request->motif;
+    $offre->save();
+
+    Offre::where('demande_id', $offre->demande_id)
+        ->where('id', '!=', $offre->id) // Exclure l'offre actuellement validée
+        ->update(['etats' => 'rejetée']);
+
+    // Générer le PDF
+    $pdf = $this->generatePDF($offre);
+
+    // Récupérer les informations nécessaires pour l'e-mail
+    $offreDetails = [
+        'demandeId' => $offre->demande->code_demande,
+        'prix' => $offre->PrixTotal,
+        'offreId' => $offre->id,
+    ];
+
+    // Trouver l'agence à notifier
+    $agence = $offre->agence->user;
+
+    // Envoyer la notification avec le PDF en pièce jointe
+    $agence->notify(new \App\Notifications\OffreValideeNotification($offreDetails, $pdf));
+
+    return redirect()->route('demandes.index')->with('success', 'L\'offre a été validée avec succès.');
+}
 
 private function generatePDF($offre)
 {
