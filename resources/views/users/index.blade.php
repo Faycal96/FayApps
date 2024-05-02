@@ -121,11 +121,18 @@
 
                                 <td>
                                     @forelse ($user->getRoleNames() as $role)
-                                    {{ $role }}
+                                        @if($role == 'DAF MINISTERE')
+                                            DMP
+                                        @elseif($role == 'DAF VRAI')
+                                            DGF
+                                        @else
+                                            {{ $role }}
+                                        @endif
                                     @empty
-                                    <span>N/A</span>
+                                        <span>N/A</span>
                                     @endforelse
                                 </td>
+                                
                                 <td>
                                     <!-- Bouton de déclenchement pour le modal de détails -->
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
