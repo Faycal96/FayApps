@@ -191,13 +191,8 @@
                                                 <div class="input-group">
                                                     {{-- <span class="input-group-text"><i
                                                             class="fas fa-file-alt"></i></span> --}}
-<<<<<<< HEAD
-                                                    <input type="number" name="nombrePassager"
-                                                        wire:model='nombrePassager' class="form-control" required>
-=======
                                                     <input type="number" name="nombrePassager"required
                                                         wire:model='nombrePassager' class="form-control">
->>>>>>> e5019873a88aa51fd322a1e41291c3171ec91a2b
                                                 </div>
                                             </div>
                                             <!-- Lieu de Départ avec icône -->
@@ -261,7 +256,7 @@
                                                            min="{{ \Carbon\Carbon::now()->toDateString() }}">
                                                 </div>
                                             </div>
-                                        
+
                                             <div class="col-md-6 form-group">
                                                 <label>Date de retour <sup class="text-danger">*</sup></label>
                                                 <div class="input-group">
@@ -272,7 +267,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row">
 
                                             <div class="col-md-6 form-group">
@@ -365,11 +360,7 @@
                                                     <!-- Champs pour la première escale -->
                                                     <tr class="escale-field" id="escaleField1">
                                                         <td>
-<<<<<<< HEAD
-                                                            <select name="lieuEscale[]" id="lieuEscale1"  class="form-control lieuEscale select2bs4 custom-select" autocomplete="off">
-=======
                                                             <select name="lieuEscale[]" id="lieuEscale1"  class="form-control lieuEscale" autocomplete="off" >
->>>>>>> e5019873a88aa51fd322a1e41291c3171ec91a2b
                                                                 <option value="">Veuillez sélectionner une Ville</option>
                                                                 @foreach ($cities as $city)
                                                                     <option value="{{ $city->city }}">{{ $city->city.' - '.$city->country }}</option>
@@ -426,7 +417,7 @@
                     @endcanany
 
 
-                  
+
 
 
                     <table id="example1" class="table table-bordered table-striped">

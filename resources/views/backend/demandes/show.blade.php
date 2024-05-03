@@ -302,11 +302,7 @@
                                                 @endcanany
                                                 @if ($offre->etats == "validée" && $offre->PrixTotal == $offreMinPrix->PrixTotal)
                                                 <!-- Bouton de validation déclenche le modal -->
-<<<<<<< HEAD
-                                                <button title="Quittance"   type="button" class="btn btn-success " data-bs-toggle="modal"><a  target="_blank" href="{{ route('quittance', ['uuid' => $offre->id]) }}"> <i class="bi bi-receipt-cutoff"></i></a></button>
-=======
                                                 <button title="Quittance" type="button" target="blank" class="btn btn-success " data-bs-toggle="modal"><a href="{{ route('quittance', ['uuid' => $offre->id]) }}"> <i class="bi bi-receipt-cutoff"></i></a></button>
->>>>>>> e5019873a88aa51fd322a1e41291c3171ec91a2b
                                                 @endif
 
                                             </div>
