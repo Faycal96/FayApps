@@ -18,7 +18,7 @@
                                 <thead>
                                     <tr>
                                         <th>Code Offre</th>
-                                        <th>Agence</th>
+                                        {{-- <th>Agence</th> --}}
                                         <th>Prix</th>
                                         <th>Statut</th>
                                         <th>Actions</th>
@@ -28,16 +28,16 @@
                                     @foreach($offres as $offre)
                                         <tr>
                                             <td>{{ $offre->code_offre }}</td>
-                                            <td>{{ $offre->agence->nomAgence }}</td>
+                                            {{-- <td>{{ $offre->agence->nomAgence }}</td> --}}
                                             <td>{{ $offre->PrixTotal }} FCFA</td>
 
                                                 @if ($offre->etats == "validée")
                                         <td> <span class="badge bg-success">Retenue</span></td>
-                                    @elseif ($offre->etats == "rejetée")
-                                        <td><span class="badge bg-danger">Non retenue</span></td>
-                                        @else
-                                        <td><span class="badge bg-warning">En attente</span></td>
-                                    @endif
+                                            @elseif ($offre->etats == "rejetée")
+                                                <td><span class="badge bg-danger">Non retenue</span></td>
+                                                @else
+                                                <td><span class="badge bg-warning">En attente</span></td>
+                                            @endif
 
                                             <td>
                                             <button title="Voir Détails" type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"

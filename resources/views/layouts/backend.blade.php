@@ -28,6 +28,9 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
+
+
+
     <!-- Tempusdominus Bootstrap 4 -->
 
     <link href="{{ asset('backend/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}"
@@ -91,10 +94,10 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
+                    <a href="{{ route('backend.index') }}" class="nav-link">Accueil</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    {{-- <a href="#" class="nav-link">Contact</a> --}}
                 </li>
             </ul>
 
@@ -218,7 +221,7 @@
 
                         @canany(['create-demande-billet','propose-demande-billet'])
                         <li class="nav-item">
-                            <a href="{{ route('demandes.index') }}" class="nav-link">
+                            <a href="{{ route('demandes.index') }}" class="nav-link  ">
                                 <i class="nav-icon far fa-calendar-alt"></i>
                                 <p>
                                     Gestion des demandes
@@ -395,7 +398,12 @@
     {{-- <script src="{{ asset('backend/assets/plugins') }}/to/select2.min.js"></script> --}}
     <!-- Insérer avant la fermeture de la balise </body> -->
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> --}}
+
+
+
+
+
 
 
 

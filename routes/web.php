@@ -32,7 +32,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/admin', [HomeController::class, 'index'])->name('backend.index');
+Route::get('/admin', [DemandeBilletController::class, 'index'])->name('backend.index');
 //Route::get('/demande', [DemandeBilletController::class, 'demande'])->name('backend.demande');
 Route::post('/users/{user}/validate', [UserController::class, 'valider'])->name('users.activate');
 //Route::get('/offre', [OffreController::class, 'offre'])->name('backend.offre');

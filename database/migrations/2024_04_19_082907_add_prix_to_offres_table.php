@@ -23,6 +23,7 @@ return new class extends Migration
     {
         Schema::table('offres', function (Blueprint $table) {
             //
+            $table->dropColumn('PrixTotal');
         });
     }
 };
