@@ -8,13 +8,31 @@
                     Il n'y a pas eu d'offres satisfaisantes pour cette demande, veuillez faire une autre demande.
                 </div>
             @else
+            <p>
+                @if(session('success'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span class="alert-heading">{{session('success')}}</span>
+
+            </div>
+
+            <script>
+                setTimeout(function() {
+                        document.querySelector('.alert.alert-success').style.display = 'none';
+                    }, 5000); // Le message flash disparaîtra après 5 secondes (5000 millisecondes)
+            </script>
+            @endif
+            </p>
                 <div class="card">
+
                     <div class="card-header bg-gray-dark text-white">
                         <h3 class="card-title">Toutes les offres pour cette demande</h3>
                     </div>
                     <div class="card-body bg-light">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table id="example" class="table ">
                                 <thead>
                                     <tr>
                                         <th>Code Offre</th>
@@ -50,7 +68,7 @@
                                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header bg-gray-dark text-white">
-                                                                <h5 class="modal-title" id="detailDemandeModalLabel{{ $offre->id }}">Détails de la Demande</h5>
+                                                                <h5 class="modal-title" id="detailDemandeModalLabel{{ $offre->id }}">Détails de la meilleure Offre</h5>
                                                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                                                     aria-label="Close"></button>
                                                             </div>
@@ -60,7 +78,7 @@
                                                                     <div class="card-body bg-light">
                                                                         <div class="row">
                                                                              <!-- Agence Accréditée -->
-                                                                             <div class="col-md-6 mb-3">
+                                                                             {{-- <div class="col-md-6 mb-3">
                                                                                 <label class="form-label"> <strong>Agence Accréditée :</strong></label>
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-text"><i class="fas fa-building"></i></span>
@@ -74,7 +92,7 @@
                                                                                     <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                                                                     <input type="text" value="{{ $offre->agence->user->email }}" class="form-control" readonly>
                                                                                 </div>
-                                                                            </div>
+                                                                            </div> --}}
 
                                                                             <!-- Ville de Départ -->
                                                                             <div class="col-md-6 mb-3">
@@ -201,25 +219,55 @@
                                                                                 <text class="form-control" readonly>{{ $offre->prixBillet.' FCFA' }}</text>
                                                                             </div>
                                                                             @endif
-                                                                            <!-- Observation Fait sur l'offre -->
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label class="form-label"> <strong>Observation Faite sur l'offre :</strong></label>
-                                                                                <textarea class="form-control" readonly>{{ $offre->description }}</textarea>
-                                                                            </div>
 
-                                                                            <!-- Prix du Billet -->
-                                                                            <div class="col-md-3 offset-1 col-sm-6 col-12">
-                                                                                <label class="form-label"><strong>Prix du Billet :</strong></label>
-                                                                                <div class="info-box">
-                                                                                    <span class="info-box-icon bg-warning"><i class="far fa-money-bill-alt"></i></span>
-                                                                                    <div class="info-box-content">
-                                                                                        <span class="info-box-text">Prix</span>
-                                                                                        <span class="info-box-number" >{{ $offre->PrixTotal.' FCFA' }}</span>
+
+                                                                                {{-- <div class="col-md-6"> --}}
+                                                                                    <!-- Observation Fait sur l'offre -->
+                                                                                    <div class="col-md-6 mb-3">
+                                                                                        <label class="form-label"> <strong>Observation Faite sur l'offre :</strong></label>
+                                                                                        <textarea class="form-control" readonly>{{ $offre->description }}</textarea>
                                                                                     </div>
-                                                                                    <!-- /.info-box-content -->
+                                                                                {{-- </div> --}}
+
+                                                                                <div class="col-md-3">
+                                                                                      <!-- Prix du Billet -->
+                                                                                    <div class=" ">
+                                                                                        <label class="form-label"><strong>Prix du Billet :</strong></label>
+                                                                                        <div class="info-box">
+                                                                                            <span class="info-box-icon bg-warning"><i class="far fa-money-bill-alt"></i></span>
+                                                                                            <div class="info-box-content">
+                                                                                                <span class="info-box-text">Prix</span>
+                                                                                                <span class="info-box-number" >{{ $offre->PrixTotal.' FCFA' }}</span>
+                                                                                            </div>
+                                                                                            <!-- /.info-box-content -->
+                                                                                        </div>
+                                                                                        <!-- /.info-box -->
+                                                                                    </div>
                                                                                 </div>
-                                                                                <!-- /.info-box -->
-                                                                            </div>
+
+                                                                                <div class="col-md-3">
+
+                                                                                    <div class=" ">
+                                                                                        <label class="form-label"><strong>Prix s'il ya pénalité :</strong></label>
+                                                                                        <div class="info-box">
+                                                                                            <span class="info-box-icon bg-warning"><i class="far fa-money-bill-alt"></i></span>
+                                                                                            <div class="info-box-content">
+                                                                                                <span class="info-box-text">Prix</span>
+                                                                                                <span class="info-box-number" >{{$offre->PrixTotal + $offre->prixpenalite.' FCFA' }}</span>
+                                                                                            </div>
+                                                                                            <!-- /.info-box-content -->
+                                                                                        </div>
+                                                                                        <!-- /.info-box -->
+                                                                                    </div>
+
+                                                                                </div>
+
+
+
+
+
+
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -251,7 +299,7 @@
                                                                 @csrf
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
-                                                                        <label for="motif" class="form-label">Motif de validation</label>
+                                                                        <label for="motif" class="form-label">Motif de validation <sup class="text-danger">*</sup> </label>
                                                                         <textarea class="form-control" id="motif" name="motif" required></textarea>
                                                                     </div>
                                                                 </div>
@@ -284,8 +332,8 @@
                                                                 @csrf
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
-                                                                        <label for="motifRejet" class="form-label">Motif du rejet</label>
-                                                                        <textarea class="form-control" id="motifRejet" name="motifRejet" required></textarea>
+                                                                        <label for="motifRejet" class="form-label">Motif du rejet <sup class="text-danger">*</sup></label>
+                                                                        <textarea class="form-control" id="motifRejet" name="motif" required></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -302,7 +350,44 @@
                                                 @endcanany
                                                 @if ($offre->etats == "validée" && $offre->PrixTotal == $offreMinPrix->PrixTotal)
                                                 <!-- Bouton de validation déclenche le modal -->
-                                                <button title="Quittance" type="button" target="blank" class="btn btn-success " data-bs-toggle="modal"><a href="{{ route('quittance', ['uuid' => $offre->id]) }}"> <i class="bi bi-receipt-cutoff"></i></a></button>
+                                                <button title="Joindre participants" type="file"  data-toggle="modal" data-target="#modal-default" class="btn btn-warning text-white"><i class="bi bi-file-pdf"></i></button>
+                                                <button title="Quittance" type="button"  class="btn btn-success" data-bs-toggle="modal"><a target="_blank" class=" text-white " href="{{ route('quittance', ['uuid' => $offre->id]) }}"> <i class="bi bi-receipt-cutoff"></i></a></button>
+
+                                                <a class="btn btn-success text-white" title="Téléchargé le routing " href="{{ Storage::url($offre->file_routing) }}" target="_blank"><b><i class=" bi bi-download"></i>
+                                                     </b>
+                                                </a>
+
+
+
+                                                {{-- Modal pour la liste des participants --}}
+                                                <div class="modal fade" id="modal-default">
+                                                    <div class="modal-dialog">
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <h4 class="modal-title">Joindre la liste des Participants</h4>
+                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                          </button>
+                                                        </div>
+                                                        <form  action="{{ route('upload.participants', ['id' =>$offre->id, 'currentStatus' => $offre->etats ] ) }}" method="POST" enctype="multipart/form-data">
+                                                            @csrf
+                                                            <div class="modal-body">
+                                                                <p>Liste des Participants </p>
+                                                                <input name="participants" type="file" class="form-control border-primary">
+                                                            </div>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-warning" data-dismiss="modal">Fermer</button>
+                                                                <button type="submit" class="btn btn-success">Joindre</button>
+                                                            </div>
+                                                        </form>
+                                                      </div>
+                                                      <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                  </div>
+                                                  <!-- /.modal -->
+
+
                                                 @endif
 
                                             </div>
@@ -321,3 +406,5 @@
         </div>
 
 @endsection
+
+

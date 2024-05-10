@@ -238,7 +238,8 @@
                                                     <input type="date" name="dateDepart" id="dateDepart"
                                                         class="form-control border-primary"
                                                         value="{{ old('dateDepart') }}" autocomplete="off" required
-                                                        min="{{ \Carbon\Carbon::now()->toDateString() }}">
+                                                        min="{{ \Carbon\Carbon::now()->toDateString() }}"
+                                                        oninput="dateArrivee.min = this.value">
                                                 </div>
                                             </div>
 
@@ -248,8 +249,7 @@
                                                     <input type="date" name="dateArrivee"
                                                         class="form-control border-primary"
                                                         value="{{ old('dateArrivee') }}" autocomplete="off" required
-                                                        min="{{ \Carbon\Carbon::now()->toDateString() }}"
-                                                        oninput="dateDepart.min = this.value">
+                                                        min="{{ \Carbon\Carbon::now()->toDateString() }}" >
                                                 </div>
                                             </div>
                                         </div>
@@ -307,12 +307,13 @@
                                                 <label for="sourceFinancement">l'agrèment<sup
                                                         class="text-danger">*</sup></label>
                                                 <select name="type_agrement" required
-                                                    class="form-control border-primary custom-select @error('#') is-invalid @enderror"
-                                                    value="{{ old('#') }}" autocomplete="off">
-                                                    <option value="">Veuillez Choisir l'agrement
+                                                    class="form-control border-primary custom-select @error('type_agrement') is-invalid @enderror"
+                                                    value="{{ old('type_agrement') }}" autocomplete="off">
+                                                    <option value="">Veuillez Choisir l'agrèment
                                                     </option>
-                                                    <option value="#">Agrement 1</option>
-                                                    <option value="#">Agrement 2</option>
+                                                    <option value="IATA">IATA</option>
+                                                    <option value="GO Lite">GO Lite</option>
+                                                    <option value="Go Standard">Go Standard</option>
                                                 </select>
                                             </div>
 
@@ -462,8 +463,6 @@
                         </div>
                     </div>
                     @endcanany
-
-
 
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -699,6 +698,7 @@
                                         <i class="bi bi-pencil-square"></i>
 
                                     </button>
+                                    {{-- edition d'une demande --}}
                                     <div class="modal fade" id="modifDemandeModal{{ $demande->id }}" tabindex="-1"
                                         aria-labelledby="detailDemandeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -881,7 +881,7 @@
                                     @canany(['propose-demande-billet'])
                                     <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
                                         data-bs-target="#activateOffreModal{{ $demande->id }}">
-                                        <i class="bi bi-toggle-on"></i> Faire une offre
+                                        <i class="bi bi-toggle-on"></i> Proposer offre
                                     </button>
                                     @endcanany
                                     @endif
@@ -893,9 +893,11 @@
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h2 class="modal-title"
-                                                        id="activateOffreModalLabel{{ $demande->id }}">
-                                                        Je Propose mon offre</h2>
+
+                                                        <h2 class="modal-title"
+                                                            id="activateOffreModalLabel{{ $demande->id }}">
+                                                            Je Propose mon offre</h2>
+
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -980,6 +982,42 @@
                                                                 </div>
 
 
+
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                        <div class="form-group m-auto">
+                                                                            <label>Duree de Voyage en Jours:</label>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text"><i
+                                                                                            class="fas fa-map-marker-alt"></i></span>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                    value="{{ $demande->dureevoyage }}"
+                                                                                    class="form-control" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Lieu d'arrivée -->
+                                                                    <div class="col-6">
+                                                                        <div class="form-group m-auto">
+                                                                            <label>Nombre d'escale souhaités</label>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text"><i
+                                                                                            class="fas fa-map-marker-alt"></i></span>
+                                                                                </div>
+                                                                                <input type="text"
+                                                                                    value="{{ $demande->nbrescale }}"
+                                                                                    class="form-control" readonly>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div> <br>
+                                                                <hr>
                                                                 <div class="row">
                                                                     <div class="col-6">
                                                                         <div class="form-group  m-auto">
@@ -993,7 +1031,7 @@
                                                                                 </div>
                                                                                 <input type="number" name="prixBillet"
                                                                                     id="prixBillet"
-                                                                                    class="form-control is-valid"
+                                                                                    class="form-control is-valid border-primary"
                                                                                     required>
                                                                             </div>
                                                                         </div>
@@ -1011,7 +1049,7 @@
                                                                                 </div>
                                                                                 <input type="date"
                                                                                     name="dateFinValidite"
-                                                                                    class="form-control"
+                                                                                    class="form-control border-primary"
                                                                                     data-inputmask-alias="datetime"
                                                                                     data-inputmask-inputformat="dd/mm/yyyy"
                                                                                     data-mask required>
@@ -1019,6 +1057,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <br>
+
                                                                 <div class="row">
                                                                     @if($demande->assurance)
                                                                     <div class="col-6">
@@ -1039,19 +1079,7 @@
                                                                         </div>
                                                                     </div>
                                                                     @endif
-                                                                    <script>
-                                                                        document.getElementById('prix').addEventListener('input', function(e) {
-                                                    // Supprime tous les caractères non numériques de la saisie
-                                                    var prix = this.value.replace(/\D/g, '');
 
-                                                    // Ajoute des espaces tous les trois caractères, en commençant par la fin
-                                                    prix = prix.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-
-                                                    // Met à jour la valeur du champ de saisie avec le prix formaté
-                                                    this.value = prix;
-                                                });
-
-                                                                    </script>
 
                                                                     <div class="col-md-6 form-group">
                                                                         <div class="row">
@@ -1295,7 +1323,7 @@
                                                                         {{-- <input id="penalite" type="number"
                                                                             value="15 000 FCFA" class="form-control  "
                                                                             readonly> --}}
-                                                                        <input type="number"
+                                                                        <input type="number" name="prixpenalite"
                                                                             class="form-control border-primary" min="0">
                                                                     </div>
 
@@ -1350,7 +1378,22 @@
                             </tr>
                             @endif
                         </tbody>
+
                         @endforeach
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>Reference</th>
+                                <th>Lieu Depart</th>
+                                <th>Lieu Arrivée</th>
+                                <th>Date Depart</th>
+                                <th>Date Retour</th>
+                                <th>Statut</th>
+                                <th>Timing</th>
+                                <th>Délai</th>
+                                <th>Action</th>
+                            </tr>
+                            </tfoot>
 
                     </table>
                 </div>

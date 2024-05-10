@@ -75,13 +75,30 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
+                    <p>
+                        @if(session('success'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <span class="alert-heading">{{session('success')}}</span>
+
+                    </div>
+
+                    <script>
+                        setTimeout(function() {
+                                document.querySelector('.alert.alert-success').style.display = 'none';
+                            }, 5000); // Le message flash disparaîtra après 5 secondes (5000 millisecondes)
+                    </script>
+                    @endif
+                    </p>
                     <div class="card-header">Liste des Offres</div>
                     <div class="card-body">
 
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Code</th>
+                                    <th>Reference</th>
                                     <th>Prix</th>
                                     <th>Validité</th>
                                     <th>Observation</th>
@@ -102,19 +119,62 @@
 
                                     <td>{{ $offre->description }}</td>
                                     @if ($offre->etats == "validée")
-                                        <td> <span class="badge bg-success">Validée</span></td>
+                                        <td> <span class="badge bg-success">Validée</span>
+                                        </td>
+
                                     @elseif ($offre->etats == "rejetée")
                                         <td><span class="badge bg-danger">Non retenue</span></td>
                                         @else
                                         <td><span class="badge bg-warning">En attente</span></td>
                                     @endif
 
-
                                     <td>
                                         <!-- Edit Button -->
                                         <button type="button" class="btn btn-sm btn-primary">
                                             <i class="fas fa-eye"></i>
                                         </button>
+
+                                        @if ($offre->etats == "validée")
+                                        <a class="btn btn-success text-white" href="{{ Storage::url($offre->participants) }}" target="_blank"><b><i class=" bi bi-download"></i>
+                                            Télécharger</b>
+                                        </a>
+
+                                        <button title="Joindre le Routing" type="file"  data-toggle="modal" data-target="#modal-default" class="btn btn-warning text-white"><i class="bi bi-file-pdf"></i></button>
+
+                                        @endif
+
+                                        {{-- <a data-toggle="modal" data-target="#" type="button" title="Joindre le Routing"
+                                            class="btn btn-warning">
+                                            <i class="bi bi-upload"></i>
+                                        </a> --}}
+
+                                           {{-- Modal pour la liste des participants --}}
+                                           <div class="modal fade" id="modal-default">
+                                            <div class="modal-dialog">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h4 class="modal-title">Joindre le Routing</h4>
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <form  action="{{ route('upload.routing', ['id' =>$offre->id, 'currentStatus' => $offre->etats ] ) }}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <p>Le Routing </p>
+                                                        <input name="file_routing" type="file" class="form-control border-primary">
+                                                    </div>
+                                                    <div class="modal-footer justify-content-between">
+                                                        <button type="button" class="btn btn-warning" data-dismiss="modal">Fermer</button>
+                                                        <button type="submit" class="btn btn-success">Joindre</button>
+                                                    </div>
+                                                </form>
+                                              </div>
+                                              <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                          </div>
+                                          <!-- /.modal -->
 
 
                                     </td>

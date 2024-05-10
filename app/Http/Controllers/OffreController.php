@@ -49,7 +49,7 @@ class OffreController extends Controller
         }
         //
         return view('backend.offres.index', [
-            'offres' => Offre::latest('id')->paginate(10000000000),
+            'offres' => Offre::orderBy('id', 'desc')->paginate(10000000000),
             'nombreOffres' =>$nombreOffres,
             'nombreOfrresValidees' =>$nombreOfrresValidees,
             'nombreOfrresRejettees' =>$nombreOfrresRejettees,
@@ -269,7 +269,7 @@ private function generatePDF($offre)
     $totalBillet = $prixBillet * $nbrePassager;
     $totalAssurance = $prixAssurance * $nbrePassager;
     $donneQrCode = env('APP_URL')."/quittance/".$offre;
-        $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate($donneQrCode));
+        $qrcode = base64_encode(QrCode::format('svg')->size(255)->errorCorrection('H')->generate($donneQrCode));
         //dd($qrcode);
 
     $data = [
@@ -290,11 +290,125 @@ private function generatePDF($offre)
 
     public function rejeter(Request $request, $offreId)
     {
+        // dd('Bonjour');
+
         $offre = Offre::findOrFail($offreId);
         $offre->etats = 'rejetée'; // Ou tout autre valeur représentant l'état rejeté
-        $offre->motif = $request->motif; // Assurez-vous que le champ existe dans votre base de données
-        $offre->save();
+        $offre->motif = $request->input('motif'); // Assurez-vous que le champ existe dans votre base de données
+        // $offre->motif = $request->motif; // Assurez-vous que le champ existe dans votre base de données
+        // dd($offre->motif);
+
+
+         // Récupérer les informations nécessaires pour l'e-mail
+          $offreDetails = [
+        'demandeId' => $offre->demande->code_demande,
+        'motif' => $offre->motif,
+        'prix' => $offre->PrixTotal,
+        'offreId' => $offre->id,
+    ];
+
+    // dd($offreDetails['motif']);
+
+    $offre->save();
+
+    // dd($offreDetails['motif']);
+            // Trouver l'agence à notifier
+          $agence = $offre->agence->user;
+
+    // Envoyer la notification avec le PDF en pièce jointe
+    $agence->notify(new \App\Notifications\OffreRejetterNotification($offreDetails));
 
         return redirect()->route('demandes.index')->with('error', 'L\'offre a été rejetée.');
     }
+
+
+
+    // pour joindre la liste des participants
+    // public function upload(Request $request)
+    // {
+    //     // Validate the request
+    //     $request->validate([
+    //         'participants' => 'required|file|mimes:csv,txt,xlsx,pdf', // Adjust as needed
+    //     ]);
+
+    //       // Téléchargement du fichier
+    //       $file = $request->file('participants');
+    //       $filePath = $file->store('participants', 'public'); // Stocke le fichier dans le répertoire public/participants
+
+    //       // Créer ou mettre à jour un participant avec le chemin du fichier
+    //       $participant = new Offre();
+    //       $participant->participants = $filePath; // Enregistre le chemin du fichier
+    //       $participant->save(); // Sauvegarde le participant
+
+
+    //     return redirect()->back()->with('success', 'participant joints avec succès !');
+    // }
+
+
+    public function upload($id, $currentStatus, Request $request)
+    {
+
+            // Validate the request
+        $request->validate([
+            'participants' => 'required|file|mimes:csv,txt,xlsx,pdf', // Adjust as needed
+        ]);
+
+        if ($currentStatus == 'validée') {
+            // Obtenir le fichier de la requête
+            $file = $request->file('participants');
+
+            // Stocker le fichier dans le système de fichiers
+            // Vous pouvez utiliser un répertoire unique basé sur l'id, par exemple
+            $filePath = $file->store("participants/{$id}", 'public'); // Stocke le fichier sous 'public/actes/{id}'
+
+            // Mettre à jour le modèle ou enregistrer le chemin du fichier dans la base de données
+            $record = Offre::find($id); // Trouver le modèle correspondant
+            if ($record) {
+                $record->participants = $filePath; // Stocker le chemin du fichier
+                $record->save(); // Sauvegarder les modifications
+            }
+
+            // Retourner un message de succès
+            return redirect()->back()->with('success', "La liste a été joint avec succès !");
+        } else {
+            // Si le statut n'est pas 'validée'
+            return redirect()->back()->with('error', "Opération échouée !");
+        }
+    }
+
+
+
+    ///la jointure du routing de voyage
+
+    public function uploadRouting($id, $currentStatus, Request $request)
+    {
+
+            // Validate the request
+        $request->validate([
+            'file_routing' => 'required|file|mimes:csv,txt,xlsx,pdf', // Adjust as needed
+        ]);
+
+        if ($currentStatus == 'validée') {
+            // Obtenir le fichier de la requête
+            $file = $request->file('file_routing');
+
+            // Stocker le fichier dans le système de fichiers
+            // Vous pouvez utiliser un répertoire unique basé sur l'id, par exemple
+            $filePath = $file->store("file_routing/{$id}", 'public'); // Stocke le fichier sous 'public/actes/{id}'
+
+            // Mettre à jour le modèle ou enregistrer le chemin du fichier dans la base de données
+            $record = Offre::find($id); // Trouver le modèle correspondant
+            if ($record) {
+                $record->file_routing = $filePath; // Stocker le chemin du fichier
+                $record->save(); // Sauvegarder les modifications
+            }
+
+            // Retourner un message de succès
+            return redirect()->back()->with('success', "Le routing a été joint avec succès !");
+        } else {
+            // Si le statut n'est pas 'validée'
+            return redirect()->back()->with('error', "Opération échouée !");
+        }
+    }
+
 }

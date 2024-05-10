@@ -58,6 +58,9 @@ Route::get('/quittance/{uuid}', [QuittanceController::class, 'index'])->name('qu
 Route::post('/ministeres/merge', [MinistereController::class, 'merge'])->name('ministeres.merge');
 Route::post('/structures/merge', [StructureController::class, 'merge'])->name('structures.merge');
 
+// Route::post('/upload/participants', [OffreController::class, 'upload'])->name('upload.participants');
+Route::post('/uploadParticipant/{id}/{currentStatus}', [OffreController::class, 'upload'])->name('upload.participants');
+Route::post('/uploadRouting/{id}/{currentStatus}', [OffreController::class, 'uploadRouting'])->name('upload.routing');
 
 
 // Route::post('registerdaf', [ControllersRegisterDafController::class, 'enregistrer'])->name('storeDaf');

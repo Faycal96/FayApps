@@ -108,7 +108,7 @@ class DemandeBilletController extends Controller
 
         //
         return view('backend.demandes.index', [
-            'demandes' => DemandeBillet::latest('id')->paginate(5),
+            'demandes' => DemandeBillet::latest('id')->paginate(10000000000),
             'offreMinPrix' => $offreMinPrix, // Passez l'offreMinPrix à la vue
             'cities'=> $cities,
             'escales'=> $escales,
@@ -209,7 +209,7 @@ class DemandeBilletController extends Controller
 
             // ***********8}
 
-            return redirect()->route('demandes.index')->with('success', 'Votre demande a été enregistrée.');
+            return redirect()->route('demandes.index')->with('success', 'Votre demande a été créee avec succès !');
 
 
     }

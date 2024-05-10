@@ -10,7 +10,7 @@
                 <div class="inner">
                     <h3>{{ $totalUsers }}</h3>
 
-                    <p>Total des utilisateurs</p> 
+                    <p>Total des utilisateurs</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
@@ -108,7 +108,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->created_at->translatedFormat('d M Y à H:i:s') }}</td>
-                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->name? $user->name : $user->agence->nomAgence }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
 
@@ -132,7 +132,7 @@
                                         <span>N/A</span>
                                     @endforelse
                                 </td>
-                                
+
                                 <td>
                                     <!-- Bouton de déclenchement pour le modal de détails -->
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
@@ -233,8 +233,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer bg-dark-primary">
-                                                    <button type="button" class="btn btn-dark"
+                                                    <button type="button" class="btn btn-warning"
                                                         data-bs-dismiss="modal">Fermer</button>
+
                                                 </div>
                                             </div>
                                         </div>
