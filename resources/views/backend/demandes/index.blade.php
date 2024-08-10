@@ -281,10 +281,25 @@
                                                     <select name="classe_billet" required
                                                         class="form-control custom-select @error('classe_billet') is-invalid @enderror"
                                                         value="{{ old('classe_billet') }}" autocomplete="off">
-                                                        <option value="">Veuillez Choisir la classe su billet
+                                                        <option value="">Veuillez Choisir la classe du billet
                                                         </option>
                                                         <option value="economique">Économique</option>
                                                         <option value="affaire">Affaire</option>
+                                                        <option value="premire_classe">Première Classe</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 form-group">
+                                                <label>Type de Billet <sup class="text-danger">*</sup></label>
+                                                <div class="input-group">
+                                                    <select name="classe_billet" required
+                                                        class="form-control custom-select @error('classe_billet') is-invalid @enderror"
+                                                        value="{{ old('classe_billet') }}" autocomplete="off">
+                                                        <option value="">Veuillez Choisir le type billet
+                                                        </option>
+                                                        <option value="aller">Billet Aller Simple </option>
+                                                        <option value="aller_retour">Billet Aller-Retour</option>
                                                     </select>
                                                 </div>
                                             </div>
