@@ -52,6 +52,17 @@ class User extends Authenticatable
     {
         return $this->hasMany(DemandeBillet::class);
     }
+    use HasFactory, Notifiable;
+
+    public function agency()
+    {
+        return $this->belongsTo(Agency::class);
+    }
+
+    public function pelerins()
+    {
+        return $this->hasMany(Pelerin::class);
+    }
 
 
 

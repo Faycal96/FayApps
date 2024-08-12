@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\DemandeBilletController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MinistereController;
 use App\Http\Controllers\OffreController;
+use App\Http\Controllers\PelerinController;
 use App\Http\Controllers\QuittanceController;
 use App\Http\Controllers\RegisterDafController;
 use App\Http\Controllers\RegisterDafController as ControllersRegisterDafController;
@@ -73,6 +75,8 @@ Route::resources([
     'ministeres' => MinistereController::class,
     'structures' => StructureController::class,
     'source_financement' => SourceFinancementController::class,
+    'pelerins'=> PelerinController::class,
+    'agencies'=> AgencyController::class,
 
 
 ]);

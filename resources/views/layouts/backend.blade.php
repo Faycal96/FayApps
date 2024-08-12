@@ -150,12 +150,13 @@
                 @canany(['create-user', 'edit-user', 'delete-user'])
                 <li><a class="nav-link" href="{{ route('users.index') }}">Gestion des utilisateurs</a></li>
                 @endcanany
-                @canany(['create-demande-billet','propose-demande-billet'])
-                <li><a class="nav-link" href="{{ route('demandes.index') }}">Gestion des demandes</a></li>
+                @canany(['create-user', 'edit-user', 'delete-user'])
+                <li><a class="nav-link" href="{{ route('pelerins.index') }}">Gestion des pelerins</a></li>
                 @endcanany
-                @canany(['propose-demande-billet'])
-                <li><a class="nav-link" href="{{ route('offres.index') }}">Gestion des offres</a></li>
+                @canany(['create-user', 'edit-user', 'delete-user'])
+                <li><a class="nav-link" href="{{ route('agencies.index') }}">Gestion des agences</a></li>
                 @endcanany
+              
 
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -219,28 +220,28 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-                        @canany(['create-demande-billet','propose-demande-billet'])
+                    
+                      
                         <li class="nav-item">
-                            <a href="{{ route('demandes.index') }}" class="nav-link  ">
+                            <a href="{{ route('agencies.index') }}" class="nav-link">
                                 <i class="nav-icon far fa-calendar-alt"></i>
                                 <p>
-                                    Gestion des demandes
-                                    {{-- <span class="badge badge-info right">2</span> --}}
-                                </p>
-                            </a>
-                        </li>
-                        @endcanany
-                        @canany(['propose-demande-billet'])
-                        <li class="nav-item">
-                            <a href="{{ route('offres.index') }}" class="nav-link">
-                                <i class="nav-icon far fa-calendar-alt"></i>
-                                <p>
-                                    Gestion des offres
+                                    Gestion des agences
 
                                 </p>
                             </a>
                         </li>
-                        @endcanany
+
+                        <li class="nav-item">
+                            <a href="{{ route('agencies.index') }}" class="nav-link">
+                                <i class="nav-icon far fa-calendar-alt"></i>
+                                <p>
+                                    Gestion des pelerins
+
+                                </p>
+                            </a>
+                        </li>
+                        
 
 
 
@@ -263,24 +264,7 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('structures.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Gestion des structures
-                                    {{-- <span class="badge badge-info right"> </span> --}}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('source_financement.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Gestion des Sources de financement
-                                    {{-- <span class="badge badge-info right"> </span> --}}
-                                </p>
-                            </a>
-                        </li>
+                       
                         @endcanany
 
 
