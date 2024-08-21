@@ -104,8 +104,25 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('agencies.store') }}" method="POST">
+                                    <form action="{{ route('agencies.store') }}"  method="POST" enctype="multipart/form-data">
                                         @csrf
+                                         <!-- Champ pour uploader la logo -->
+                                         <div class="col-md-6 mb-3">
+                                            <i class="bi bi-camera-fill me-2"></i>
+                                            <label for="logo" class="form-label"><strong>logo (facultatif)</strong></label>
+                                            <input type="file" class="form-control @error('logo') is-invalid @enderror" id="logo" name="logo" accept="image/*" onchange="previewImage(event)">
+                                            @error('logo')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <!-- Prévisualisation de l'image -->
+                                        <div class="col-md-6 mb-3">
+                                            <label><strong>Prévisualisation de la logo</strong></label>
+                                            <div id="image-preview" style="border: 1px solid #ddd; padding: 5px; max-width: 100%; display: none;">
+                                                <img id="image-display" src="" alt="Prévisualisation" style="max-width: 100%; height: auto;" />
+                                            </div>
+                                        </div>
                                         <div class="mb-3">
                                             <label for="name" class="form-label">Nom</label>
                                             <input type="text" class="form-control" id="name" name="name" required>
@@ -152,6 +169,7 @@
                                 <td>{{ $agency->phone_number }}</td>
                                 <td>{{ $agency->email }}</td>
                                 <td>
+                                    
                                     <!-- Bouton de déclenchement pour le modal de modification -->
                                     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editAgencyModal{{ $agency->id }}">
                                         <i class="bi bi-pencil"></i> Modifier
@@ -240,3 +258,14 @@
 </div><!-- /.container-fluid -->
 
 @endsection
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('image-display');
+            output.src = reader.result;
+            document.getElementById('image-preview').style.display = 'block';
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>

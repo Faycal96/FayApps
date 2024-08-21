@@ -35,7 +35,7 @@ class UserController extends Controller
     public function index(): View
     {
         // Récupère tous les utilisateurs et précharge les agences liées
-        $users = User::with('agenceAcredite')->latest('id')->paginate(10000000000);
+        $users = User::with('agency')->latest('id')->paginate(10000000000);
 
         // Calcule les statistiques
         $totalUsers = User::count();

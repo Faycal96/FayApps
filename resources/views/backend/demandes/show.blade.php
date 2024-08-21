@@ -46,7 +46,7 @@
                                     @foreach($offres as $offre)
                                         <tr>
                                             <td>{{ $offre->code_offre }}</td>
-                                            {{-- <td>{{ $offre->agence->nomAgence }}</td> --}}
+                                            {{-- <td>{{ $offre->agence->nomAgence }}</td> --}}  
                                             <td>{{ $offre->PrixTotal }} FCFA</td>
 
                                                 @if ($offre->etats == "validée")

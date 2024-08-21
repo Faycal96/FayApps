@@ -9,7 +9,7 @@ class Agency extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address', 'phone_number', 'email'];
+    protected $fillable = ['name', 'address', 'phone_number', 'email','logo',];
 
     public function users()
     {

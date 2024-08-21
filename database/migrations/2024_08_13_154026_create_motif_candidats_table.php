@@ -9,19 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('agencies', function (Blueprint $table) {
+        Schema::create('motif_candidats', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->decimal('montant', 10, 2); // Montant de l'édition
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('agencies');
+        Schema::dropIfExists('motif_candidats');
     }
 };

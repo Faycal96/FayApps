@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h3 class="text-center mt-3 mb-3">Inscription d'un Agent du ministère</h3>
+            <h3 class="text-center mt-3 mb-3">Creation d'un utilisateur</h3>
             <div class="card">
 
                 <div class="card-header text-center">  <sup class="text-danger">les champs precédés d'étoile rouge sont obligatoires</sup> </div>
@@ -55,21 +55,40 @@
                             </div>
                         </div>
 
-                        <!-- Ministères -->
+                        
+                        
+
+                         <!-- Ministères -->
+                         @if(auth()->user()->hasRole(['Super Admin'])) 
+                        <!-- Pour les super administrateurs -->
                         <div class="row mb-3">
-                            <label for="ministere" class="col-md-4 col-form-label text-md-end">{{ __('Ministère') }} <sup class="text-danger">*</sup></label>
+                            <label for="agence" class="col-md-4 col-form-label text-md-end">{{ __('Agence') }} <sup class="text-danger">*</sup></label>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-building"></i></span>
-                                    <select name="id_m" required class="form-select">
-                                        <option value="">Veuillez choisir un Ministère</option>
-                                        @foreach ($ministeres as $ministere)
-                                        <option value="{{ $ministere->id }}">{{ $ministere->libelleLong }}</option>
+                                    <select name="agency_id" required class="form-select">
+                                        <option value="">Veuillez choisir une agence</option>
+                                        @foreach ($agencies as $agence)
+                                            <option value="{{ $agence->id }}">{{ $agence->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
+                    @else
+                        <!-- Pour les autres utilisateurs, pré-sélectionner leur agence -->
+                        <div class="row mb-3">
+                            <label for="agence" class="col-md-4 col-form-label text-md-end">{{ __('Agence') }} <sup class="text-danger">*</sup></label>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                    <input type="text" class="form-control" value="{{ Auth::user()->agency->name }}" readonly>
+                                    <input type="hidden" name="agency_id" value="{{ Auth::user()->agency->id }}">
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
 
                         <!-- Matricule -->
                         <div class="row mb-3">
@@ -86,22 +105,46 @@
                                 @enderror
                             </div>
                         </div>
+                        @if(auth()->user()->hasRole(['Super Admin'])) 
+                        <!-- Si l'utilisateur est un Super Admin -->
                         <div class="row mb-3">
-                            <label for="roles" class="col-md-4 col-form-label text-md-end text-start">{{ __('Profil') }}<sup class="text-danger">*</label>
-                            <div class="col-md-6">  
+                            <label for="roles" class="col-md-4 col-form-label text-md-end text-start">{{ __('Profil') }}<sup class="text-danger">*</sup></label>
+                            <div class="col-md-6">
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-users"></i></span>         
-                                <select class="form-select @error('roles') is-invalid @enderror" aria-label="Roles" id="roles" name="roles">
-                                    <option value="">Veuillez choisir votre profil</option>
-                                    <option value="DAF MINISTERE" {{ old('roles') == 'DAF MINISTERE' ? 'selected' : '' }}>DMP</option>
-                                    <option value="DAF VRAI" {{ old('roles') == 'DAF VRAI' ? 'selected' : '' }}>DAF</option>
-                                </select>
-                                
-                                @if ($errors->has('roles'))
-                                    <span class="text-danger">{{ $errors->first('roles') }}</span>
-                                @endif
+                                    <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                    <select class="form-select @error('roles') is-invalid @enderror" aria-label="Roles" id="roles" name="roles">
+                                        <option value="">Veuillez choisir votre profil</option>
+                                        <option value="Admin" {{ old('roles') == 'Admin' ? 'selected' : '' }}>Admin</option>
+                                    </select>
+                                    
+                                    @if ($errors->has('roles'))
+                                        <span class="text-danger">{{ $errors->first('roles') }}</span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
+                        @else
+                        
+                        <!-- Si l'utilisateur est un Admin -->
+                        <div class="row mb-3">
+                            <label for="roles" class="col-md-4 col-form-label text-md-end text-start">{{ __('Profil') }}<sup class="text-danger">*</sup></label>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                    <select class="form-select @error('roles') is-invalid @enderror" aria-label="Roles" id="roles" name="roles">
+                                        <option value="">Veuillez choisir votre profil</option>
+                                        <option value="Caisse" {{ old('roles') == 'Caisse' ? 'selected' : '' }}>Caisse</option>
+                                        <option value="Gerant" {{ old('roles') == 'Gerant' ? 'selected' : '' }}>Gerant</option>
+                                    </select>
+                                    
+                                    @if ($errors->has('roles'))
+                                        <span class="text-danger">{{ $errors->first('roles') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                         </div>
                         
                         

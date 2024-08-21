@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function agency()
     {
-        return $this->belongsTo(Agency::class);
+        return $this->hasOne(Agency::class,'id','agency_id');
     }
 
     public function pelerins()

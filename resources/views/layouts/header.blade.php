@@ -388,11 +388,11 @@
 
     <div class="container">
         <div class="copyright">
-            &copy; Copyright <strong><span>AchatBillet</span></strong>. Tous droit reservés
+            &copy; Copyright <strong><span>HadjBurkina</span></strong>. Tous droit reservés
         </div>
         <div class="credits">
 
-            Conçu par <a href="https://mdenp.com/"> Pool DGTD / MTDPCE</a>
+            Conçu par <a href="https://mdenp.com/"> Faycal LENGLENGUE</a>
         </div>
     </div>
 </footer><!-- End Footer -->

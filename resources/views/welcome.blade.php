@@ -55,7 +55,7 @@
         <div class="container d-flex justify-content-center justify-content-md-between">
             <div class="contact-info d-flex align-items-center">
                 <i class="bi bi-envelope d-flex align-items-center"><a
-                        href="mailto:contact@example.com">billetavion@tic.gov.bf </a></i>
+                        href="mailto:contact@example.com">hadjburkina@gov.bf </a></i>
                 <i class="bi bi-phone d-flex align-items-center ms-4"><span>+226 55 89 55 48</span></i>
             </div>
             <div class="social-links d-none d-md-flex align-items-center">
@@ -77,7 +77,7 @@
 
                 <img src="{{ asset('frontend/assets/img/armoirie.png') }}" width="50px" height="70px" />
                 <h1>
-                    <a href="/">Plateforme d'acquisition de billet d'avion</a>
+                    <a href="/">Plateforme de gestion des candidats au pelerinage à la mecque au burkina</a>
                 </h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
@@ -198,10 +198,10 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <div class="">
-                        &copy; Copyright <strong><span>AchatBillet</span></strong>. Tous droit reservés
+                        &copy; Copyright <strong><span>HadjBurkina</span></strong>. Tous droit reservés
                     </div>
                     <div class="">
-                        Conçu par <a href="https://mdenp.com/"> Pool DGTD / MTDPCE</a>
+                        Conçu par <a href="https://mdenp.com/"> Faycal LENGLENGUE</a>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>billetAvion</title>
+    <title>HadjBurkina</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -144,18 +144,27 @@
 
 
                 @else
-                @canany(['create-role', 'edit-role', 'delete-role'])
+                @if(auth()->user()->hasRole(['Admin']))
+                <li><a class="nav-link" href="{{ route('paiements.index') }}">Gestion des paiements</a></li>
+                @endif
+                @if(auth()->user()->hasRole(['Super Admin']))
                 <li><a class="nav-link" href="{{ route('roles.index') }}">Gestion Roles</a></li>
-                @endcanany
+                @endif
                 @canany(['create-user', 'edit-user', 'delete-user'])
                 <li><a class="nav-link" href="{{ route('users.index') }}">Gestion des utilisateurs</a></li>
                 @endcanany
-                @canany(['create-user', 'edit-user', 'delete-user'])
+                @if(auth()->user()->hasRole(['Admin']))
                 <li><a class="nav-link" href="{{ route('pelerins.index') }}">Gestion des pelerins</a></li>
-                @endcanany
-                @canany(['create-user', 'edit-user', 'delete-user'])
+                @endif
+                @if(auth()->user()->hasRole(['Admin']))
+                <li><a class="nav-link" href="{{ route('motif-candidats.index') }}">Gestion des Motifs</a></li>
+                @endif
+                @if(auth()->user()->hasRole(['Admin']))
+                <li><a class="nav-link" href="{{ route('facilitateurs.index') }}">Gestion des facilitateurs</a></li>
+                @endif
+                @if(auth()->user()->hasRole(['Super Admin']))
                 <li><a class="nav-link" href="{{ route('agencies.index') }}">Gestion des agences</a></li>
-                @endcanany
+                @endif
               
 
                 <li class="nav-item dropdown">
@@ -195,7 +204,7 @@
             <a href="index3.html" class="brand-link">
                 <img src="{{ asset('frontend/assets/img/armoirie.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">BilletAvion</span>
+                <span class="brand-text font-weight-light">HadjBurkina</span>
             </a>
 
             <!-- Sidebar -->
@@ -220,7 +229,7 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-                    
+               @if(auth()->user()->hasRole(['Super Admin']))
                       
                         <li class="nav-item">
                             <a href="{{ route('agencies.index') }}" class="nav-link">
@@ -231,9 +240,10 @@
                                 </p>
                             </a>
                         </li>
-
+                        @endif
+                        @if(auth()->user()->hasRole(['Admin']))
                         <li class="nav-item">
-                            <a href="{{ route('agencies.index') }}" class="nav-link">
+                            <a href="{{ route('pelerins.index') }}" class="nav-link">
                                 <i class="nav-icon far fa-calendar-alt"></i>
                                 <p>
                                     Gestion des pelerins
@@ -241,7 +251,7 @@
                                 </p>
                             </a>
                         </li>
-                        
+                        @endif
 
 
 
@@ -250,20 +260,12 @@
                             <a href="{{ route('users.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Gestion des utilisateur
+                                    Gestion des utilisateurs
                                     {{-- <span class="badge badge-info right"> </span> --}}
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('ministeres.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Gestion des ministeres
-                                    {{-- <span class="badge badge-info right"> </span> --}}
-                                </p>
-                            </a>
-                        </li>
+                     
                        
                         @endcanany
 
@@ -297,7 +299,7 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; Pool DGTD / MTDPCE.</strong>
+            <strong>Copyright &copy; Faycal LENGLENGUE.</strong>
             All rights reserved.
         </footer>
 
@@ -383,9 +385,6 @@
     <!-- Insérer avant la fermeture de la balise </body> -->
 
     {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> --}}
-
-
-
 
 
 

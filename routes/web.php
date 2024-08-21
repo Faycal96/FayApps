@@ -3,9 +3,12 @@
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\DemandeBilletController;
+use App\Http\Controllers\FacilitateursController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MinistereController;
+use App\Http\Controllers\MotifCandidatController;
 use App\Http\Controllers\OffreController;
+use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\PelerinController;
 use App\Http\Controllers\QuittanceController;
 use App\Http\Controllers\RegisterDafController;
@@ -59,6 +62,7 @@ Route::get('/notifications/read/{id}', [App\Http\Controllers\DemandeBilletContro
 Route::get('/quittance/{uuid}', [QuittanceController::class, 'index'])->name('quittance');
 Route::post('/ministeres/merge', [MinistereController::class, 'merge'])->name('ministeres.merge');
 Route::post('/structures/merge', [StructureController::class, 'merge'])->name('structures.merge');
+Route::get('/pelerins/{id}/pdf', [PelerinController::class, 'generatePDF'])->name('recipisse.pdf');
 
 // Route::post('/upload/participants', [OffreController::class, 'upload'])->name('upload.participants');
 Route::post('/uploadParticipant/{id}/{currentStatus}', [OffreController::class, 'upload'])->name('upload.participants');
@@ -77,6 +81,9 @@ Route::resources([
     'source_financement' => SourceFinancementController::class,
     'pelerins'=> PelerinController::class,
     'agencies'=> AgencyController::class,
+    'facilitateurs'=> FacilitateursController::class,
+    'motif-candidats'=> MotifCandidatController::class,
+    'paiements'=> PaiementController::class,
 
 
 ]);

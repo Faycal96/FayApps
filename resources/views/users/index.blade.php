@@ -66,7 +66,7 @@
         <!-- ./col -->
     </div>
 
-    <div class="row">
+    <div class=" ">
         <div class="col-12">
             <p>
                 @if(session('success'))
@@ -91,6 +91,9 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                    @can('create-user')
+                    <a href="{{ route('registerdaf') }}" class="btn btn-success btn-sm my-2"><i class="bi bi-plus-circle"></i> Ajouter un nouveau utilisateur</a>
+                @endcan
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -105,6 +108,7 @@
                         </thead>
                         <tbody>
                             @forelse ($users as $user)
+                            @if ($user->agency_id ==auth()->user()->agency_id  && auth()->user()->hasRole(['Admin']) || ($user->hasRole(['Admin']) && auth()->user()->hasRole(['Super Admin'])))
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->created_at->translatedFormat('d M Y à H:i:s') }}</td>
@@ -221,12 +225,12 @@
 
                                                         <!-- Ministère -->
                                                         <div class="col-md-6 mb-3">
-                                                            <i class="bi bi-building me-2"></i><strong>Ministère :
-                                                                @foreach ($ministeres as $min)
+                                                            <i class="bi bi-building me-2"></i><strong>Agence :
+                                                                
 
-                                                            </strong> {{ $user->id_m==$min->id ? $min->libelleLong : ''
+                                                            </strong> {{  $user->Agency->name
                                                             }}
-                                                            @endforeach
+                                                           
                                                         </div>
 
                                                         @endif
@@ -244,6 +248,7 @@
 
 
                                     @can('edit-user')
+                                    
                                     @if($user->is_active == 1)
                                     <!-- Bouton de déclenchement -->
                                     <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
@@ -360,7 +365,9 @@
 
                                 </td>
                             </tr>
+                            @endif
                             @empty
+                            
                             <tr>
                                 <td colspan="5" class="text-center">Aucun utilisateur trouvé!</td>
                             </tr>

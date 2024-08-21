@@ -23,14 +23,24 @@ class AgencyController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
             'email' => 'required|string|email|max:255|unique:agencies',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation pour la photo
         ]);
-
-        Agency::create($request->all());
+     
+        if ($request->hasFile('logo')) {
+            if (!file_exists(public_path('images/logos'))) {
+                mkdir(public_path('images/logos'), 0755, true);
+            }
+            $imageName = time().'.'.$request->logo->getClientOriginalExtension();
+            $request->logo->move(public_path('images/logos'), $imageName);
+            $validatedData['logo'] = $imageName;
+        }
+        
+        Agency::create($validatedData);
 
         return redirect()->route('agencies.index')->with('success', 'Agence créée avec succès.');
     }
