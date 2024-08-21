@@ -181,10 +181,10 @@ class UserController extends Controller
         // Vérifie l'état après l'enregistrement et envoie la notification appropriée
         if ($user->is_active) {
             // Si l'utilisateur est maintenant actif, envoie une notification d'activation
-            $user->notify(new \App\Notifications\AccountActivated());
+           // $user->notify(new \App\Notifications\AccountActivated());
         } else {
             // Sinon, envoie une notification de désactivation
-            $user->notify(new \App\Notifications\AccountDeactivated());
+           // $user->notify(new \App\Notifications\AccountDeactivated());
         }
 
         // Redirige l'utilisateur vers la page précédente avec un message de succès

@@ -85,10 +85,11 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    
+                    @if(auth()->user()->hasRole(['Admin']))
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPaiementModal">
                         <i class="bi bi-plus-circle"></i>  Ajouter un Paiement
                     </button>
+                    @endif
                    <div class="modal fade" id="createPaiementModal" tabindex="-1" aria-labelledby="createPaiementModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -104,7 +105,7 @@
                         <select name="pelerin_id" id="pelerin_id" class="form-control" required>
                             @foreach($pelerins as $pelerin)
                                 <option value="{{ $pelerin->id }}" data-restant="{{ $pelerin->montantRestant() }}">
-                                    {{ $pelerin->nom }} {{ $pelerin->prenom }}
+                                    {{ $pelerin->nom }} {{ $pelerin->prenom }} -{{ $pelerin->passeport }}
                                 </option>
                             @endforeach
                         </select>
@@ -164,6 +165,7 @@
                                 <th>#</th>
                                 <th>Date</th>
                                 <th>Nom-Prenom</th>
+                                <th>Passeport</th>
                                 <th>Montant versé</th>
                                 <th>Montant total du hadj </th>
                                 
@@ -181,6 +183,7 @@
 
                                     {{ strtoupper( $payment->pelerin->nom) }} {{ ucfirst( $payment->pelerin->prenom) }}
                                 </td>
+                                <td>{{  $payment->pelerin->passeport }}</td>
                                
                                 <td>{{  number_format( $payment->montant, 0, ',', ' ') }} FCFA</td>
                                 <td>{{  number_format( $payment->pelerin->prixTotalHadj(), 0, ',', ' ') }} FCFA</td>
@@ -201,7 +204,7 @@
                                         class="btn btn-info btn-sm" target="_blank">
                                         <i class="bi bi-download"></i> Récépissé
                                      </a>
-                                    @if ($payment->pelerin->montantRestant() > 0)
+                                    @if ($payment->pelerin->montantRestant() > 0 && auth()->user()->hasRole(['Admin']))
                                     <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#payPaymentModal{{ $payment->id }}">
                                         <i class="bi bi-credit-card"></i> Payer
                                     </button>
@@ -268,7 +271,7 @@
                                     }
                                 </script>
                                 
-                                    <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#simpleDetailModal{{ $payment->id }}">
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#simpleDetailModal{{ $payment->id }}">
                                         <i class="bi bi-info-circle"></i> Détails
                                     </button>
 
@@ -303,9 +306,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if(auth()->user()->hasRole(['Admin']))
                                     <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editPaymentModal{{ $payment->id }}">
                                         <i class="bi bi-pencil"></i> Modifier
                                     </button>
+                                    
 
 <!-- Modal de Modification -->
 <div class="modal fade" id="editPaymentModal{{ $payment->id }}" tabindex="-1" aria-labelledby="editPaymentModalLabel{{ $payment->id }}" aria-hidden="true">
@@ -398,6 +403,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                 </td>
                             </tr>
                             @empty

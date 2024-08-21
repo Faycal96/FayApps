@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class MotifCandidatController extends Controller
 {
+    public function __construct()
+    {
+        
+
+        $this->middleware('auth');
+        
+    }
     public function index()
     {
         $motifCandidats = MotifCandidat::all();

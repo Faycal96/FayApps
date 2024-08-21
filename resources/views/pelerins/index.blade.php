@@ -85,6 +85,7 @@
                 </script>
                 @endif
             </p>
+            @if(auth()->user()->hasRole(['Admin']))
             <!-- Bouton pour ouvrir le modal d'ajout -->
                 <div class="row mb-3">
                     <div class="col-12">
@@ -260,7 +261,7 @@
                             </div>
                         </div>
                     </div>
-
+            @endif
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Gestion des Pèlerins</h3>
@@ -271,7 +272,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Date Inscription</th>
+                                <th>Date Naissance</th>
                                 <th>Passport</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
@@ -285,17 +286,16 @@
                             @if ($pelerin->user->agency_id ==auth()->user()->agency_id)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $pelerin->created_at->translatedFormat('d M Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($pelerin->date_naissance)->format('d/m/Y') }}</td>
                                 <td>{{ $pelerin->passeport }}</td>
                                 <td>{{ $pelerin->nom }}</td>
                                 <td>{{ $pelerin->prenom }}</td>
                                 <td>{{ $pelerin->facilitateur }}</td>
                                 
                                 <td>
-                                    @if($pelerin->statut == 'completed')
+                                    @if($pelerin->montantRestant() == 0)
                                     <span class="badge bg-success">Definitif</span>
-                                    @elseif($pelerin->statut == 'Non payé')
-                                    <span class="badge bg-danger">Annulé</span>
+                                   
                                     @else
                                     <span class="badge bg-warning">Provisoire</span>
                                     @endif
@@ -306,6 +306,7 @@
                                         class="btn btn-info btn-sm" target="_blank">
                                         <i class="bi bi-download"></i> Récépissé
                                      </a>
+
                                     <!-- Bouton de déclenchement pour le modal de détails -->
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#simpleDetailModal{{ $pelerin->id }}">
@@ -444,7 +445,7 @@
 
 
 
-                                    
+                            @if(auth()->user()->hasRole(['Admin']))
                                     <!-- Bouton de déclenchement pour le modal de modification -->
                                     <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
                                         data-bs-target="#editPilgrimModal{{ $pelerin->id }}">
@@ -596,7 +597,7 @@
                                                             <select class="form-control @error('facilitateur_id') is-invalid @enderror" id="facilitateur" name="facilitateur" required>
                                                                 <option value="">Sélectionner un facilitateur</option>
                                                                 @foreach($facilitateurs as $id => $nom)
-                                                                    <option value="{{ $id }}" {{ $pelerin->facilitateur_id == $id ? 'selected' : '' }}>{{ $nom }}</option>
+                                                                    <option value="{{ $nom }}" {{ $pelerin->facilitateur_id == $id ? 'selected' : '' }}>{{ $nom }}</option>
                                                                 @endforeach
                                                             </select>
                                                             @error('facilitateur_id')
@@ -664,7 +665,7 @@
                                         </div>
                                     </div>
 
-                                  
+                                  @endif
                                 </td>
                             </tr>
                             @endif

@@ -46,6 +46,7 @@
                     <h3 class="card-title">Gestion des Facilitateurs</h3>
                 </div>
                 <div class="card-body">
+                    @if(auth()->user()->hasRole(['Admin']))
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createFacilitateurModal">
                         <i class="bi bi-plus"></i> Ajouter un Facilitateur
                     </button>
@@ -76,6 +77,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
 
                     <hr>
 
@@ -97,6 +99,7 @@
                                 <td>{{ $facilitateur->agence->name }}</td>
                                 <td>{{ $facilitateur->telephone }}</td>
                                 <td>
+                                    @if(auth()->user()->hasRole(['Admin']))
                                     <!-- Bouton de déclenchement pour le modal de modification -->
                                     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editFacilitateurModal{{ $facilitateur->id }}">
                                         <i class="bi bi-pencil"></i> Modifier
@@ -158,6 +161,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                 </td>
                             </tr>
                             @empty

@@ -144,7 +144,7 @@
 
 
                 @else
-                @if(auth()->user()->hasRole(['Admin']))
+                @if(auth()->user()->hasRole(['Admin','Caisse','Gerant']))
                 <li><a class="nav-link" href="{{ route('paiements.index') }}">Gestion des paiements</a></li>
                 @endif
                 @if(auth()->user()->hasRole(['Super Admin']))
@@ -153,10 +153,10 @@
                 @canany(['create-user', 'edit-user', 'delete-user'])
                 <li><a class="nav-link" href="{{ route('users.index') }}">Gestion des utilisateurs</a></li>
                 @endcanany
-                @if(auth()->user()->hasRole(['Admin']))
+                @if(auth()->user()->hasRole(['Admin','Caisse','Gerant']))
                 <li><a class="nav-link" href="{{ route('pelerins.index') }}">Gestion des pelerins</a></li>
                 @endif
-                @if(auth()->user()->hasRole(['Admin']))
+                @if(auth()->user()->hasRole(['Super Admin']))
                 <li><a class="nav-link" href="{{ route('motif-candidats.index') }}">Gestion des Motifs</a></li>
                 @endif
                 @if(auth()->user()->hasRole(['Admin']))
@@ -174,8 +174,8 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        @if (isset(Auth::user()->ministere))
-                        <a class="dropdown-item text-primary">{{' Agent '.Auth::user()->ministere->libelleCourt }}</a>
+                        @if (isset(Auth::user()->agency))
+                        <a class="dropdown-item text-primary">{{' Agence '.Auth::user()->agency->name }}</a>
                         @endif
                         <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
@@ -241,7 +241,7 @@
                             </a>
                         </li>
                         @endif
-                        @if(auth()->user()->hasRole(['Admin']))
+                        @if(auth()->user()->hasRole(['Admin','Caisse','Gerant']))
                         <li class="nav-item">
                             <a href="{{ route('pelerins.index') }}" class="nav-link">
                                 <i class="nav-icon far fa-calendar-alt"></i>

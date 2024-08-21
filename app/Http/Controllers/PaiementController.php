@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class PaiementController extends Controller
 {
+    public function __construct()
+    {
+        
+
+        $this->middleware('auth');
+        
+    }
     public function index()
     {
         // Récupérer l'utilisateur connecté

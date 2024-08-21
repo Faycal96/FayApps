@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Auth;
 
 class PelerinController extends Controller
 {
+    public function __construct()
+    {
+        
+
+        $this->middleware('auth');
+        
+    }
     public function index()
 {
     // Récupérer le nombre total de pèlerins
@@ -42,7 +49,7 @@ $pelerins = Pelerin::whereHas('user', function ($query) use ($user) {
 }
 
 public function store(Request $request)
-{
+ {
     // Valider les données du formulaire
     $validatedData = $request->validate([
         'nom' => 'required|string|max:255',
@@ -60,6 +67,13 @@ public function store(Request $request)
         'note_observation' => 'nullable|string|max:255',
         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:8012',
     ]);
+   
+$existingUser = Pelerin::where('passeport', $request->passeport)->first();
+
+if ($existingUser) {
+    return back()->withErrors(['passeport' => 'Ce numéro de passeport est déjà utilisé. Veuillez en choisir un autre.'])->withInput();
+}
+
 
     $validatedData['user_id'] = Auth::id();
 
@@ -109,7 +123,7 @@ public function store(Request $request)
     // Validation des données
     $validatedData = $request->validate([
         'nom' => 'string|max:255',
-        'passeport' => 'string|max:255',
+        'passeport' => 'required|string|max:255|unique:pelerins',
         'prenom' => 'string|max:255',
         'date_delivrance' => 'required|date',
         'date_naissance' => 'required|date',
