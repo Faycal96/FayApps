@@ -150,18 +150,18 @@
                                                 @enderror
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <i class="bi bi-calendar-event-fill me-2"></i>
-                                                <label for="date_delivrance" class="form-label"><strong>Date de Délivrance</strong></label>
-                                                <input type="date" class="form-control @error('date_delivrance') is-invalid @enderror" id="date_delivrance" name="date_delivrance" value="{{ old('date_delivrance') }}"required>
-                                                @error('date_delivrance')
+                                                <i class="bi bi-geo-alt me-2"></i>
+                                                <label for="nationalite" class="form-label"><strong>Nationalité</strong></label>
+                                                <input type="text" class="form-control @error('nationalite') is-invalid @enderror" id="nationalite" name="nationalite" value="{{ old('nationalite') }}"required>
+                                                @error('nationalite')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <i class="bi bi-calendar-fill me-2"></i>
-                                                <label for="date_naissance" class="form-label"><strong>Date de Naissance</strong></label>
-                                                <input type="date" class="form-control @error('date_naissance') is-invalid @enderror" id="date_naissance" name="date_naissance" value="{{ old('date_naissance') }}"required>
-                                                @error('date_naissance')
+                                                <i class="bi bi-calendar-event-fill me-2"></i>
+                                                <label for="date_delivrance" class="form-label"><strong>Date de Délivrance</strong></label>
+                                                <input type="date" class="form-control @error('date_delivrance') is-invalid @enderror" id="date_delivrance" name="date_delivrance" value="{{ old('date_delivrance') }}"required>
+                                                @error('date_delivrance')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -173,6 +173,24 @@
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
+                                            <div class="col-md-6 mb-3">
+                                                <i class="bi bi-calendar-fill me-2"></i>
+                                                <label for="date_naissance" class="form-label"><strong>Date de Naissance</strong></label>
+                                                <input type="date" class="form-control @error('date_naissance') is-invalid @enderror" id="date_naissance" name="date_naissance" value="{{ old('date_naissance') }}"required>
+                                                @error('date_naissance')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                               <!-- Champ Lieu de Naissance -->
+                                            <div class="col-md-6 mb-3">
+                                                <i class="bi bi-geo-alt-fill me-2"></i>
+                                                <label for="lieu_naissance" class="form-label"><strong>Lieu de Naissance</strong></label>
+                                                <input type="text" class="form-control @error('lieu_naissance') is-invalid @enderror" id="lieu_naissance" name="lieu_naissance" value="{{ old('lieu_naissance') }}" required>
+                                                @error('lieu_naissance')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                          
                                             <div class="col-md-6 mb-3">
                                                 <i class="bi bi-gender-ambiguous me-2"></i>
                                                 <label for="sexe" class="form-label"><strong>Sexe</strong></label>
@@ -186,14 +204,7 @@
                                                 @enderror
                                             </div>
                                             
-                                            <div class="col-md-6 mb-3">
-                                                <i class="bi bi-geo-alt me-2"></i>
-                                                <label for="nationalite" class="form-label"><strong>Nationalité</strong></label>
-                                                <input type="text" class="form-control @error('nationalite') is-invalid @enderror" id="nationalite" name="nationalite" value="{{ old('nationalite') }}"required>
-                                                @error('nationalite')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
+                                           
                                             <div class="col-md-6 mb-3">
                                                 <i class="bi bi-phone-fill me-2"></i>
                                                 <label for="telephone" class="form-label"><strong>Téléphone</strong></label>
@@ -240,6 +251,19 @@
                                                 <label for="ville_province" class="form-label"><strong>Ville ou Province</strong></label>
                                                 <input type="text" class="form-control @error('ville_province') is-invalid @enderror" id="ville_province" name="ville_province" value="{{ old('ville_province') }}"required>
                                                 @error('ville_province')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                                                <!-- Champ Type de Vol -->
+                                            <div class="col-md-6 mb-3">
+                                                <i class="bi bi-airplane-fill me-2"></i>
+                                                <label for="type_vol" class="form-label"><strong>Type de Vol</strong></label>
+                                                <select class="form-control @error('type_vol') is-invalid @enderror" id="type_vol" name="type_vol" required>
+                                                    <option value="">Sélectionner</option>
+                                                    <option value="Charter" {{ old('type_vol') == 'Charter' ? 'selected' : '' }}>Charter</option>
+                                                    <option value="Régulier" {{ old('type_vol') == 'Régulier' ? 'selected' : '' }}>Régulier</option>
+                                                </select>
+                                                @error('type_vol')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -354,12 +378,26 @@
                                                         <input type="text" value="{{ $pelerin->passeport }}" class="form-control" readonly>
                                                     </div>
                                                 </div>
+                                                <!-- Nationalité -->
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label"><i class="bi bi-geo-alt me-2"></i><strong>Nationalité :</strong></label>
+                                                    <div class="input-group">
+                                                        <input type="text" value="{{ $pelerin->nationalite }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
 
                                                 <!-- Date de Délivrance -->
                                                 <div class="col-md-6 mb-3">
                                                     <label class="form-label"><i class="bi bi-calendar-event-fill me-2"></i><strong>Date de Délivrance :</strong></label>
                                                     <div class="input-group">
                                                         <input type="text" value="{{ \Carbon\Carbon::parse($pelerin->date_delivrance)->format('d/m/Y') }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                                 <!-- Date d'Expiration -->
+                                                 <div class="col-md-6 mb-3">
+                                                    <label class="form-label"><i class="bi bi-file-earmark-text-fill me-2"></i><strong>Date d'Expiration :</strong></label>
+                                                    <div class="input-group">
+                                                        <input type="text" value="{{ \Carbon\Carbon::parse($pelerin->date_expiration)->format('d/m/Y') }}" class="form-control" readonly>
                                                     </div>
                                                 </div>
 
@@ -371,13 +409,15 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- Date d'Expiration -->
+                                                                            <!-- Lieu de Naissance -->
                                                 <div class="col-md-6 mb-3">
-                                                    <label class="form-label"><i class="bi bi-file-earmark-text-fill me-2"></i><strong>Date d'Expiration :</strong></label>
+                                                    <label class="form-label"><i class="bi bi-geo-alt-fill me-2"></i><strong>Lieu de Naissance :</strong></label>
                                                     <div class="input-group">
-                                                        <input type="text" value="{{ \Carbon\Carbon::parse($pelerin->date_expiration)->format('d/m/Y') }}" class="form-control" readonly>
+                                                        <input type="text" value="{{ $pelerin->lieu_naissance }}" class="form-control" readonly>
                                                     </div>
                                                 </div>
+
+                                               
 
                                                 <!-- Sexe -->
                                                 <div class="col-md-6 mb-3">
@@ -387,13 +427,7 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- Nationalité -->
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label"><i class="bi bi-geo-alt me-2"></i><strong>Nationalité :</strong></label>
-                                                    <div class="input-group">
-                                                        <input type="text" value="{{ $pelerin->nationalite }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
+                                                
 
                                                 <!-- Téléphone -->
                                                 <div class="col-md-6 mb-3">
@@ -405,9 +439,9 @@
 
                                                 <!-- Motif Candidat -->
                                                 <div class="col-md-6 mb-3">
-                                                    <label class="form-label"><i class="bi bi-clipboard me-2"></i><strong>Motif Candidat :</strong></label>
+                                                    <label class="form-label"><i class="bi bi-clipboard me-2"></i><strong>Edition :</strong></label>
                                                     <div class="input-group">
-                                                        <input type="text" value="{{ $pelerin->motif_candidat }}" class="form-control" readonly>
+                                                        <input type="text" value="{{ $pelerin->motifCandidat->nom }}" class="form-control" readonly>
                                                     </div>
                                                 </div>
 
@@ -424,6 +458,13 @@
                                                     <label class="form-label"><i class="bi bi-map-fill me-2"></i><strong>Ville ou Province :</strong></label>
                                                     <div class="input-group">
                                                         <input type="text" value="{{ $pelerin->ville_province }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                                                            <!-- Type de Vol -->
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label"><i class="bi bi-airplane-fill me-2"></i><strong>Type de Vol :</strong></label>
+                                                    <div class="input-group">
+                                                        <input type="text" value="{{ $pelerin->type_vol }}" class="form-control" readonly>
                                                     </div>
                                                 </div>
 
@@ -518,12 +559,28 @@
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
                                                         </div>
+                                                        <!-- Nationalité -->
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label"><i class="bi bi-geo-alt me-2"></i><strong>Nationalité :</strong></label>
+                                                            <input type="text" class="form-control @error('nationalite') is-invalid @enderror" id="nationalite" name="nationalite" value="{{ $pelerin->nationalite }}" required>
+                                                            @error('nationalite')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
                                 
                                                         <!-- Date de Délivrance -->
                                                         <div class="col-md-6 mb-3">
                                                             <label class="form-label"><i class="bi bi-calendar-event-fill me-2"></i><strong>Date de Délivrance :</strong></label>
                                                             <input type="date" class="form-control @error('date_delivrance') is-invalid @enderror" id="date_delivrance" name="date_delivrance" value="{{ \Carbon\Carbon::parse($pelerin->date_delivrance)->format('Y-m-d') }}" required>
                                                             @error('date_delivrance')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                        <!-- Date d'Expiration -->
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label"><i class="bi bi-file-earmark-text-fill me-2"></i><strong>Date d'Expiration :</strong></label>
+                                                            <input type="date" class="form-control @error('date_expiration') is-invalid @enderror" id="date_expiration" name="date_expiration" value="{{ \Carbon\Carbon::parse($pelerin->date_expiration)->format('Y-m-d') }}" required>
+                                                            @error('date_expiration')
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
                                                         </div>
@@ -536,15 +593,17 @@
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
                                                         </div>
-                                
-                                                        <!-- Date d'Expiration -->
+                                                                                        <!-- Champ Lieu de Naissance -->
                                                         <div class="col-md-6 mb-3">
-                                                            <label class="form-label"><i class="bi bi-file-earmark-text-fill me-2"></i><strong>Date d'Expiration :</strong></label>
-                                                            <input type="date" class="form-control @error('date_expiration') is-invalid @enderror" id="date_expiration" name="date_expiration" value="{{ \Carbon\Carbon::parse($pelerin->date_expiration)->format('Y-m-d') }}" required>
-                                                            @error('date_expiration')
+                                                            <i class="bi bi-geo-alt-fill me-2"></i>
+                                                            <label for="lieu_naissance" class="form-label"><strong>Lieu de Naissance</strong></label>
+                                                            <input type="text" class="form-control @error('lieu_naissance') is-invalid @enderror" id="lieu_naissance" name="lieu_naissance" value="{{ old('lieu_naissance', $pelerin->lieu_naissance) }}" required>
+                                                            @error('lieu_naissance')
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
                                                         </div>
+                                
+                                                        
                                 
                                                         <!-- Sexe -->
                                                         <div class="col-md-6 mb-3">
@@ -559,14 +618,7 @@
                                                             @enderror
                                                         </div>
                                 
-                                                        <!-- Nationalité -->
-                                                        <div class="col-md-6 mb-3">
-                                                            <label class="form-label"><i class="bi bi-geo-alt me-2"></i><strong>Nationalité :</strong></label>
-                                                            <input type="text" class="form-control @error('nationalite') is-invalid @enderror" id="nationalite" name="nationalite" value="{{ $pelerin->nationalite }}" required>
-                                                            @error('nationalite')
-                                                            <div class="invalid-feedback">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
+                                                        
                                 
                                                         <!-- Téléphone -->
                                                         <div class="col-md-6 mb-3">
@@ -579,9 +631,9 @@
                                 
                                                         <!-- Motif Candidat -->
                                                         <div class="col-md-6 mb-3">
-                                                            <label class="form-label"><i class="bi bi-clipboard me-2"></i><strong>Motif Candidat :</strong></label>
+                                                            <label class="form-label"><i class="bi bi-clipboard me-2"></i><strong>Motif  :</strong></label>
                                                             <select class="form-control @error('motif_candidat_id') is-invalid @enderror" id="motif_candidat_id" name="motif_candidat_id" required>
-                                                                <option value="">Sélectionner un motif</option>
+                                                                <option value="">Sélectionner le motif</option>
                                                                 @foreach($motifCandidats as $motifCandidat)
                                                                     <option value="{{ $motifCandidat->id }}" {{ $pelerin->motif_candidat_id == $motifCandidat->id ? 'selected' : '' }}>{{ $motifCandidat->nom }}</option>
                                                                 @endforeach
@@ -610,6 +662,19 @@
                                                             <label class="form-label"><i class="bi bi-map-fill me-2"></i><strong>Ville ou Province :</strong></label>
                                                             <input type="text" class="form-control @error('ville_province') is-invalid @enderror" id="ville_province" name="ville_province" value="{{ $pelerin->ville_province }}" required>
                                                             @error('ville_province')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                                                        <!-- Champ Type de Vol -->
+                                                        <div class="col-md-6 mb-3">
+                                                            <i class="bi bi-airplane-fill me-2"></i>
+                                                            <label for="type_vol" class="form-label"><strong>Type de Vol</strong></label>
+                                                            <select class="form-control @error('type_vol') is-invalid @enderror" id="type_vol" name="type_vol" required>
+                                                                <option value="">Sélectionner</option>
+                                                                <option value="Charter" {{ old('type_vol', $pelerin->type_vol) == 'Charter' ? 'selected' : '' }}>Charter</option>
+                                                                <option value="Regulier" {{ old('type_vol', $pelerin->type_vol) == 'Regulier' ? 'selected' : '' }}>Regulier</option>
+                                                            </select>
+                                                            @error('type_vol')
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
                                                         </div>

@@ -66,6 +66,8 @@ public function store(Request $request)
         'ville_province' => 'nullable|string|max:255',
         'note_observation' => 'nullable|string|max:255',
         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:8012',
+        'type_vol' => 'nullable|string|max:255',
+        'lieu_naissance' => 'nullable|string|max:255',
     ]);
    
 $existingUser = Pelerin::where('passeport', $request->passeport)->first();
@@ -123,7 +125,7 @@ if ($existingUser) {
     // Validation des données
     $validatedData = $request->validate([
         'nom' => 'string|max:255',
-        'passeport' => 'required|string|max:255|unique:pelerins',
+        'passeport' => 'required|string|max:255',
         'prenom' => 'string|max:255',
         'date_delivrance' => 'required|date',
         'date_naissance' => 'required|date',
@@ -136,8 +138,19 @@ if ($existingUser) {
         'ville_province' => 'string|max:255',
         'note_observation' => 'nullable|string',
         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:8012',
+        
     ]);
 
+    
+    // Vérifier si le passeport est déjà utilisé par un autre enregistrement
+    $existingUser = Pelerin::where('passeport', $request->passeport)
+                           ->where('id', '!=', $pelerin->id)
+                           ->first();
+
+    if ($existingUser) {
+        return back()->withErrors(['passeport' => 'Ce numéro de passeport est déjà utilisé. Veuillez en choisir un autre.'])
+                     ->withInput();
+    }
     // Gestion de l'upload de la photo
     if ($request->hasFile('photo')) {
         // Supprimer l'ancienne photo si elle existe

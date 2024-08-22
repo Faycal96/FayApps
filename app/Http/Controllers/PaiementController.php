@@ -100,16 +100,16 @@ public function update(Request $request, Paiement $paiement)
         'note' => 'nullable|string',
     ]);
 
-    // Vérifiez que le montant ne dépasse pas le montant restant à payer
-    $pelerin = Pelerin::find($request->pelerin_id);
+  // Vérifiez que le montant ne dépasse pas le montant restant à payer
+  $pelerin = Pelerin::find($request->pelerin_id);
+  $montantRestant = $pelerin->montantRestant();
 
-    // Vérifiez que le montant ne dépasse pas le montant restant à payer
-    if ($request->montant > $pelerin->montantRestant()) {
-        return redirect()->back()->withErrors([
-            'montant' => 'Le montant payé ne peut pas dépasser le montant restant à payer.'
-        ])->withInput();
-    }
-
+  // Permet de passer si montantRestant est 0, même si le montant est 0 ou plus
+  if ($montantRestant > 0 && $request->montant > $montantRestant) {
+      return redirect()->back()->withErrors([
+          'montant' => 'Le montant payé ne peut pas dépasser le montant restant à payer.'
+      ])->withInput();
+  }
     // Supprimer l'ancien reçu
     $recuPath = public_path('recu/' . $paiement->id . '_recu.pdf');
     if (file_exists($recuPath)) {

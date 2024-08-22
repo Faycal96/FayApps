@@ -312,68 +312,69 @@
                                     </button>
                                     
 
-<!-- Modal de Modification -->
-<div class="modal fade" id="editPaymentModal{{ $payment->id }}" tabindex="-1" aria-labelledby="editPaymentModalLabel{{ $payment->id }}" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-secondary text-white">
-                <h5 class="modal-title" id="editPaymentModalLabel{{ $payment->id }}">Modifier le Paiement pour {{ $payment->pelerin->nom }} {{ $payment->pelerin->prenom }}, le montant restant est de {{ number_format($payment->pelerin->montantRestant(), 0, ',', ' ') }} FCFA</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editPaymentForm{{ $payment->id }}" action="{{ route('paiements.update', $payment->id) }}" method="POST">
-                    @csrf
-                    @method('PATCH')
-                    <input type="hidden" name="pelerin_id" value="{{ $payment->pelerin_id }}">
-                    <input type="hidden" id="montantRestant{{ $payment->id }}" value="{{ $payment->pelerin->montantRestant() }}">
-                    
-                    <div class="form-group mb-3">
-                        <label for="montant"><i class="bi bi-cash-coin me-2"></i>Montant</label>
-                        <input type="number" name="montant" id="montant{{ $payment->id }}" class="form-control" value="{{ $payment->montant }}" required>
-                        <div id="montantError{{ $payment->id }}" class="text-danger mt-2"></div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="mode_paiement"><i class="bi bi-credit-card me-2"></i>Mode de Paiement</label>
-                        <select class="form-control" id="mode_paiement" name="mode_paiement" required>
-                            <option value="espece" {{ $payment->mode_paiement == 'espece' ? 'selected' : '' }}>Espèce</option>
-                            <option value="card_credit" {{ $payment->mode_paiement == 'card_credit' ? 'selected' : '' }}>Carte de Crédit</option>
-                            <option value="cheque" {{ $payment->mode_paiement == 'cheque' ? 'selected' : '' }}>Chèque</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="note"><i class="bi bi-note-text me-2"></i>Note</label>
-                        <textarea name="note" id="note" class="form-control">{{ $payment->note }}</textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer bg-light">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary" onclick="validateEditPayment({{ $payment->id }})">Enregistrer</button>
-            </div>
-        </div>
-    </div>
-</div>
+                                    <!-- Modal de Modification -->
+                                    <div class="modal fade" id="editPaymentModal{{ $payment->id }}" tabindex="-1" aria-labelledby="editPaymentModalLabel{{ $payment->id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-secondary text-white">
+                                                    <h5 class="modal-title" id="editPaymentModalLabel{{ $payment->id }}">Modifier le Paiement pour {{ $payment->pelerin->nom }} {{ $payment->pelerin->prenom }}, le montant restant est de {{ number_format($payment->pelerin->montantRestant(), 0, ',', ' ') }} FCFA</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="editPaymentForm{{ $payment->id }}" action="{{ route('paiements.update', $payment->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <input type="hidden" name="pelerin_id" value="{{ $payment->pelerin_id }}">
+                                                        <input type="hidden" id="montantRestant{{ $payment->id }}" value="{{ $payment->pelerin->montantRestant() }}">
+                                                        
+                                                        <div class="form-group mb-3">
+                                                            <label for="montant"><i class="bi bi-cash-coin me-2"></i>Montant</label>
+                                                            <input type="number" name="montant" id="montant{{ $payment->id }}" class="form-control" value="{{ $payment->montant }}" required>
+                                                            <div id="montantError{{ $payment->id }}" class="text-danger mt-2"></div>
+                                                        </div>
+                                                        <div class="form-group mb-3">
+                                                            <label for="mode_paiement"><i class="bi bi-credit-card me-2"></i>Mode de Paiement</label>
+                                                            <select class="form-control" id="mode_paiement" name="mode_paiement" required>
+                                                                <option value="espece" {{ $payment->mode_paiement == 'espece' ? 'selected' : '' }}>Espèce</option>
+                                                                <option value="card_credit" {{ $payment->mode_paiement == 'card_credit' ? 'selected' : '' }}>Carte de Crédit</option>
+                                                                <option value="cheque" {{ $payment->mode_paiement == 'cheque' ? 'selected' : '' }}>Chèque</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group mb-3">
+                                                            <label for="note"><i class="bi bi-note-text me-2"></i>Note</label>
+                                                            <textarea name="note" id="note" class="form-control">{{ $payment->note }}</textarea>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer bg-light">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                                    <button type="button" class="btn btn-primary" onclick="validateEditPayment({{ $payment->id }})">Enregistrer</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
 
-<script>
-    function validateEditPayment(paymentId) {
-        const montantInput = document.getElementById(`montant${paymentId}`);
-        const montantRestant = parseFloat(document.getElementById(`montantRestant${paymentId}`).value);
-        const montantError = document.getElementById(`montantError${paymentId}`);
-        
-        const montant = parseFloat(montantInput.value);
-        
-        if (montant > montantRestant) {
-            montantError.textContent = 'Le montant payé ne peut pas dépasser le montant restant à payer.';
-            return;
-        } else {
-            montantError.textContent = '';
-        }
-
-        document.getElementById(`editPaymentForm${paymentId}`).submit();
-    }
-</script>
-
+                                    <script>
+                                        function validateEditPayment(paymentId) {
+                                            const montantInput = document.getElementById(`montant${paymentId}`);
+                                            const montantRestant = parseFloat(document.getElementById(`montantRestant${paymentId}`).value);
+                                            const montantError = document.getElementById(`montantError${paymentId}`);
+                                            
+                                            const montant = parseFloat(montantInput.value);
+                                            
+                                            // Permet de passer si montantRestant est 0, même si le montant est 0 ou plus
+                                            if (montantRestant > 0 && montant > montantRestant) {
+                                                montantError.textContent = 'Le montant payé ne peut pas dépasser le montant restant à payer.';
+                                                return;
+                                            } else {
+                                                montantError.textContent = '';
+                                            }
+                                    
+                                            document.getElementById(`editPaymentForm${paymentId}`).submit();
+                                        }
+                                    </script>
+                                    
 
 
 

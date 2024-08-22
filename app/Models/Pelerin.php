@@ -12,6 +12,8 @@ class Pelerin extends Model
         'nom', 'passeport', 'prenom', 'date_delivrance', 'date_naissance',
         'date_expiration', 'sexe', 'nationalite', 'telephone', 'motif_candidat',
         'facilitateur', 'statut_candidat', 'ville_province', 'note_observation','user_id','photo','motif_candidat_id',
+        'type_vol',
+        'lieu_naissance',
     ];
     public function user()
     {

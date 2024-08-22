@@ -5,73 +5,76 @@
     <title>Récépissé d'Inscription</title>
     <style>
         body {
-            font-family: 'DejaVu Sans', sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 40px;
             color: #333;
-            background-color: #f9f9f9;
+            background-color: #f4f4f4;
             line-height: 1.6;
         }
         header {
             text-align: center;
-            border-bottom: 3px solid #0044cc;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            border-bottom: 4px solid #0056b3;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
             background-color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
         .header-logo img {
-            max-width: 80px;
+            max-width: 100px;
             border-radius: 8px;
-            margin-bottom: 10px;
         }
         .header-info {
             display: inline-block;
             text-align: center;
+            margin-top: 10px;
         }
         .header-info h1 {
             margin: 0;
-            font-size: 24px;
-            color: #0044cc;
+            font-size: 28px;
+            color: #0056b3;
         }
         .header-info p {
-            margin: 2px 0;
-            font-size: 12px;
+            margin: 4px 0;
+            font-size: 14px;
+            color: #555;
         }
         .title {
             text-align: center;
             text-transform: uppercase;
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #0044cc;
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: #0056b3;
+            font-weight: bold;
         }
         .info-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 30px;
             background-color: #ffffff;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
         .info-table th, .info-table td {
             border: 1px solid #ddd;
-            padding: 15px;
-            font-size: 12px;
+            padding: 20px;
+            font-size: 14px;
             text-align: left;
         }
         .info-table th {
-            background-color: #0044cc;
+            background-color: #0056b3;
             color: #ffffff;
             font-weight: bold;
         }
         .info-table tr:nth-child(even) {
-            background-color: #f4f4f4;
+            background-color: #f9f9f9;
         }
         .info-table tr:hover {
             background-color: #e0e0e0;
         }
         .info-table td {
-            border-left: 3px solid #0044cc; /* Ajoute une bordure de gauche colorée */
+            border-left: 4px solid #0056b3; /* Bordure de gauche colorée */
         }
         .info-table th:first-child, .info-table td:first-child {
             border-left: none; /* Supprime la bordure de gauche pour la première colonne */
@@ -81,7 +84,8 @@
             font-size: 12px;
             color: #666;
             border-top: 1px solid #ddd;
-            padding-top: 10px;
+            padding-top: 15px;
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -99,7 +103,7 @@
     </header>
 
     <div class="title">
-        <strong>Récépissé d'Inscription N° {{ str_pad($pelerin->id, 6, '0', STR_PAD_LEFT) }}</strong>
+        Récépissé d'Inscription N° {{ str_pad($pelerin->id, 6, '0', STR_PAD_LEFT) }}
     </div>
 
     <table class="info-table">
