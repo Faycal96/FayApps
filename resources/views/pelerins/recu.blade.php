@@ -5,50 +5,47 @@
     <title>Reçu de Paiement</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 16px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
             color: #333;
             margin: 0;
             padding: 20px;
-            background-color: #f4f4f9;
+            background: #f9f9f9;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
             background: #fff;
             padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         .header img {
-            max-width: 150px;
+            max-width: 120px;
             margin-bottom: 10px;
         }
         .header h1 {
-            font-size: 26px;
-            color: #007bff;
             margin: 5px 0;
+            font-size: 24px;
+            color: #007bff;
         }
         .header h2 {
-            font-size: 20px;
-            color: #444;
-            margin: 5px 0;
+            margin: 0;
+            font-size: 18px;
+            color: #333;
         }
         .info {
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
         }
         .info p {
-            margin: 8px 0;
-        }
-        .info strong {
-            color: #007bff;
+            margin: 5px 0;
         }
         .table-paiement {
             width: 100%;
@@ -57,24 +54,20 @@
         }
         .table-paiement th, .table-paiement td {
             border: 1px solid #ddd;
-            padding: 15px;
+            padding: 12px;
             text-align: left;
         }
         .table-paiement th {
             background-color: #007bff;
             color: #fff;
-            font-weight: bold;
         }
         .table-paiement tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .table-paiement td {
-            font-size: 14px;
+            background-color: #f2f2f2;
         }
         .footer {
-            margin-top: 40px;
+            margin-top: 30px;
             text-align: center;
-            font-size: 14px;
+            font-size: 12px;
             color: #666;
         }
     </style>
@@ -91,8 +84,8 @@
 
         <div class="info">
             <p><strong>ID INSCRIT:</strong> {{ str_pad($paiement->pelerin->id, 6, '0', STR_PAD_LEFT) }}</p>
-            <p><strong>Nom:</strong> {{ strtoupper($paiement->pelerin->nom) }}</p>
-            <p><strong>Prénom:</strong> {{ ucfirst($paiement->pelerin->prenom) }}</p>
+            <p><strong>Nom:</strong>{{ strtoupper($paiement->pelerin->nom) }} </p>
+            <p><strong>Prénom:</strong> {{ucfirst($paiement->pelerin->prenom)  }}</p>
             <p><strong>N° Passeport/CNIB:</strong> {{ $paiement->pelerin->passeport }}</p>
             <p><strong>Facilitateur/SC:</strong> {{ $paiement->pelerin->facilitateur }}</p>
             <p><strong>Date d'inscription:</strong> {{ $paiement->pelerin->created_at->format('d/m/Y à H:i:s') }}</p>
@@ -123,7 +116,7 @@
             <p><strong>Montant payé :</strong> {{ number_format($paiement->montant, 0, ',', ' ') }} FCFA</p>
             <p><strong>Total versé :</strong> {{ number_format($totalVerse, 0, ',', ' ') }} FCFA</p>
             <p><strong>Reste à payer :</strong> {{ number_format($resteAPayer, 0, ',', ' ') }} FCFA</p>
-            <p><strong>La caisse :</strong> {{ $name }}</p>
+            <p><strong>La caisse :</strong> {{$name}}</p>
         </div>
 
         <div class="footer">

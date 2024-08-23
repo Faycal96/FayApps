@@ -91,73 +91,74 @@
                     </button>
                     @endif
                    <div class="modal fade" id="createPaiementModal" tabindex="-1" aria-labelledby="createPaiementModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createPaiementModalLabel">Ajouter un Paiement</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="createPaymentForm" action="{{ route('paiements.store') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group mb-3">
-                        <label for="pelerin_id"><i class="bi bi-person-fill me-2"></i>Pèlerin</label>
-                        <select name="pelerin_id" id="pelerin_id" class="form-control" required>
-                            @foreach($pelerins as $pelerin)
-                                <option value="{{ $pelerin->id }}" data-restant="{{ $pelerin->montantRestant() }}">
-                                    {{ $pelerin->nom }} {{ $pelerin->prenom }} -{{ $pelerin->passeport }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="createPaiementModalLabel">Ajouter un Paiement</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form id="createPaymentForm" action="{{ route('paiements.store') }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="form-group mb-3">
+                                            <label for="pelerin_id"><i class="bi bi-person-fill me-2"></i>Pèlerin</label>
+                                            <select name="pelerin_id" id="pelerin_id" class="form-control select2bs4" style="width: 100%;" required>
+                                                @foreach($pelerins as $pelerin)
+                                                    <option value="{{ $pelerin->id }}" data-restant="{{ $pelerin->montantRestant() }}">
+                                                        {{ $pelerin->nom }} {{ $pelerin->prenom }} -{{ $pelerin->passeport }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group mb-3">
+                                            <label for="montant"><i class="bi bi-cash-coin me-2"></i>Montant</label>
+                                            <input type="number" name="montant" id="montant" class="form-control" required>
+                                            <div id="montantError" class="text-danger mt-2"></div>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="mode_paiement"><i class="bi bi-credit-card me-2"></i>Mode de Paiement</label>
+                                            <select class="form-control" id="mode_paiement" name="mode_paiement" required>
+                                                <option value="">Sélectionner le moyen de paiement</option>
+                                                <option value="espece">Espèce</option>
+                                                <option value="card_credit">Carte de Crédit</option>
+                                                <option value="cheque">Chèque</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="note"><i class="bi bi-note-text me-2"></i>Note</label>
+                                            <textarea name="note" id="note" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer bg-light">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        <button type="button" class="btn btn-primary" onclick="validateCreatePayment()">Ajouter</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="montant"><i class="bi bi-cash-coin me-2"></i>Montant</label>
-                        <input type="number" name="montant" id="montant" class="form-control" required>
-                        <div id="montantError" class="text-danger mt-2"></div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="mode_paiement"><i class="bi bi-credit-card me-2"></i>Mode de Paiement</label>
-                        <select class="form-control" id="mode_paiement" name="mode_paiement" required>
-                            <option value="">Sélectionner le moyen de paiement</option>
-                            <option value="espece">Espèce</option>
-                            <option value="card_credit">Carte de Crédit</option>
-                            <option value="cheque">Chèque</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="note"><i class="bi bi-note-text me-2"></i>Note</label>
-                        <textarea name="note" id="note" class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer bg-light">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary" onclick="validateCreatePayment()">Ajouter</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
-<script>
-    function validateCreatePayment() {
-        const pelerinId = document.getElementById('pelerin_id').value;
-        const montantInput = document.getElementById('montant');
-        const montantError = document.getElementById('montantError');
-        const selectedOption = document.querySelector(`#pelerin_id option[value="${pelerinId}"]`);
-        const montantRestant = parseFloat(selectedOption.dataset.restant);
+                    <script>
+                        function validateCreatePayment() {
+                            const pelerinId = document.getElementById('pelerin_id').value;
+                            const montantInput = document.getElementById('montant');
+                            const montantError = document.getElementById('montantError');
+                            const selectedOption = document.querySelector(`#pelerin_id option[value="${pelerinId}"]`);
+                            const montantRestant = parseFloat(selectedOption.dataset.restant);
 
-        const montant = parseFloat(montantInput.value);
+                            const montant = parseFloat(montantInput.value);
 
-        if (montant > montantRestant) {
-            montantError.textContent = 'Le montant payé ne peut pas dépasser le montant prix du hadj.';
-            return;
-        } else {
-            montantError.textContent = '';
-        }
+                            if (montant > montantRestant) {
+                                montantError.textContent = 'Le montant payé ne peut pas dépasser le montant prix du hadj.';
+                                return;
+                            } else {
+                                montantError.textContent = '';
+                            }
 
-        document.getElementById('createPaymentForm').submit();
-    }
-</script>
+                            document.getElementById('createPaymentForm').submit();
+                        }
+                    </script>
 
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>

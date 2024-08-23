@@ -70,12 +70,13 @@ public function store(Request $request)
         'lieu_naissance' => 'nullable|string|max:255',
     ]);
    
-$existingUser = Pelerin::where('passeport', $request->passeport)->first();
-
-if ($existingUser) {
-    return back()->withErrors(['passeport' => 'Ce numéro de passeport est déjà utilisé. Veuillez en choisir un autre.'])->withInput();
-}
-
+ // Vérifier si le numéro de passeport existe déjà
+ $existingPelerin = Pelerin::where('passeport', $request->passeport)->first();
+ if ($existingPelerin) {
+     return redirect()->back()
+         ->withErrors(['passeport' => 'Un pèlerin avec ce numéro de passeport existe déjà.'])
+         ->withInput();
+ }
 
     $validatedData['user_id'] = Auth::id();
 

@@ -56,6 +56,7 @@
 
     <!-- Select2 -->
     <script src="{{ asset('backend/assets/plugins/select2/js/select2.full.min.js') }}"></script>
+    
 
 
     <!-- Theme style -->

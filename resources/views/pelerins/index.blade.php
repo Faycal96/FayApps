@@ -285,6 +285,7 @@
                             </div>
                         </div>
                     </div>
+                    
             @endif
             <div class="card">
                 <div class="card-header">
@@ -769,3 +770,4 @@
         reader.readAsDataURL(event.target.files[0]);
     }
 </script>
+
