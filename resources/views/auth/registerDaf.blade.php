@@ -90,21 +90,7 @@
                     @endif
 
 
-                        <!-- Matricule -->
-                        <div class="row mb-3">
-                            <label for="matricule" class="col-md-4 col-form-label text-md-end">{{ __('Matricule') }} <sup class="text-danger">*</sup></label>
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
-                                    <input id="matricule" type="text" class="form-control @error('matricule') is-invalid @enderror" name="matricule" value="{{ old('matricule') }}" required autocomplete="matricule">
-                                </div>
-                                @error('matricule')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
+                      
                         @if(auth()->user()->hasRole(['Super Admin'])) 
                         <!-- Si l'utilisateur est un Super Admin -->
                         <div class="row mb-3">

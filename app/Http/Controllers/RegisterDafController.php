@@ -37,7 +37,7 @@ class RegisterDafController extends Controller
         $request->validate([
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
-            'matricule' => 'required|string|max:255',
+            
             'telephone' => 'required|string|max:255',
             // 'typeUtilisateur' =>'required|string|max:255',
             'email' => 'required|email',
@@ -57,7 +57,7 @@ class RegisterDafController extends Controller
             'name' => $request->input('prenom').''.$request->input('nom'),
             'nom' => $request->input('nom'),
             'prenom' => $request->input('prenom'),
-            'matricule' => $request->input('matricule'),
+            
             'telephone' => $request->input('telephone'),
             'id_m' =>$request->input('id_m'),
             'agency_id' =>$request->input('agency_id'),
