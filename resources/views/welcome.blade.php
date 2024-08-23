@@ -70,7 +70,7 @@
     <header id="header" class="d-flex align-items-center">
         <div class="container d-flex justify-content-between align-items-center">
             {{-- <div class="logo">
-                <h1><a href="">AchatBillet</a></h1>
+                <h1><a href="">HadjBurkina</a></h1>
             </div> --}}
 
             <div class="container  d-flex float-start logo">

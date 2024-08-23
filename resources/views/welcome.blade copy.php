@@ -53,7 +53,7 @@
     <div class="container d-flex justify-content-between align-items-center">
 
       <div class="logo">
-        <h1><a href="index.html">AchatBillet</a></h1>
+        <h1><a href="index.html">HadjBurkina</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
@@ -286,7 +286,7 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>AchatBillet</span></strong>.  Tous droit reservés
+        &copy; Copyright <strong><span>HadjBurkina</span></strong>.  Tous droit reservés
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
