@@ -249,7 +249,7 @@
 
                                     @can('edit-user')
                                     
-                                    @if($user->is_active == 1)
+                                    @if($user->is_active == 1 && (!auth()->user()->hasRole('Admin') || !$user->hasRole('Admin')))
                                     <!-- Bouton de déclenchement -->
                                     <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
                                         data-bs-target="#deactivateUserModal{{ $user->id }}">

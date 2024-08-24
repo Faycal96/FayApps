@@ -149,7 +149,7 @@
 
                             const montant = parseFloat(montantInput.value);
 
-                            if (montant > montantRestant) {
+                            if (montant > montantRestant ) {
                                 montantError.textContent = 'Le montant payé ne peut pas dépasser le montant prix du hadj.';
                                 return;
                             } else {
@@ -357,23 +357,24 @@
 
 
                                     <script>
-                                        function validateEditPayment(paymentId) {
-                                            const montantInput = document.getElementById(`montant${paymentId}`);
-                                            const montantRestant = parseFloat(document.getElementById(`montantRestant${paymentId}`).value);
-                                            const montantError = document.getElementById(`montantError${paymentId}`);
-                                            
-                                            const montant = parseFloat(montantInput.value);
-                                            
-                                            // Permet de passer si montantRestant est 0, même si le montant est 0 ou plus
-                                            if (montantRestant > 0 && montant > montantRestant) {
-                                                montantError.textContent = 'Le montant payé ne peut pas dépasser le montant restant à payer.';
-                                                return;
-                                            } else {
-                                                montantError.textContent = '';
-                                            }
-                                    
-                                            document.getElementById(`editPaymentForm${paymentId}`).submit();
-                                        }
+                                     function validateEditPayment(paymentId) {
+    const montantInput = document.getElementById('montant' + paymentId);
+    const montantError = document.getElementById('montantError' + paymentId);
+    const montantRestantInput = document.getElementById('montantRestant' + paymentId);
+    const montantRestant = parseFloat(montantRestantInput.value);
+
+    const montant = parseFloat(montantInput.value);
+
+    if (montant > montantRestant + parseFloat(montantInput.dataset.original)) {
+        montantError.textContent = 'Le montant payé ne peut pas dépasser le montant restant à payer après la modification.';
+        return;
+    } else {
+        montantError.textContent = '';
+    }
+
+    document.getElementById('editPaymentForm' + paymentId).submit();
+}
+
                                     </script>
                                     
 
