@@ -3,32 +3,7 @@
 @section('content')
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>3</h3>
-                    <p>Total des Facilitateurs</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person"></i>
-                </div>
-                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-6">
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3>6</h3>
-                    <p>Facilitateurs associés à des agences</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-    </div>
+ 
 
     <div class="row">
         <div class="col-12">

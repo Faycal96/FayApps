@@ -18,40 +18,47 @@ class PelerinController extends Controller
         $this->middleware('auth');
         
     }
-    public function index()
-    {
-        // Récupérer l'utilisateur connecté
-        $user = auth()->user();
+    public function index(Request $request)
+{
+    // Récupérer l'utilisateur connecté
+    $user = auth()->user();
+
+   // Récupérer l'ID du motif candidat sélectionné ou utiliser un motif par défaut
+   $motifCandidatId = $request->input('motifCandidatId', MotifCandidat::first()->id);
+    $pelerinsForMotif = Pelerin::whereHas('user', function ($query) use ($user) {
+        $query->where('agency_id', $user->agency_id);
+    })->where('motif_candidat_id', $motifCandidatId)->get();
+
+    // Filtrer les pèlerins qui ont payé entièrement (montant restant = 0)
+    $pelerinsPayes = $pelerinsForMotif->filter(function ($pelerin) {
+        return $pelerin->montantRestant() == 0;
+    });
+
+    // Filtrer les pèlerins qui n'ont pas encore tout payé (montant restant > 0)
+    $pelerinsEnAttente = $pelerinsForMotif->filter(function ($pelerin) {
+        return $pelerin->montantRestant() > 0;
+    });
+    // Filtrer les pèlerins qui n'ont pas encore tout payé (montant restant > 0)
+    $pelerinsNonPaye = $pelerinsForMotif->filter(function ($pelerin) {
+        return $pelerin->montantTotalPaye() == 0;
+    });
+  // Récupérer les pèlerins associés à l'agence de l'utilisateur connecté, triés par date de création en ordre décroissant
+  $pelerins = Pelerin::whereHas('user', function ($query) use ($user) {
+    $query->where('agency_id', $user->agency_id);
+})->orderBy('created_at', 'desc')->get();
+
+    // Statistiques
+    $totalPelerinsForMotif = $pelerinsForMotif->count();
+    $totalPelerinsPayes = $pelerinsPayes->count();
+    $totalPelerinsEnAttente = $pelerinsEnAttente->count();
+    $totalPelerinsNonPaye = $pelerinsNonPaye->count();
+    $motifCandidats = MotifCandidat::all();
+    $facilitateurs = Facilitateurs::where('agence_id', $user->agency_id)->pluck('nom', 'id');
+
+    return view('pelerins.index', compact('totalPelerinsNonPaye','pelerins','motifCandidatId','totalPelerinsForMotif','motifCandidats','facilitateurs' ,'totalPelerinsPayes', 'totalPelerinsEnAttente'));
+}
+
     
-        // Récupérer le nombre total de pèlerins pour l'agence de l'utilisateur connecté
-        $totalPelerins = Pelerin::whereHas('user', function ($query) use ($user) {
-            $query->where('agency_id', $user->agency_id);
-        })->count();
-    
-        // Récupérer le nombre total de pèlerins avec paiement complet
-        $totalPelerinsComplet = Pelerin::whereHas('user', function ($query) use ($user) {
-            $query->where('agency_id', $user->agency_id);
-        })->get()->filter(function($pelerin) {
-            return $pelerin->montantRestant() == 0;
-        })->count();
-    
-        // Récupérer le nombre total de pèlerins avec paiement en attente
-        $totalPelerinsEnAttente = Pelerin::whereHas('user', function ($query) use ($user) {
-            $query->where('agency_id', $user->agency_id);
-        })->get()->filter(function($pelerin) {
-            return $pelerin->montantRestant() > 0;
-        })->count();
-    
-        // Récupérer les pèlerins associés à l'agence de l'utilisateur connecté, triés par date de création en ordre décroissant
-        $pelerins = Pelerin::whereHas('user', function ($query) use ($user) {
-            $query->where('agency_id', $user->agency_id);
-        })->orderBy('created_at', 'desc')->get();
-    
-        $facilitateurs = Facilitateurs::where('agence_id', $user->agency_id)->pluck('nom', 'id');
-        $motifCandidats = MotifCandidat::all();
-    
-        return view('pelerins.index', compact('totalPelerins', 'totalPelerinsComplet', 'totalPelerinsEnAttente', 'pelerins', 'facilitateurs', 'motifCandidats'));
-    }
     
 
     public function create()

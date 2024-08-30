@@ -152,4 +152,46 @@ public function update(Request $request, Paiement $paiement)
 
         return redirect()->route('paiements.index')->with('success', 'Paiement supprimé avec succès.');
     }
+    public function cancel(Request $request, Paiement $paiement)
+{
+    // Validation du motif d'annulation
+    $request->validate([
+        'motif_annulation' => 'required|string|max:255',
+    ]);
+
+    // Annuler le paiement : mettre à jour le statut et enregistrer le motif
+    $paiement->update([
+        'statut_paiement' => 'annulé',
+        'motif_annulation' => $request->motif_annulation,
+    ]);
+
+    // Réduire le montant total payé du pèlerin
+    $pelerin = $paiement->pelerin;
+    $paiement->montant = 0; // Réinitialiser le montant du paiement annulé
+    $paiement->save();
+    
+// Calculer les montants
+$totalVerse = $pelerin->montantTotalPaye();
+$resteAPayer = $pelerin->montantRestant();
+    // Supprimer l'ancien reçu s'il existe
+    $recuPath = public_path('recus/' . $paiement->id . '_recu.pdf');
+    if (file_exists($recuPath)) {
+        unlink($recuPath);
+    }
+
+    // Générer un nouveau reçu avec les montants mis à jour
+    $user = Auth::user();
+    $agence = $user->agency;
+    $name = $user->name;
+    $logo = public_path('images/logos/' . $agence->logo);
+
+    $pdf = PDF::loadView('pelerins.recu', compact('paiement', 'pelerin', 'logo', 'agence','totalVerse', 'resteAPayer','name'));
+
+     // Sauvegarder le nouveau PDF
+     $pdfFilePath = public_path('recu/' . $paiement->id . '_recu.pdf');
+     $pdf->save($pdfFilePath);
+
+    return redirect()->route('paiements.index')->with('success', 'Paiement annulé avec succès.');
+}
+
 }

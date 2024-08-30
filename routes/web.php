@@ -67,6 +67,7 @@ Route::get('/pelerins/{id}/pdf', [PelerinController::class, 'generatePDF'])->nam
 // Route::post('/upload/participants', [OffreController::class, 'upload'])->name('upload.participants');
 Route::post('/uploadParticipant/{id}/{currentStatus}', [OffreController::class, 'upload'])->name('upload.participants');
 Route::post('/uploadRouting/{id}/{currentStatus}', [OffreController::class, 'uploadRouting'])->name('upload.routing');
+Route::patch('/paiements/{paiement}/cancel', [PaiementController::class, 'cancel'])->name('paiements.cancel');
 
 
 // Route::post('registerdaf', [ControllersRegisterDafController::class, 'enregistrer'])->name('storeDaf');

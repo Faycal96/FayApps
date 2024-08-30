@@ -3,69 +3,68 @@
 @section('content')
 
 <div class="container-fluid">
+    <form action="{{ route('pelerins.index') }}" method="GET">
+        <div class="form-group">
+            <label for="motifCandidatId">Sélectionner le Motif</label>
+            <select name="motifCandidatId" id="motifCandidatId" class="form-control" style="width: 200px;" onchange="this.form.submit()">
+
+                @foreach($motifCandidats as $motif)
+                    <option value="{{ $motif->id }}" {{ $motif->id == $motifCandidatId ? 'selected' : '' }}>
+                        {{ $motif->nom }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+    </form>
+    
     <div class="row">
         <div class="col-lg-3 col-6">
-            <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>{{ $totalPelerins }}</h3>
-
-                    <p>Total des pèlerins</p>
+                    <h3>{{ $totalPelerinsForMotif }}</h3>
+                    <p>Total des Pèlerins pour le Motif</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col -->
         <div class="col-lg-3 col-6">
-            <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>{{ $totalPelerinsComplet}}</h3>
-
-                    <p>Pèlerins complétés</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>{{ $totalPelerinsEnAttente}}</h3>
-
-                    <p>Pèlerins avec paiements en attente</p>
+                    <h3>{{ $totalPelerinsPayes }}</h3>
+                    <p>Pèlerins soldés</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        
-        <!-- ./col -->
         <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
+            <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>0</h3>
-
-                    <p>Pèlerins annulés</p>
+                    <h3>{{ $totalPelerinsEnAttente }}</h3>
+                    <p>Pèlerins en Attente</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
+                    <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ $totalPelerinsNonPaye }}</h3>
+                    <p>Pèlerins non payés</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+            </div>
+        </div>
     </div>
+    
+    
 
     <div class="row">
         <div class="col-12">

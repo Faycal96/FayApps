@@ -2,64 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>56</h3>
-                    <p>Total des paiements</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
-                </div>
-                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3>665<sup style="font-size: 20px"></sup></h3>
-                    <p>Paiements complétés</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>564</h3>
-                    <p>Paiements en attente</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>56</h3>
-                    <p>Paiements échoués</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-    </div>
+    
 
     <div class="">
         <div class="col-12">
@@ -196,8 +139,8 @@
                                     <span class="badge bg-success">Payé</span>
                                 @elseif ($payment->pelerin->montantTotalPaye() > 0 && $payment->pelerin->montantRestant() > 0)
                                     <span class="badge bg-warning">En cours</span>
-                                @elseif ($payment->pelerin->montantTotalPaye() == 0)
-                                    <span class="badge bg-danger">N</span>
+                                @elseif ($payment->statut_paiement = 'annulé')
+                                    <span class="badge bg-danger">Annulé</span>
                                 @endif
                                 </td>
                                 <td>
@@ -307,6 +250,39 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Bouton pour annuler le paiement -->
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancelPaymentModal{{ $payment->id }}">
+                                    <i class="bi bi-x-circle"></i> Annuler
+                                </button>
+
+                                <!-- Modal d'annulation -->
+                                <div class="modal fade" id="cancelPaymentModal{{ $payment->id }}" tabindex="-1" aria-labelledby="cancelPaymentModalLabel{{ $payment->id }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-danger text-white">
+                                                <h5 class="modal-title" id="cancelPaymentModalLabel{{ $payment->id }}">Annuler le Paiement</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{ route('paiements.cancel', $payment->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+
+                                                    <div class="form-group">
+                                                        <label for="motif_annulation">Motif d'Annulation</label>
+                                                        <textarea name="motif_annulation" id="motif_annulation" class="form-control" rows="4" required></textarea>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-danger">Confirmer l'Annulation</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                     @if(auth()->user()->hasRole(['Admin']))
                                     <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editPaymentModal{{ $payment->id }}">
                                         <i class="bi bi-pencil"></i> Modifier
@@ -357,30 +333,30 @@
 
 
                                     <script>
-                                     function validateEditPayment(paymentId) {
-    const montantInput = document.getElementById('montant' + paymentId);
-    const montantError = document.getElementById('montantError' + paymentId);
-    const montantRestantInput = document.getElementById('montantRestant' + paymentId);
-    const montantRestant = parseFloat(montantRestantInput.value);
+                                      function validateEditPayment(paymentId) {
+                                            const montantInput = document.getElementById('montant' + paymentId);
+                                            const montantError = document.getElementById('montantError' + paymentId);
+                                            const montantRestantInput = document.getElementById('montantRestant' + paymentId);
+                                            const montantRestant = parseFloat(montantRestantInput.value);
 
-    const montant = parseFloat(montantInput.value);
+                                            const montant = parseFloat(montantInput.value);
 
-    if (montant > montantRestant + parseFloat(montantInput.dataset.original)) {
-        montantError.textContent = 'Le montant payé ne peut pas dépasser le montant restant à payer après la modification.';
-        return;
-    } else {
-        montantError.textContent = '';
-    }
+                                            if (montant > montantRestant + parseFloat(montantInput.dataset.original)) {
+                                                montantError.textContent = 'Le montant payé ne peut pas dépasser le montant restant à payer après la modification.';
+                                                return;
+                                            } else {
+                                                montantError.textContent = '';
+                                            }
 
-    document.getElementById('editPaymentForm' + paymentId).submit();
-}
+                                            document.getElementById('editPaymentForm' + paymentId).submit();
+                                        }
 
                                     </script>
                                     
 
 
 
-                                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePaymentModal{{ $payment->id }}">
+                                    {{-- <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePaymentModal{{ $payment->id }}">
                                         <i class="bi bi-trash"></i> Supprimer
                                     </button>
 
@@ -405,7 +381,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     @endif
                                 </td>
                             </tr>

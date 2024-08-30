@@ -16,6 +16,7 @@ class Paiement extends Model
         'mode_paiement',
         'note',
         'statut_paiement',
+        'motif_annulation'
     ];
 
     public function pelerin()
