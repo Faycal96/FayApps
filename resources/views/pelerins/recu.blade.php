@@ -70,6 +70,14 @@
             font-size: 12px;
             color: #666;
         }
+        .annulation {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            color: #721c24;
+        }
     </style>
 </head>
 <body>
@@ -84,8 +92,8 @@
 
         <div class="info">
             <p><strong>ID INSCRIT:</strong> {{ str_pad($paiement->pelerin->id, 6, '0', STR_PAD_LEFT) }}</p>
-            <p><strong>Nom:</strong>{{ strtoupper($paiement->pelerin->nom) }} </p>
-            <p><strong>Prénom:</strong> {{ucfirst($paiement->pelerin->prenom)  }}</p>
+            <p><strong>Nom:</strong> {{ strtoupper($paiement->pelerin->nom) }}</p>
+            <p><strong>Prénom:</strong> {{ ucfirst($paiement->pelerin->prenom) }}</p>
             <p><strong>N° Passeport/CNIB:</strong> {{ $paiement->pelerin->passeport }}</p>
             <p><strong>Facilitateur/SC:</strong> {{ $paiement->pelerin->facilitateur }}</p>
             <p><strong>Date d'inscription:</strong> {{ $paiement->pelerin->created_at->format('d/m/Y à H:i:s') }}</p>
@@ -113,11 +121,21 @@
         </table>
 
         <div class="info">
-            <p><strong>Montant payé :</strong> {{ number_format($paiement->montant, 0, ',', ' ') }} FCFA</p>
+            @if ($paiement->statut_paiement === 'annulé')
+            <p><strong>Montant initial versé :</strong> {{ number_format($montantVerse, 0, ',', ' ') }} FCFA</p>
+        @endif
             <p><strong>Total versé :</strong> {{ number_format($totalVerse, 0, ',', ' ') }} FCFA</p>
             <p><strong>Reste à payer :</strong> {{ number_format($resteAPayer, 0, ',', ' ') }} FCFA</p>
-            <p><strong>La caisse :</strong> {{$name}}</p>
+            <p><strong>La caisse :</strong> {{ $name }}</p>
         </div>
+
+        @if ($paiement->statut_paiement === 'annulé')
+            <div class="annulation">
+                <h3>Annulation de Paiement</h3>
+                <p><strong>Montant initial versé :</strong> {{ number_format($montantVerse, 0, ',', ' ') }} FCFA</p>
+                <p><strong>Motif d'annulation :</strong> {{ $paiement->motif_annulation }}</p>
+            </div>
+        @endif
 
         <div class="footer">
             <p>Merci de bien vouloir vérifier le montant de vos versements sur le reçu devant notre caissier(e).</p>
