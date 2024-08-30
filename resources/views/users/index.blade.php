@@ -5,11 +5,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-3 col-6">
-            <!-- small box -->
+            <!-- small box pour le total des utilisateurs -->
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>{{ $totalUsers }}</h3>
-
                     <p>Total des utilisateurs</p>
                 </div>
                 <div class="icon">
@@ -18,14 +17,14 @@
                 <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col -->
+        
+        @if(Auth::user()->hasRole('Super Admin'))
         <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
+            <!-- small box pour le total des utilisateurs avec rôle Admin -->
+            <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>{{ $usersWithoutAgence }}<sup style="font-size: 20px"></sup></h3>
-
-                    <p>Total DAF</p>
+                    <h3>{{ $totalAdminUsers }}</h3>
+                    <p>Total des utilisateurs Admin</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -33,14 +32,26 @@
                 <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col -->
+        @endif
         <div class="col-lg-3 col-6">
-            <!-- small box -->
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>{{ $usersWithAgence }}</h3>
-
-                    <p>Total Agence</p>
+                    <h3>{{ $totalSecretaries}}</h3>
+                    <p>Total des Gérants</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="col-lg-3 col-6">
+            <!-- small box pour le total des utilisateurs actifs -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ $activeUsers }}</h3>
+                    <p>Utilisateurs actifs</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -48,14 +59,13 @@
                 <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col -->
+    
         <div class="col-lg-3 col-6">
-            <!-- small box -->
+            <!-- small box pour le total des utilisateurs désactivés -->
             <div class="small-box bg-danger">
                 <div class="inner">
                     <h3>{{ $disabledUsers }}</h3>
-
-                    <p>Utilisateurs desactivés</p>
+                    <p>Utilisateurs désactivés</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
@@ -63,8 +73,8 @@
                 <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col -->
     </div>
+    
 
     <div class=" ">
         <div class="col-12">

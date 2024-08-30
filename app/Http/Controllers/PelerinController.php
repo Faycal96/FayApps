@@ -19,28 +19,40 @@ class PelerinController extends Controller
         
     }
     public function index()
-{
-    // Récupérer le nombre total de pèlerins
-    $totalPelerins = Pelerin::count();
-
-    
-  // Récupérer l'utilisateur connecté
+    {
+        // Récupérer l'utilisateur connecté
         $user = auth()->user();
     
-        // Récupérer les pèlerins associés à l'agence de l'utilisateur connecté, triés par date de création en ordre décroissant
-$pelerins = Pelerin::whereHas('user', function ($query) use ($user) {
-    $query->where('agency_id', $user->agency_id);
-})->orderBy('created_at', 'desc')->get();
-
+        // Récupérer le nombre total de pèlerins pour l'agence de l'utilisateur connecté
+        $totalPelerins = Pelerin::whereHas('user', function ($query) use ($user) {
+            $query->where('agency_id', $user->agency_id);
+        })->count();
     
-
-    $facilitateurs = Facilitateurs::where('agence_id', Auth::user()->agency_id)->pluck('nom', 'id');
-
-    $motifCandidats = MotifCandidat::all();
-    // Retourner la vue avec les données nécessaires
-    return view('pelerins.index', compact('totalPelerins', 'pelerins','facilitateurs','motifCandidats'));
-}
-
+        // Récupérer le nombre total de pèlerins avec paiement complet
+        $totalPelerinsComplet = Pelerin::whereHas('user', function ($query) use ($user) {
+            $query->where('agency_id', $user->agency_id);
+        })->get()->filter(function($pelerin) {
+            return $pelerin->montantRestant() == 0;
+        })->count();
+    
+        // Récupérer le nombre total de pèlerins avec paiement en attente
+        $totalPelerinsEnAttente = Pelerin::whereHas('user', function ($query) use ($user) {
+            $query->where('agency_id', $user->agency_id);
+        })->get()->filter(function($pelerin) {
+            return $pelerin->montantRestant() > 0;
+        })->count();
+    
+        // Récupérer les pèlerins associés à l'agence de l'utilisateur connecté, triés par date de création en ordre décroissant
+        $pelerins = Pelerin::whereHas('user', function ($query) use ($user) {
+            $query->where('agency_id', $user->agency_id);
+        })->orderBy('created_at', 'desc')->get();
+    
+        $facilitateurs = Facilitateurs::where('agence_id', $user->agency_id)->pluck('nom', 'id');
+        $motifCandidats = MotifCandidat::all();
+    
+        return view('pelerins.index', compact('totalPelerins', 'totalPelerinsComplet', 'totalPelerinsEnAttente', 'pelerins', 'facilitateurs', 'motifCandidats'));
+    }
+    
 
     public function create()
     {

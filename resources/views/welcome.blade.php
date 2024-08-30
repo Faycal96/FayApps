@@ -183,10 +183,10 @@
                             </form>
                         </div>
                     </div>
-                    <div class="text-center mt-3">
+                    {{-- <div class="text-center mt-3">
                         <h3><a class="btn btn-primary" href="{{ route('login') }}"> Je n'ai pas de compte.</a>
                         </h3>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@ use App\Models\AgenceAcredite;
 use App\Models\Ministere;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
@@ -32,27 +33,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
-    {
-        // Récupère tous les utilisateurs et précharge les agences liées
-        $users = User::with('agency')->latest('id')->paginate(10000000000);
-
-        // Calcule les statistiques
-        $totalUsers = User::count();
-        $disabledUsers = User::where('is_active', 0)->count(); // Assurez-vous que 'is_active' est bien le nom de la colonne indiquant si un utilisateur est actif ou non
-        $usersWithAgence = User::whereHas('agenceAcredite')->count(); // Utilisateurs associés à une agence
-        $usersWithoutAgence = User::whereDoesntHave('agenceAcredite')->count(); // Utilisateurs non associés à une agence
-
-        // Retourne la vue avec les utilisateurs et les statistiques
-        return view('users.index', [
-            'users' => $users,
-            'totalUsers' => $totalUsers,
-            'disabledUsers' => $disabledUsers,
-            'usersWithAgence' => $usersWithAgence,
-            'usersWithoutAgence' => $usersWithoutAgence,
-            'ministeres' =>Ministere::all(),
-        ]);
-    }
+ 
 
 
     /**
@@ -70,7 +51,50 @@ class UserController extends Controller
     // }
 
 
+    public function index(): View
+    {
+        // Utilisateur connecté
+        $user = Auth::user();
+    
+        // Statistiques de base
+        $totalUsers = 0;
+        $totalAdminUsers = 0;
+        $activeUsers = 0;
+        $disabledUsers = 0;
+    
+        if ($user->hasRole('Super Admin')) {
+            // Pour Superadmin : statistiques globales
+            $totalUsers = User::count();
+            $totalAdminUsers = User::role('Admin')->count(); // Nombre d'utilisateurs ayant le rôle Admin
+            $activeUsers = User::where('is_active', 1)->count();
+            $disabledUsers = User::where('is_active', 0)->count();
+        } elseif ($user->hasRole('Admin')) {
+            // Pour Admin : statistiques de l'agence de l'utilisateur connecté
+            $agencyId = $user->agency_id;
+            $totalUsers = User::where('agency_id', $agencyId)->count();
+            $activeUsers = User::where('agency_id', $agencyId)->where('is_active', 1)->count();
+            $disabledUsers = User::where('agency_id', $agencyId)->where('is_active', 0)->count();
+            $totalSecretaries = User::where('agency_id', $agencyId)
+                        ->role('Gerant')
+                        ->count();
 
+        }
+    
+        // Récupère tous les utilisateurs (pour l'affichage de la liste)
+        $users = User::with('agency')->latest('id')->paginate(10000000000);
+    
+        // Retourne la vue avec les utilisateurs et les statistiques
+        return view('users.index', [
+            'users' => $users,
+            'totalUsers' => $totalUsers,
+            'totalAdminUsers' => $totalAdminUsers,
+            'activeUsers' => $activeUsers,
+            'disabledUsers' => $disabledUsers,
+            'totalSecretaries' => $totalSecretaries,
+            'ministeres' => Ministere::all(),
+        ]);
+    }
+    
 /*
 ** store daf
 */
