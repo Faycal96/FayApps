@@ -161,63 +161,63 @@
                                         </div>
                                     </div>
                                     <!-- Bouton pour activer/désactiver -->
-@if ($agency->is_active)
-<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deactivateAgencyModal{{ $agency->id }}">
-    <i class="bi bi-toggle-off"></i>   Désactiver
-</button>
-@else
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#activateAgencyModal{{ $agency->id }}">
-    <i class="bi bi-toggle-on"></i>   Activer
-</button>
-@endif
+                                    @if ($agency->is_active)
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deactivateAgencyModal{{ $agency->id }}">
+                                        <i class="bi bi-toggle-off"></i>   Désactiver
+                                    </button>
+                                    @else
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#activateAgencyModal{{ $agency->id }}">
+                                        <i class="bi bi-toggle-on"></i>   Activer
+                                    </button>
+                                    @endif
 
-<!-- Modal d'activation -->
-<div class="modal fade" id="activateAgencyModal{{ $agency->id }}" tabindex="-1" aria-labelledby="activateAgencyModalLabel{{ $agency->id }}" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <form action="{{ route('agencies.toggleStatus', $agency->id) }}" method="POST">
-            @csrf
-            <div class="modal-header">
-                <h5 class="modal-title" id="activateAgencyModalLabel{{ $agency->id }}">Activer l'agence</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="fin_validite" class="form-label">Date de fin de validité</label>
-                    <input type="date" class="form-control" id="fin_validite" name="fin_validite" required>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Activer</button>
-            </div>
-        </form>
-    </div>
-</div>
-</div>
+                                    <!-- Modal d'activation -->
+                                    <div class="modal fade" id="activateAgencyModal{{ $agency->id }}" tabindex="-1" aria-labelledby="activateAgencyModalLabel{{ $agency->id }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="{{ route('agencies.toggleStatus', $agency->id) }}" method="POST">
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="activateAgencyModalLabel{{ $agency->id }}">Activer l'agence</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label for="fin_validite" class="form-label">Date de fin de validité</label>
+                                                        <input type="date" class="form-control" id="fin_validite" name="fin_validite" required>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Activer</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </div>
 
-<!-- Modal de désactivation -->
-<div class="modal fade" id="deactivateAgencyModal{{ $agency->id }}" tabindex="-1" aria-labelledby="deactivateAgencyModalLabel{{ $agency->id }}" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <form action="{{ route('agencies.toggleStatus', $agency->id) }}" method="POST">
-            @csrf
-            <div class="modal-header">
-                <h5 class="modal-title" id="deactivateAgencyModalLabel{{ $agency->id }}">Désactiver l'agence</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Êtes-vous sûr de vouloir désactiver cette agence ? Cela désactivera également tous les utilisateurs associés.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger">Désactiver</button>
-            </div>
-        </form>
-    </div>
-</div>
-</div>
+                                    <!-- Modal de désactivation -->
+                                    <div class="modal fade" id="deactivateAgencyModal{{ $agency->id }}" tabindex="-1" aria-labelledby="deactivateAgencyModalLabel{{ $agency->id }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="{{ route('agencies.toggleStatus', $agency->id) }}" method="POST">
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deactivateAgencyModalLabel{{ $agency->id }}">Désactiver l'agence</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Êtes-vous sûr de vouloir désactiver cette agence ? Cela désactivera également tous les utilisateurs associés.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-danger">Désactiver</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </div>
 
 
-                                    <!-- Bouton de déclenchement pour le modal de suppression -->
+                                    {{-- <!-- Bouton de déclenchement pour le modal de suppression -->
                                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteAgencyModal{{ $agency->id }}">
                                         <i class="bi bi-trash"></i> Supprimer
                                     </button>
@@ -243,7 +243,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </td>
                             </tr>
                             @empty
