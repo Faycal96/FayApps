@@ -33,6 +33,7 @@
             </div>
         </div>
         @endif
+        @if(Auth::user()->hasRole('Admin'))
         <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">
                 <div class="inner">
@@ -45,7 +46,7 @@
                 <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-    
+        @endif
         <div class="col-lg-3 col-6">
             <!-- small box pour le total des utilisateurs actifs -->
             <div class="small-box bg-success">

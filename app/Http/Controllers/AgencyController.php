@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agency;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AgencyController extends Controller
@@ -76,4 +77,29 @@ class AgencyController extends Controller
         $agency->delete();
         return redirect()->route('agencies.index')->with('success', 'Agence supprimée avec succès.');
     }
-}
+    public function toggleStatus(Request $request, Agency $agency)
+    {
+        if ($agency->is_active) {
+            // Désactivation de l'agence et des utilisateurs
+            $agency->is_active = false;
+            $agency->save();
+    
+            // Désactiver tous les utilisateurs associés
+            User::where('agency_id', $agency->id)->update(['is_active' => false]);
+        } else {
+            // Activation de l'agence
+            $request->validate([
+                'fin_validite' => 'required|date',
+            ]);
+    
+            $agency->is_active = true;
+            $agency->fin_validite = $request->fin_validite;
+            $agency->save();
+    
+            // Activer tous les utilisateurs associés
+            User::where('agency_id', $agency->id)->update(['is_active' => true]);
+        }
+    
+        return redirect()->back()->with('success', 'Statut de l\'agence mis à jour avec succès.');
+    }
+}   

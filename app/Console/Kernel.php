@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->job(new CheckDemandeBillets)->everyMinute();
-
+         $schedule->command('agency:check-validity')->everyMinute();
 
         // $schedule->call(function () {
         //     $today = now();

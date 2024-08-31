@@ -31,6 +31,9 @@ class PaiementController extends Controller
         ->whereIn('pelerin_id', $pelerins->pluck('id'))
         ->orderBy('created_at', 'desc')
         ->get();
+       
+
+       
 
     return view('paiements.index', compact('paiements', 'pelerins'));
 }

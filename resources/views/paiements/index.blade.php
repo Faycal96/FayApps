@@ -4,7 +4,7 @@
 <div class="container-fluid">
     
 
-    <div class="">
+    <div class="row">
         <div class="col-12">
             <p>
                 @if(session('success'))
@@ -56,13 +56,13 @@
                                         
                                         <div class="form-group mb-3">
                                             <label for="montant"><i class="bi bi-cash-coin me-2"></i>Montant</label>
-                                            <input type="number" name="montant" id="montant" class="form-control" required>
+                                            <input type="number" name="montant" id="montant" class="form-control" value="{{ old('montant', 100000) }}" required>
                                             <div id="montantError" class="text-danger mt-2"></div>
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="mode_paiement"><i class="bi bi-credit-card me-2"></i>Mode de Paiement</label>
                                             <select class="form-control" id="mode_paiement" name="mode_paiement" required>
-                                                <option value="">Sélectionner le moyen de paiement</option>
+                                                
                                                 <option value="espece">Espèce</option>
                                                 <option value="card_credit">Carte de Crédit</option>
                                                 <option value="cheque">Chèque</option>
@@ -103,207 +103,210 @@
                         }
                     </script>
 
-<table id="example1" class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Date</th>
-            <th>Nom-Prenom</th>
-            <th>Passeport</th>
-            <th>Montant versé</th>
-            <th>Montant total du hadj</th>
-            <th>Statut</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @forelse ($paiements as $payment)
-        <tr>
-            <td>{{ $loop->iteration }}</td>
-            <td>{{ $payment->created_at->translatedFormat('d M Y') }}</td>
-            <td>
-                {{ strtoupper($payment->pelerin->nom) }} {{ ucfirst($payment->pelerin->prenom) }}
-            </td>
-            <td>{{ $payment->pelerin->passeport }}</td>
-            <td>
-                @if ($payment->statut_paiement == 'Annulé')
-                    <span class="text-muted">{{ number_format($payment->montant, 0, ',', ' ') }} FCFA</span>
-                @else
-                    {{ number_format($payment->montant, 0, ',', ' ') }} FCFA
-                @endif
-            </td>
-            <td>{{ number_format($payment->pelerin->prixTotalHadj(), 0, ',', ' ') }} FCFA</td>
-            <td>
-                @if ($payment->statut_paiement == 'Payé')
-                    <span class="badge bg-success">Soldé</span>
-                @elseif ($payment->statut_paiement == 'En cours')
-                    <span class="badge bg-warning">En cours</span>
-                @elseif ($payment->statut_paiement == 'Annulé')
-                    <span class="badge bg-danger">Annulé</span>
-                @endif
-            </td>
-            <td>
-                <!-- Bouton Récépissé -->
-                <a href="{{ asset('recu/' . $payment->id . '_recu.pdf') }}" class="btn btn-info btn-sm" target="_blank">
-                    <i class="bi bi-download"></i> Récépissé
-                </a>
-                
-                <!-- Bouton Détails -->
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#simpleDetailModal{{ $payment->id }}">
-                    <i class="bi bi-info-circle"></i> Détails
-                </button>
-                
-                <!-- Bouton Modifier -->
-                @if ($payment->statut_paiement != 'Annulé' && auth()->user()->hasRole(['Admin']))
-                    <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editPaymentModal{{ $payment->id }}">
-                        <i class="bi bi-pencil"></i> Modifier
-                    </button>
-                @endif
-                
-                <!-- Bouton Annuler -->
-                @if ($payment->statut_paiement != 'Annulé')
-                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancelPaymentModal{{ $payment->id }}">
-                        <i class="bi bi-x-circle"></i> Annuler
-                    </button>
-                @endif
-                
-                <!-- Modal de Détails -->
-                <div class="modal fade" id="simpleDetailModal{{ $payment->id }}" tabindex="-1" aria-labelledby="simpleDetailModalLabel{{ $payment->id }}" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header bg-dark text-white">
-                                <h5 class="modal-title" id="simpleDetailModalLabel{{ $payment->id }}">Détails du Paiement</h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body bg-light">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <i class="bi bi-person-fill me-2"></i><strong>Nom :</strong> {{ $payment->pelerin->nom }}
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Nom-Prenom</th>
+                        <th>Passeport</th>
+                        <th>Montant versé</th>
+                        <th>Montant total du hadj</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($paiements as $payment)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $payment->created_at->translatedFormat('d M Y') }}</td>
+                        <td>
+                            {{ strtoupper($payment->pelerin->nom) }} {{ ucfirst($payment->pelerin->prenom) }}
+                        </td>
+                        <td>{{ $payment->pelerin->passeport }}</td>
+                        <td>
+                            @if ($payment->statut_paiement == 'Annulé')
+                                <span class="text-muted">{{ number_format($payment->montant_vers_avant_annulation, 0, ',', ' ') }} FCFA</span>
+                            @else
+                                {{ number_format($payment->montant, 0, ',', ' ') }} FCFA
+                            @endif
+                        </td>
+                        <td>{{ number_format($payment->pelerin->prixTotalHadj(), 0, ',', ' ') }} FCFA</td>
+                        <td>
+                            @if ($payment->statut_paiement == 'Payé')
+                                <span class="badge bg-success">Soldé</span>
+                            @elseif ($payment->statut_paiement == 'En cours')
+                                <span class="badge bg-warning">En cours</span>
+                            @elseif ($payment->statut_paiement == 'Annulé')
+                                <span class="badge bg-danger">Annulé</span>
+                            @endif
+                        </td>
+                        <td>
+                            <!-- Bouton Récépissé -->
+                            <a href="{{ asset('recu/' . $payment->id . '_recu.pdf') }}" class="btn btn-info btn-sm" target="_blank">
+                                <i class="bi bi-download"></i> Récépissé
+                            </a>
+                            
+                            <!-- Bouton Détails -->
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#simpleDetailModal{{ $payment->id }}">
+                                <i class="bi bi-info-circle"></i> Détails
+                            </button>
+                            
+                            <!-- Bouton Modifier -->
+                            @if ($payment->statut_paiement != 'Annulé' && auth()->user()->hasRole(['Admin']))
+                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editPaymentModal{{ $payment->id }}">
+                                    <i class="bi bi-pencil"></i> Modifier
+                                </button>
+                            @endif
+                            
+                            <!-- Bouton Annuler -->
+                            @if ($payment->statut_paiement != 'Annulé')
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancelPaymentModal{{ $payment->id }}">
+                                    <i class="bi bi-x-circle"></i> Annuler
+                                </button>
+                            @endif
+                            
+                            <!-- Modal de Détails -->
+                            <div class="modal fade" id="simpleDetailModal{{ $payment->id }}" tabindex="-1" aria-labelledby="simpleDetailModalLabel{{ $payment->id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-dark text-white">
+                                            <h5 class="modal-title" id="simpleDetailModalLabel{{ $payment->id }}">Détails du Paiement</h5>
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body bg-light">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <i class="bi bi-person-fill me-2"></i><strong>Nom :</strong> {{ $payment->pelerin->nom }}
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <i class="bi bi-calendar-event-fill me-2"></i><strong>Date du paiement :</strong> {{ $payment->created_at->translatedFormat('d M Y à H:i:s') }}
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <i class="bi bi-cash-coin me-2"></i><strong>Montant versé :</strong> {{ $payment->montant }} FCFA
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <i class="bi bi-credit-card me-2"></i><strong>Mode de paiement :</strong> {{ $payment->mode_paiement }}
+                                                </div>
+                                                @if ($payment->statut_paiement == 'Annulé')
+                                                <div class="col-md-6 mb-3">
+                                                    <i class="bi bi-arrow-return-left me-2"></i><strong>Montant précédemment versé :</strong> {{ $payment->montant_annule }} FCFA
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <i class="bi bi-arrow-return-left me-2"></i><strong>Motif d'annulation:</strong> {{ $payment->motif_annulation }} 
+                                                </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer bg-dark text-white">
+                                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <i class="bi bi-calendar-event-fill me-2"></i><strong>Date du paiement :</strong> {{ $payment->created_at->translatedFormat('d M Y à H:i:s') }}
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <i class="bi bi-cash-coin me-2"></i><strong>Montant versé :</strong> {{ $payment->montant }} FCFA
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <i class="bi bi-credit-card me-2"></i><strong>Mode de paiement :</strong> {{ $payment->mode_paiement }}
-                                    </div>
-                                    @if ($payment->statut_paiement == 'Annulé')
-                                    <div class="col-md-12 mb-3">
-                                        <i class="bi bi-arrow-return-left me-2"></i><strong>Montant précédemment versé :</strong> {{ $payment->montant_annule }} FCFA
-                                    </div>
-                                    @endif
                                 </div>
                             </div>
-                            <div class="modal-footer bg-dark text-white">
-                                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Fermer</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Modal de Modification -->
-                @if (auth()->user()->hasRole(['Admin']))
-                <div class="modal fade" id="editPaymentModal{{ $payment->id }}" tabindex="-1" aria-labelledby="editPaymentModalLabel{{ $payment->id }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header bg-secondary text-white">
-                                <h5 class="modal-title" id="editPaymentModalLabel{{ $payment->id }}">Modifier le Paiement pour {{ $payment->pelerin->nom }} {{ $payment->pelerin->prenom }}, le montant restant est de {{ number_format($payment->pelerin->montantRestant(), 0, ',', ' ') }} FCFA</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="editPaymentForm{{ $payment->id }}" action="{{ route('paiements.update', $payment->id) }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="pelerin_id" value="{{ $payment->pelerin_id }}">
-                                    <input type="hidden" id="montantRestant{{ $payment->id }}" value="{{ $payment->pelerin->montantRestant() }}">
-                                    <div class="form-group mb-3">
-                                        <label for="montant"><i class="bi bi-cash-coin me-2"></i>Montant</label>
-                                        <input type="number" name="montant" id="montant{{ $payment->id }}" class="form-control" value="{{ $payment->montant }}" required>
-                                        <div id="montantError{{ $payment->id }}" class="text-danger mt-2"></div>
+                            
+                            <!-- Modal de Modification -->
+                            @if (auth()->user()->hasRole(['Admin']))
+                            <div class="modal fade" id="editPaymentModal{{ $payment->id }}" tabindex="-1" aria-labelledby="editPaymentModalLabel{{ $payment->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-secondary text-white">
+                                            <h5 class="modal-title" id="editPaymentModalLabel{{ $payment->id }}">Modifier le Paiement pour {{ $payment->pelerin->nom }} {{ $payment->pelerin->prenom }}, le montant restant est de {{ number_format($payment->pelerin->montantRestant(), 0, ',', ' ') }} FCFA</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="editPaymentForm{{ $payment->id }}" action="{{ route('paiements.update', $payment->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="pelerin_id" value="{{ $payment->pelerin_id }}">
+                                                <input type="hidden" id="montantRestant{{ $payment->id }}" value="{{ $payment->pelerin->montantRestant() }}">
+                                                <div class="form-group mb-3">
+                                                    <label for="montant"><i class="bi bi-cash-coin me-2"></i>Montant</label>
+                                                    <input type="number" name="montant" id="montant{{ $payment->id }}" class="form-control" value="{{ $payment->montant }}" required>
+                                                    <div id="montantError{{ $payment->id }}" class="text-danger mt-2"></div>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="mode_paiement"><i class="bi bi-credit-card me-2"></i>Mode de Paiement</label>
+                                                    <select class="form-control" id="mode_paiement" name="mode_paiement" required>
+                                                        <option value="espece" {{ $payment->mode_paiement == 'espece' ? 'selected' : '' }}>Espèce</option>
+                                                        <option value="card_credit" {{ $payment->mode_paiement == 'card_credit' ? 'selected' : '' }}>Carte de Crédit</option>
+                                                        <option value="cheque" {{ $payment->mode_paiement == 'cheque' ? 'selected' : '' }}>Chèque</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="note"><i class="bi bi-note-text me-2"></i>Note</label>
+                                                    <textarea name="note" id="note" class="form-control">{{ $payment->note }}</textarea>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer bg-light">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="button" class="btn btn-primary" onclick="validateEditPayment({{ $payment->id }})">Enregistrer</button>
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <label for="mode_paiement"><i class="bi bi-credit-card me-2"></i>Mode de Paiement</label>
-                                        <select class="form-control" id="mode_paiement" name="mode_paiement" required>
-                                            <option value="espece" {{ $payment->mode_paiement == 'espece' ? 'selected' : '' }}>Espèce</option>
-                                            <option value="card_credit" {{ $payment->mode_paiement == 'card_credit' ? 'selected' : '' }}>Carte de Crédit</option>
-                                            <option value="cheque" {{ $payment->mode_paiement == 'cheque' ? 'selected' : '' }}>Chèque</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="note"><i class="bi bi-note-text me-2"></i>Note</label>
-                                        <textarea name="note" id="note" class="form-control">{{ $payment->note }}</textarea>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
-                            <div class="modal-footer bg-light">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="button" class="btn btn-primary" onclick="validateEditPayment({{ $payment->id }})">Enregistrer</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <script>
-                    function validateEditPayment(paymentId) {
-                        const montantInput = document.getElementById('montant' + paymentId);
-                        const montantError = document.getElementById('montantError' + paymentId);
-                        const montantRestantInput = document.getElementById('montantRestant' + paymentId);
-                        const montantRestant = parseFloat(montantRestantInput.value);
+                            <script>
+                                function validateEditPayment(paymentId) {
+                                    const montantInput = document.getElementById('montant' + paymentId);
+                                    const montantError = document.getElementById('montantError' + paymentId);
+                                    const montantRestantInput = document.getElementById('montantRestant' + paymentId);
+                                    const montantRestant = parseFloat(montantRestantInput.value);
 
-                        const montant = parseFloat(montantInput.value);
+                                    const montant = parseFloat(montantInput.value);
 
-                        if (montant > montantRestant + parseFloat(montantInput.dataset.original)) {
-                            montantError.textContent = 'Le montant payé ne peut pas dépasser le montant restant à payer après la modification.';
-                            return;
-                        } else {
-                            montantError.textContent = '';
-                        }
+                                    if (montant > montantRestant + parseFloat(montantInput.dataset.original)) {
+                                        montantError.textContent = 'Le montant payé ne peut pas dépasser le montant restant à payer après la modification.';
+                                        return;
+                                    } else {
+                                        montantError.textContent = '';
+                                    }
 
-                        document.getElementById('editPaymentForm' + paymentId).submit();
-                    }
-                </script>
-                @endif
+                                    document.getElementById('editPaymentForm' + paymentId).submit();
+                                }
+                            </script>
+                            @endif
 
-                <!-- Modal d'annulation -->
-                @if ($payment->statut_paiement != 'Annulé')
-                <div class="modal fade" id="cancelPaymentModal{{ $payment->id }}" tabindex="-1" aria-labelledby="cancelPaymentModalLabel{{ $payment->id }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header bg-danger text-white">
-                                <h5 class="modal-title" id="cancelPaymentModalLabel{{ $payment->id }}">Annuler le Paiement</h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="{{ route('paiements.cancel', $payment->id) }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
+                            <!-- Modal d'annulation -->
+                            @if ($payment->statut_paiement != 'Annulé')
+                            <div class="modal fade" id="cancelPaymentModal{{ $payment->id }}" tabindex="-1" aria-labelledby="cancelPaymentModalLabel{{ $payment->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title" id="cancelPaymentModalLabel{{ $payment->id }}">Annuler le Paiement</h5>
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('paiements.cancel', $payment->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
 
-                                    <div class="form-group">
-                                        <label for="motif_annulation">Motif d'Annulation</label>
-                                        <textarea name="motif_annulation" id="motif_annulation" class="form-control" rows="4" required></textarea>
+                                                <div class="form-group">
+                                                    <label for="motif_annulation">Motif d'Annulation</label>
+                                                    <textarea name="motif_annulation" id="motif_annulation" class="form-control" rows="4" required></textarea>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-danger">Confirmer l'Annulation</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-danger">Confirmer l'Annulation</button>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-            </td>
-        </tr>
-        @empty
-        <tr>
-            <td colspan="8">Aucun paiement enregistré pour le moment.</td>
-        </tr>
-        @endforelse
-    </tbody>
-</table>
+                            @endif
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="8">Aucun paiement enregistré pour le moment.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
 
 
                 </div>

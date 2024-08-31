@@ -70,6 +70,9 @@ Route::post('/uploadRouting/{id}/{currentStatus}', [OffreController::class, 'upl
 Route::patch('/paiements/{paiement}/cancel', [PaiementController::class, 'cancel'])->name('paiements.cancel');
 
 
+Route::post('/agencies/{agency}/toggle-status', [AgencyController::class, 'toggleStatus'])->name('agencies.toggleStatus');
+
+
 // Route::post('registerdaf', [ControllersRegisterDafController::class, 'enregistrer'])->name('storeDaf');
 
 Route::resources([

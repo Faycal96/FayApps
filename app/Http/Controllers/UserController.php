@@ -61,6 +61,7 @@ class UserController extends Controller
         $totalAdminUsers = 0;
         $activeUsers = 0;
         $disabledUsers = 0;
+        $totalSecretaries = 0; 
     
         if ($user->hasRole('Super Admin')) {
             // Pour Superadmin : statistiques globales
