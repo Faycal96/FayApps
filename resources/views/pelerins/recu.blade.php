@@ -210,7 +210,7 @@
             <table class="signature-table">
                 <tr>
                     <td class="label">Signature du pèlerin</td>
-                    <td class="label">Signature de l'agent</td>
+                    <td class="label">Signature du caissier(e) {{ $name }}</td>
                 </tr>
             </table>
         </div>
@@ -220,7 +220,7 @@
         </div>
 
         <!-- Ligne de séparation -->
-        <div class="separator"><span>Découper ici</span></div>
+        <div class="separator"><span></span></div>
 
         <!-- Deuxième section - Reçu pour l'agence -->
         <div class="duplicate-receipt">
@@ -245,22 +245,16 @@
             <!-- Informations générales du pèlerin -->
             <table class="info-table">
                 <tr>
-                    <th>ID INSCRIT</th>
-                    <td>{{ str_pad($paiement->pelerin->id, 6, '0', STR_PAD_LEFT) }}</td>
                     <th>Nom</th>
                     <td>{{ strtoupper($paiement->pelerin->nom) }}</td>
-                </tr>
-                <tr>
-                    <th>N° Passeport/CNIB</th>
-                    <td>{{ $paiement->pelerin->passeport }}</td>
                     <th>Prénom</th>
                     <td>{{ ucfirst($paiement->pelerin->prenom) }}</td>
                 </tr>
                 <tr>
+                    <th>N° Passeport/CNIB</th>
+                    <td>{{ $paiement->pelerin->passeport }}</td>
                     <th>Facilitateur/SC</th>
                     <td>{{ $paiement->pelerin->facilitateur }}</td>
-                    <th>Date d'inscription</th>
-                    <td>{{ $paiement->pelerin->created_at->format('d/m/Y à H:i:s') }}</td>
                 </tr>
             </table>
 
@@ -293,7 +287,7 @@
                 <table class="signature-table">
                     <tr>
                         <td class="label">Signature du pèlerin</td>
-                        <td class="label">Signature de l'agent</td>
+                        <td class="label">Signature du caissier(e) {{ $name }}</td>
                     </tr>
                 </table>
             </div>
