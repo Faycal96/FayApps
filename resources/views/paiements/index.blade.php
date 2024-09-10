@@ -46,7 +46,7 @@
                                         <div class="form-group mb-3">
                                             <label for="pelerin_id"><i class="bi bi-person-fill me-2"></i>Pèlerin</label>
                                             <select name="pelerin_id" id="pelerin_id" class="form-control select2bs4" style="width: 100%;" required>
-                                                @foreach($pelerins as $pelerin)
+                                                @foreach($pelerinsS as $pelerin)
                                                     <option value="{{ $pelerin->id }}" data-restant="{{ $pelerin->montantRestant() }}">
                                                         {{ $pelerin->nom }} {{ $pelerin->prenom }} -{{ $pelerin->passeport }}
                                                     </option>
@@ -111,7 +111,7 @@
                         <th>Nom-Prenom</th>
                         <th>Passeport</th>
                         <th>Montant versé</th>
-                        <th>Montant total du hadj</th>
+                        <th>Prix du hadj</th>
                         <th>Statut</th>
                         <th>Action</th>
                     </tr>
@@ -127,12 +127,12 @@
                         <td>{{ $payment->pelerin->passeport }}</td>
                         <td>
                             @if ($payment->statut_paiement == 'Annulé')
-                                <span class="text-muted">{{ number_format($payment->montant_vers_avant_annulation, 0, ',', ' ') }} FCFA</span>
+                                <span class="text-muted">{{ number_format($payment->montant_vers_avant_annulation, 0, ',', ' ') }} </span>
                             @else
-                                {{ number_format($payment->montant, 0, ',', ' ') }} FCFA
+                                {{ number_format($payment->montant, 0, ',', ' ') }}
                             @endif
                         </td>
-                        <td>{{ number_format($payment->pelerin->prixTotalHadj(), 0, ',', ' ') }} FCFA</td>
+                        <td>{{ number_format($payment->pelerin->prixTotalHadj(), 0, ',', ' ') }}</td>
                         <td>
                             @if ($payment->statut_paiement == 'Payé')
                                 <span class="badge bg-success">Soldé</span>
@@ -144,15 +144,18 @@
                         </td>
                         <td>
                             <!-- Bouton Récépissé -->
-                            <a href="{{ asset('recu/' . $payment->id . '_recu.pdf') }}" class="btn btn-info btn-sm" target="_blank">
-                                <i class="bi bi-download"></i> Récépissé
-                            </a>
+                           
+                            <a href="{{ route('paiements.generatePdf', $payment->id) }}" class="btn btn-info btn-sm" target="_blank"> <i class="bi bi-download"></i> Récu</a>
                             
                             <!-- Bouton Détails -->
                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#simpleDetailModal{{ $payment->id }}">
                                 <i class="bi bi-info-circle"></i> Détails
                             </button>
-                            
+                            @if ($payment->pelerin->montantRestant() > 0 && auth()->user()->hasRole(['Admin']))
+                            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#payPaymentModal{{ $payment->id }}">
+                                <i class="bi bi-credit-card"></i> Payer
+                            </button>
+                            @endif
                             <!-- Bouton Modifier -->
                             @if ($payment->statut_paiement != 'Annulé' && auth()->user()->hasRole(['Admin']))
                                 <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editPaymentModal{{ $payment->id }}">
@@ -298,6 +301,67 @@
                                 </div>
                             </div>
                             @endif
+                           
+
+                            <!-- Modal de Paiement -->
+                            <div class="modal fade" id="payPaymentModal{{ $payment->id }}" tabindex="-1" aria-labelledby="payPaymentModalLabel{{ $payment->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-success text-white">
+                                            <h5 class="modal-title" id="payPaymentModalLabel{{ $payment->id }}">Payer pour {{ $payment->pelerin->nom }} {{ $payment->pelerin->prenom }}, le montant restant est de {{ number_format($payment->pelerin->montantRestant(), 0, ',', ' ') }} FCFA</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="paymentForm{{ $payment->id }}" action="{{ route('paiements.store') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="pelerin_id" value="{{ $payment->pelerin_id }}">
+                                                <input type="hidden" id="montantRestant{{ $payment->id }}" value="{{ $payment->pelerin->montantRestant() }}">
+
+                                                <div class="form-group mb-3">
+                                                    <label for="montant"><i class="bi bi-cash-coin me-2"></i>Montant</label>
+                                                    <input type="number" name="montant" id="montant{{ $payment->id }}" class="form-control"value="{{ old('montant', $payment->pelerin->montantRestant()) }}" required>
+                                                    <div id="montantError{{ $payment->id }}" class="text-danger mt-2"></div>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="mode_paiement"><i class="bi bi-credit-card me-2"></i>Mode de Paiement</label>
+                                                    <select class="form-control" id="mode_paiement" name="mode_paiement" required>
+                                                        
+                                                        <option value="espece">Espèce</option>  
+                                                        <option value="card_credit">Carte de Crédit</option> 
+                                                        <option value="cheque">Chèque</option> 
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="note"><i class="bi bi-note-text me-2"></i>Note</label>
+                                                    <textarea name="note" id="note" class="form-control"></textarea>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer bg-light">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="button" class="btn btn-success" onclick="validatePayment({{ $payment->id }})">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    function validatePayment(paymentId) {
+                                        const montantInput = document.getElementById(`montant${paymentId}`);
+                                        const montantRestant = parseFloat(document.getElementById(`montantRestant${paymentId}`).value);
+                                        const montantError = document.getElementById(`montantError${paymentId}`);
+                                        
+                                        const montant = parseFloat(montantInput.value);
+                                        
+                                        if (montant > montantRestant) {
+                                            montantError.textContent = 'Le montant payé ne peut pas dépasser le montant restant à payer.';
+                                            return;
+                                        } else {
+                                            montantError.textContent = '';
+                                        }
+                                
+                                        document.getElementById(`paymentForm${paymentId}`).submit();
+                                    }
+                                </script>
                         </td>
                     </tr>
                     @empty

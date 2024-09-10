@@ -116,21 +116,10 @@ public function store(Request $request)
     // Génération du PDF
     $logo = public_path('images/logos/' . Auth::user()->agency->logo);
     // Chemin pour sauvegarder le PDF
-    $recipissePath = public_path('recipisses');
-    if (!is_dir($recipissePath)) {
-        mkdir($recipissePath, 0777, true);
-    }
-
-    $pdf = PDF::loadView('pelerins.recipisse', compact('pelerin', 'logo', 'agence'));
-
-    // Sauvegarder le PDF
-    $pdfFilePath = $recipissePath . '/' . $pelerin->id . '_recipisse.pdf';
-    $pdf->save($pdfFilePath);
+   
 
     // Rediriger vers une page avec un message de succès
-    return redirect()->route('pelerins.index')
-    ->with('success', 'Pèlerin ajouté avec succès.')
-    ->with('pdf', url('recipisses/' . $pelerin->id . '_recipisse.pdf'));
+    return redirect()->route('pelerins.index')->with('success', 'Pèlerin ajouté avec succès.');
 }
 
     
@@ -189,26 +178,10 @@ public function store(Request $request)
     // Mise à jour des données du pèlerin
     $pelerin->update($validatedData);
 
-    // Supprimer l'ancien récépissé s'il existe
-    $recipissePath = public_path('recipisses/' . $pelerin->id . '_recipisse.pdf');
-    if (file_exists($recipissePath)) {
-        unlink($recipissePath);
-    }
-
-    // Génération d'un nouveau PDF
-    $user = Auth::user();
-    $agence = $user->agency;
-    $logo = public_path('images/logos/' . $user->agency->logo);
-
-    $pdf = PDF::loadView('pelerins.recipisse', compact('pelerin', 'logo', 'agence'));
-
-    // Sauvegarder le nouveau PDF
-    $pdfFilePath = public_path('recipisses') . '/' . $pelerin->id . '_recipisse.pdf';
-    $pdf->save($pdfFilePath);
+   
 
     // Rediriger avec un message de succès
-    return redirect()->route('pelerins.index')->with('success', 'Pèlerin mis à jour avec succès.')
-                                            ->with('pdf', url('recipisses/' . $pelerin->id . '_recipisse.pdf'));
+    return redirect()->route('pelerins.index')->with('success', 'Pèlerin mis à jour avec succès.');
 }
 
 

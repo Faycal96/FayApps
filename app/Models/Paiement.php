@@ -18,6 +18,8 @@ class Paiement extends Model
         'statut_paiement',
         'motif_annulation',
         'montant_vers_avant_annulation',
+        'total_verse',
+        'reste_a_payer',
     ];
 
     public function pelerin()

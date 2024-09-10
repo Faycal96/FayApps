@@ -327,10 +327,7 @@
                                 </td>
 
                                 <td>
-                                    <a href="{{ asset('recipisses/' . $pelerin->id . '_recipisse.pdf') }}" 
-                                        class="btn btn-info btn-sm" target="_blank">
-                                        <i class="bi bi-download"></i> Récépissé
-                                     </a>
+                                   
 
                                     <!-- Bouton de déclenchement pour le modal de détails -->
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
@@ -529,7 +526,7 @@
                                 
                                                         <!-- Prévisualisation de la nouvelle photo -->
                                                         <div class="col-md-6 mb-3">
-                                                            <label><strong>Prévisualisation de la nouvelle photo</strong></label>
+                                                           
                                                             <div id="image-preview" style="border: 1px solid #ddd; padding: 5px; max-width: 100%; display: none;">
                                                                 <img id="image-display" src="" alt="Prévisualisation" style="max-width: 100%; height: auto;" />
                                                             </div>

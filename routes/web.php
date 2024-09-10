@@ -72,6 +72,7 @@ Route::patch('/paiements/{paiement}/cancel', [PaiementController::class, 'cancel
 
 Route::post('/agencies/{agency}/toggle-status', [AgencyController::class, 'toggleStatus'])->name('agencies.toggleStatus');
 
+Route::get('paiements/generatePdf/{id}', [PaiementController::class, 'generatePdf'])->name('paiements.generatePdf');
 
 // Route::post('registerdaf', [ControllersRegisterDafController::class, 'enregistrer'])->name('storeDaf');
 
