@@ -161,9 +161,12 @@
                 </tr>
             </table>
         </div>
-
+        @if ($paiement->statut_paiement === 'Annulé')
         <!-- Titre Reçu de Paiement -->
+        <div class="title">Annulation de paiement N° {{ str_pad($paiement->id, 6, '0', STR_PAD_LEFT) }}</div>
+        @else
         <div class="title">Reçu de Paiement N° {{ str_pad($paiement->id, 6, '0', STR_PAD_LEFT) }}</div>
+@endif
 
         <!-- Informations générales du pèlerin -->
         <table class="info-table">
@@ -185,20 +188,32 @@
         <table class="amount-table">
             <thead>
                 <tr>
+                    <th>Date Versement</th>
                     <th>Type Versement</th>
                     <th>Motif</th>
-                    <th>Date Versement</th>
-                    <th>Montant Versé</th>
+                    <th>
+                        @if ($paiement->statut_paiement === 'Annulé')
+                        Montant Annulé
+                        @else 
+                        Montant Versé
+                        @endif
+                    </th>
                     <th>Reste à payer</th>
                     <th>Total Versé</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td>{{ \Carbon\Carbon::parse($paiement->date_versement)->format('d/m/Y') }}</td>
                     <td>{{ $paiement->mode_paiement }}</td>
                     <td>{{ $paiement->pelerin->motifCandidat->nom }}</td>
-                    <td>{{ \Carbon\Carbon::parse($paiement->date_versement)->format('d/m/Y') }}</td>
-                    <td>{{ number_format($paiement->montant, 0, ',', ' ') }} FCFA</td>
+                    <td>
+                        @if ($paiement->statut_paiement === 'Annulé')
+                        {{ number_format($paiement->montant_vers_avant_annulation, 0, ',', ' ') }} FCFA
+                        @else
+                        {{ number_format($paiement->montant, 0, ',', ' ') }} FCFA
+                        @endif
+                    </td>
                     <td class="red">{{ number_format($resteAPayer, 0, ',', ' ') }} FCFA</td>
                     <td>{{ number_format($totalVerse, 0, ',', ' ') }} FCFA</td>
                 </tr>
@@ -210,7 +225,7 @@
             <table class="signature-table">
                 <tr>
                     <td class="label">Signature du pèlerin</td>
-                    <td class="label">Signature du caissier(e) {{ $name }}</td>
+                    <td class="label">Signature du caissier(e) ({{ $name }})</td>
                 </tr>
             </table>
         </div>
@@ -262,9 +277,9 @@
             <table class="amount-table">
                 <thead>
                     <tr>
+                        <th>Date Versement</th>
                         <th>Type Versement</th>
                         <th>Motif</th>
-                        <th>Date Versement</th>
                         <th>Montant Versé</th>
                         <th>Reste à payer</th>
                         <th>Total Versé</th>
@@ -272,9 +287,10 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>{{ \Carbon\Carbon::parse($paiement->date_versement)->format('d/m/Y') }}</td>
                         <td>{{ $paiement->mode_paiement }}</td>
                         <td>{{ $paiement->pelerin->motifCandidat->nom }}</td>
-                        <td>{{ \Carbon\Carbon::parse($paiement->date_versement)->format('d/m/Y') }}</td>
+                       
                         <td>{{ number_format($paiement->montant, 0, ',', ' ') }} FCFA</td>
                         <td class="red">{{ number_format($resteAPayer, 0, ',', ' ') }} FCFA</td>
                         <td>{{ number_format($totalVerse, 0, ',', ' ') }} FCFA</td>

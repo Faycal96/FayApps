@@ -388,7 +388,7 @@
 
     <div class="container">
         <div class="copyright">
-            &copy; Copyright <strong><span>HadjBurkina</span></strong>. Tous droit reservés
+            &copy; Copyright <strong><span>HadjBurkina</span></strong>. Tous droits reservés
         </div>
         <div class="credits">
 

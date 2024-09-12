@@ -153,26 +153,26 @@ public function store(Request $request)
     
         // Stocker le montant versé avant annulation
         $montantVerse = $paiement->montant;
+               // Calculer les montants
+               $totalVerse =$paiement->total_verse - $paiement->montant_vers_avant_annulation;
+               $resteAPayer = $paiement->reste_a_payer + $paiement->montant_vers_avant_annulation;
+            // Calculer les montants
+   
     
         // Annuler le paiement : mettre à jour le statut et enregistrer le motif
         $paiement->update([
             'statut_paiement' => 'Annulé',
             'motif_annulation' => $request->motif_annulation,
             'montant' => 0, // Réinitialiser le montant du paiement annulé
-        ]);
-    
-        // Réduire le montant total payé du pèlerin
-        $pelerin = $paiement->pelerin;
-    
-        // Calculer les montants
-        $totalVerse = $pelerin->montantTotalPaye() - $montantVerse;
-        $resteAPayer = $pelerin->montantRestant() + $montantVerse;
-    
-        // Mettre à jour les montants du pèlerin
-        $pelerin->update([
             'total_verse' => $totalVerse,
             'reste_a_payer' => $resteAPayer,
+           
         ]);
+    
+        
+    
+
+    
     
         return redirect()->route('paiements.index')->with('success', 'Paiement annulé avec succès.');
     }
